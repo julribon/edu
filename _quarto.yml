@@ -1,0 +1,6 @@
+project:
+  title: "Informatique"
+  output-dir: output
+  render:
+    - "*.qmd"
+    #- "!exams/"
