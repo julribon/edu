@@ -1,0 +1,1121 @@
+---
+title: "Conditions"
+subtitle: Introduction à la Programmation avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    #show-notes: true
+    #show-notes: separate-page
+---
+
+## Programmation structurée
+
+::: {.columns}
+::: {.column width="30%"}
+
+* Paradigme reposant sur trois concepts fondamentaux:
+  * Séquences
+  * Conditions
+  * Boucles
+
+:::
+::: {.column width="70%"}
+
+![](../images/structured_programming.png)
+
+:::
+:::
+
+::: notes
+
+**Programmation structurée**
+
+- La **programmation structurée** est un paradigme de programmation qui repose sur trois concepts fondamentaux :
+  - **Séquences** : l'exécution des instructions dans l'ordre dans lequel elles apparaissent.
+  - **Conditions** : exécution conditionnelle d'instructions en fonction d'une expression booléenne (par exemple, avec `if`, `else`).
+  - **Boucles** : répétition d'une série d'instructions jusqu'à ce qu'une condition soit remplie (par exemple, avec `for`, `while`).
+
+Ce paradigme permet de structurer le code de manière logique et claire, facilitant ainsi la lisibilité et la maintenance du programme.
+
+:::
+
+
+## Aujourd'hui
+
+* Conditions
+  * Opérateurs de comparaison (`==`, `!=`, `>`, `<`, `>=`, `<=`)
+  * Structure (`if`, `elif`, `else`)
+  * Opérateurs logiques (`and`, `or`, `not`)
+  * Conditions sur une ligne (inline) et imbriquées
+  * Combinaisons, comparaisons multiples et cas spéciaux
+
+::: notes
+
+**Aujourd'hui : Les conditions**
+
+- **Opérateurs de comparaison** :  
+  Utilisés pour comparer deux valeurs. Les résultats des comparaisons sont des valeurs booléennes (`True` ou `False`). Exemples : `==`, `!=`, `<`, `>`.
+
+- **Opérateurs logiques** :  
+  Utilisés pour combiner plusieurs conditions. Exemples : `and`, `or`, `not`.
+
+- **`if` ... `elif` ... `else`** :  
+  Structure conditionnelle de base permettant d'exécuter différentes branches de code selon le résultat d'une condition.  
+  - **`if`** : vérifie une condition.
+  - **`elif`** : vérifie une condition supplémentaire si la première est fausse.
+  - **`else`** : exécute du code si toutes les conditions précédentes sont fausses.
+
+- **Conditions inline et imbriquées** :  
+  - **Inline** : une condition peut être écrite sur une seule ligne pour des expressions simples.
+  - **Imbriquées** : il est possible d'imbriquer plusieurs conditions pour gérer des cas complexes.
+
+Ces concepts permettent de contrôler le flux d'exécution en fonction de différentes conditions.
+
+:::
+
+
+## Opérateurs de comparaison
+
+
+::: {.columns}
+::: {.column .small-10 width="55%"}
+ 
+
+|  | Signification |
+|-----------|---------------|
+| `==`      | égal à        |
+| `!=`      | différent de  |
+| `>`       | plus grand que|
+| `<`       | plus petit que|
+| `>=`      | plus grand ou égal à |
+| `<=`      | plus petit ou égal à |
+
+:::
+::: {.column width="45%"}
+
+Exemple d'utilisation :
+
+<p>
+```{python}
+a = 5
+b = 3
+```
+</p>
+<br>
+<p>
+```{python}
+#| output-location: column 
+print(a == b)
+print(a != b)
+print(a < b)
+print(a <= b)
+print(a > b)
+print(a >= b)
+```
+</p>
+
+:::
+:::
+
+::: notes
+
+**Opérateurs de comparaison**
+
+Les opérateurs de comparaison sont utilisés pour comparer deux valeurs et renvoient des résultats booléens (`True` ou `False`).
+
+- **`==`** : Vérifie si deux valeurs sont égales.
+- **`!=`** : Vérifie si deux valeurs sont différentes.
+- **`>`** : Vérifie si la première valeur est supérieure à la seconde.
+- **`<`** : Vérifie si la première valeur est inférieure à la seconde.
+- **`>=`** : Vérifie si la première valeur est supérieure ou égale à la seconde.
+- **`<=`** : Vérifie si la première valeur est inférieure ou égale à la seconde.
+
+Ces opérateurs sont essentiels pour écrire des conditions et des comparaisons dans vos programmes.
+
+:::
+
+
+
+## `if` (si)
+
+Le **mot-clé** `if` permet d'exécuter un bloc de code si une condition est vraie : 
+
+
+* Ce code affiche un message, car la conditon est vraie (`True`)
+
+```{python}
+a = 5
+b = 3
+if a > b:
+  print("a est plus grand que b")
+```
+
+
+* Alors que ce code n'affiche rien, car la conditon est fausse (`False`)
+
+```{python}
+a = 5
+b = 3
+if b > a:
+  print("b est plus grand que a")
+```
+
+
+::: notes
+
+**`if`**
+
+- La structure **`if`** permet d'exécuter un bloc de code uniquement si une condition est vraie.
+
+  Exemple : Si `a > b`, alors le bloc de code à l'intérieur de l'instruction `if` s'exécute.
+
+:::
+
+## L'indentation
+
+* ⚠️ **Attention à l'indentation :**
+  * Python utilise l'indentation pour définir les blocs de code.
+  * Une mauvaise indentation peut provoquer des erreurs de syntaxe: `IndentationError`.
+
+```{python}
+#| output-location: column 
+#| error: True
+
+if a > b:
+print("a est plus grand que b")
+```
+
+* Remarque: d'autres langages de programmaiton, comme Java, utilisent des accolades `{}` à la place de l'indentation.
+
+::: notes
+
+**Indentation**
+
+- **Attention à l'indentation** :  
+  Python utilise l'indentation (espace ou tabulation) pour définir les blocs de code, contrairement à d'autres langages qui utilisent des accolades `{}`. Si l'indentation est incorrecte, Python génère une erreur.
+
+Dans l'exemple erroné, l'absence d'indentation correcte provoque une erreur, car Python ne peut pas identifier le bloc de code lié à la condition `if`.
+
+:::
+
+
+## Condition sur une ligne
+
+* Il est possible d'écrire une condition sur une seule ligne :
+
+```{python}
+a = 5
+if a > 0: print("a est positif")
+```
+
+* C'est utile pour des conditions simples et des instructions courtes qui ne nécessitent pas de bloc de code complet.
+* Remarque : il existe aussi un opérateur ternaire.
+
+
+::: notes
+
+- **Condition sur une ligne (inline)** :  
+  En Python, il est également possible d'écrire une condition sur une seule ligne sans utiliser l'opérateur ternaire complet. Cela s'applique uniquement aux cas où une action doit être effectuée si une condition est vraie, et aucune action n'est nécessaire si la condition est fausse. Ce type de condition est couramment utilisé pour des actions simples et directes.
+
+  - **Exemple** :  
+    Vous pouvez écrire une condition simple de la manière suivante :
+    ```python
+    if a > 0: print("a est positif")
+    ```
+    Ici, la fonction `print()` ne s'exécute que si `a` est supérieur à 0. Si la condition est fausse, aucune action n'est effectuée et le programme continue.
+
+  - **Avantages** :  
+    Cette approche permet de simplifier le code et d'éviter des blocs conditionnels plus longs lorsqu'une seule action est nécessaire en cas de condition vraie. Il est particulièrement utile lorsque le traitement à réaliser est court et n'exige pas de structure `else`.
+
+:::
+
+
+
+
+## `elif` (sinon si)
+
+* Le mot-clé `elif` permet de tester plusieurs conditions.
+* Si la 1^ère^ condition est vraie, les suivantes ne sont pas testées. Autrement, la condition suivante est testée.
+* `elif` est une contraction qui signifie **"else if"**.
+* `elif` est optionnel et peut être répété plusieurs fois.
+
+::: {.columns}
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 3
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+```
+
+:::
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 5
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+```
+:::
+
+:::
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 7
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+```
+:::
+
+
+::: notes
+
+**`elif`**
+
+- L'instruction **`elif`** (contraction de `else if`) permet de tester plusieurs conditions séquentielles. Si la première condition `if` est fausse, Python vérifie les conditions suivantes grâce à `elif`.
+
+- **Fonctionnement** :
+  - Si la première condition `if` est vraie, les blocs `elif` ne sont pas évalués.
+  - Si la condition `if` est fausse, Python évalue chaque `elif` dans l'ordre jusqu'à trouver une condition vraie. Si aucune n'est vraie, aucune action n'est effectuée à moins d'avoir un bloc `else`.
+
+- **`elif` est optionnel** et peut être utilisé plusieurs fois dans la même structure pour vérifier plusieurs cas possibles.
+
+Dans les exemples, les différentes conditions sont testées selon la valeur de `a` et `b`, et le premier bloc `if` ou `elif` dont la condition est vraie est exécuté.
+
+:::
+
+
+
+## `else` (sinon)
+
+* Le mot-clé `else` permets de définir un bloc de code à exécuter si aucune des conditions précédentes n'est vraie.
+* `else` est optionnel et peut être utilisé sans `elif`
+* `else` est placé à la fin de la structure `if` ... `elif` ... `else`.
+* Utile pour gérer les cas par défaut ou les erreurs.
+
+
+::: {.columns}
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 3
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+else:
+  print("b > a")
+```
+
+:::
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 5
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+else:
+  print("b > a")
+```
+:::
+
+:::
+::: {.column width="32%"}
+
+```{python}
+a = 5
+b = 7
+if a > b:
+  print("a > b")
+elif a == b:
+  print("a égal b")
+else:
+  print("b > a")
+```
+:::
+
+
+::: notes
+
+**`else`**
+
+- **`else`** permet de définir un bloc de code qui s'exécute uniquement si **aucune** des conditions précédentes (`if` ou `elif`) n'est vraie.
+
+- **Fonctionnement** :
+  - Si toutes les conditions dans les blocs `if` et `elif` sont fausses, le bloc `else` s'exécute.
+  - **`else` est optionnel**, mais il est utile pour gérer les cas où aucune des conditions n'est satisfaite.
+
+- **Placement** :  
+  Le bloc `else` doit toujours être placé à la fin de la structure conditionnelle `if ... elif ... else`.
+
+Dans les exemples, si ni `if` ni `elif` ne sont vrais, le bloc `else` s'exécute, indiquant que `b > a`.
+
+:::
+
+## `else` sans `elif`
+
+* Le bloc `else` peut être utilisé directement après un `if`. 
+- Sans `elif`, `else` s'exécute si la condition du `if` est fausse.
+* Cela permet de gérer le comportement :
+  * Lorsqu'une condition est vraie (avec `if`),
+  * Lorsqu'elle est fausse (avec `else`).
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+a = 5
+b = 3
+if a > b:
+  print("a > b")
+else:
+  print("a <= b")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+a = 5
+b = 7
+if a > b:
+  print("a > b")
+else:
+  print("a <= b")
+```
+:::
+:::
+
+
+::: notes
+
+**`else` **: 
+- Le bloc `else` peut être utilisé directement après un `if` sans qu'un `elif` soit nécessaire. Cela permet de gérer les cas où seulement deux conditions sont à vérifier : une première avec `if` et une alternative avec `else`.
+- Sans `elif`,  le `else` s'exécute si la condition du `if` est fausse.
+
+:::
+
+
+
+
+<!-- 
+
+## Opérateur ternaire 
+
+* Permet d'écrire des conditions simples en une seule ligne.
+
+* Syntaxe :
+
+```python
+valeur_si_vrai if condition else valeur_si_faux
+```
+
+* Exemple :
+
+```{python}
+a = 5
+resultat = "positif" if a > 0 else "négatif"
+print(resultat)
+```
+
+* Pour décider rapidement entre deux valeurs en fonction d'une condition.
+
+::: notes
+
+- **Opérateur ternaire (expression conditionnelle inline étendue)** :  
+  L'opérateur ternaire permet d'écrire une condition en une seule ligne tout en évaluant deux résultats possibles. Il est particulièrement utile pour rendre le code plus lisible lorsqu'une décision simple est nécessaire. 
+  - **Fonctionnement** : La syntaxe de l'opérateur ternaire consiste à vérifier une condition et à renvoyer une valeur différente selon que cette condition est vraie ou fausse. Le premier résultat (après `valeur_si_vrai`) est celui qui sera renvoyé si la condition est vraie, tandis que le second résultat (après `else`) sera renvoyé si la condition est fausse.
+  
+  - **Exemple** :  
+    Si vous avez besoin d'affecter à une variable la chaîne `"positif"` ou `"négatif"` en fonction de la valeur de `a`, vous pouvez utiliser la condition inline :
+    ```python
+    resultat = "positif" if a > 0 else "négatif"
+    ```
+    Ici, `resultat` sera `"positif"` si la valeur de `a` est supérieure à 0, sinon il sera `"négatif"`. Cela simplifie l'écriture d'un bloc conditionnel plus long et le rend plus concis.
+
+  - **Avantages** :  
+    L'opérateur ternaire est idéal pour les conditions simples qui nécessitent une affectation ou une évaluation rapide. Il rend le code plus compact, surtout lorsqu'il s'agit de conditions triviales qui ne nécessitent pas un bloc conditionnel complet avec `if` et `else`.
+
+:::
+-->
+
+
+
+
+## Opérateurs logiques
+
+* Permettent de combiner ou modifier plusieurs conditions
+
+| Opérateur | Signification |
+|-----------|---------------|
+| `and`     | vrai si les deux conditions sont vraies            |
+| `or`      | vrai si au moins une des conditions est vraie            |
+| `not`     | inverse la condition           |
+
+* Attention à l'ordre des opérateurs !
+
+<p>
+
+```{python}
+#| output-location: column
+a = 5
+b = 3
+print(a > 0 and b < 0)
+print(a > 0 or b < 0)
+print(not a > 0)
+```
+
+</p>
+
+::: notes
+
+**Opérateurs logiques**
+
+Les opérateurs logiques permettent de combiner ou de modifier plusieurs conditions.
+
+- **`and`** : Renvoie `True` si **les deux** conditions sont vraies.
+- **`or`** : Renvoie `True` si **au moins une** des conditions est vraie.
+- **`not`** : Inverse le résultat de la condition (renvoie `True` si la condition est fausse, et vice versa).
+
+Ces opérateurs sont utilisés pour créer des conditions plus complexes dans les expressions conditionnelles.
+
+---
+
+**Attention à l'ordre des opérateurs** :  
+Lorsque vous combinez plusieurs opérateurs, l'ordre d'évaluation des expressions peut changer le résultat. Utilisez des parenthèses pour clarifier ou forcer l'ordre d'exécution.
+
+
+```{python}
+print(not a > 0 and b < 0)
+print(not (a > 0 and b < 0))
+```
+
+:::
+
+
+## Combinaisons de conditions 
+
+* Les opérateurs logiques permettent de combiner plusieurs conditions.
+* Par défaut l'opérateur `and` prime sur `or`.
+* Les parenthèses permettent de préciser l'ordre d'évaluation de plusieurs conditions.
+* Utiliser des parenthèse pour forcer l'évalution du `or` avant celui du `and`. 
+
+```{python}
+a = 5; b = 3; c = 4
+```
+
+<p>
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+if a > b or a > c and b > c : 
+  print("Conditions vérifiées")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+if (a > b or a > c) and b > c :
+  print("Conditions vérifiées")
+```
+
+:::
+:::
+
+</p>
+
+::: notes
+
+- **Combinaison avec parenthèses** :  
+  Les parenthèses permettent de clarifier et de forcer l'ordre dans lequel les conditions sont évaluées. Elles sont utiles pour écrire des conditions complexes tout en maintenant la lisibilité du code.
+
+- **Fonctionnement** :  
+  Sans parenthèses, Python suit l'ordre de priorité des opérateurs logiques (`not` avant `and`, et `and` avant `or`). En ajoutant des parenthèses, vous pouvez modifier cet ordre pour vous assurer que certaines conditions sont évaluées avant d'autres.
+
+- **Avantages** :  
+  L'utilisation de parenthèses permet de mieux structurer des conditions complexes et d'éviter des erreurs d'interprétation par Python.
+
+:::
+
+<!--
+## Court-circuit avec `and` et `or`
+
+* **Short-circuiting** (court-circuit) signifie que Python n'évalue pas la seconde partie d'une condition si le résultat est déjà connu après la première.
+
+```{python}
+#| error: True
+a = -5
+if a > 0 and z > 0:
+  print("Les deux nombres sont positifs")
+b = 5
+if b > 0 or z > 0:
+  print("Au moins un nombre est positif")
+print(z)
+```
+
+::: notes
+
+- **Short-circuiting** :  
+  Le **short-circuiting** optimise l'évaluation des conditions logiques. Avec **`and`**, si la première condition est fausse, la deuxième n'est pas évaluée. Avec **`or`**, si la première condition est vraie, la deuxième est ignorée.
+
+- **Avantages** :  
+  Cela permet d'améliorer l'efficacité du code et d'éviter des erreurs, par exemple, en évitant l'évaluation d'une condition qui pourrait générer une exception si la première condition suffit à donner le résultat final.
+
+:::
+-->
+
+
+
+## Comparaison multiple sur une ligne
+
+* En Python, il est possible de faire des comparaisons multiples sur une seule ligne.
+* Permet de vérifier si une valeur se trouve dans un intervalle.
+* Permet de rendre le code plus lisible et concis.
+
+```{python}
+a = 5
+if 0 < a < 10:
+    print("a est compris entre 0 et 10")
+```
+
+* Cela équivaut à :
+```{python}
+if 0 < a and a < 10:
+    print("a est compris entre 0 et 10")
+```
+
+
+::: notes
+
+- **Comparaison multiple** :  
+  En Python, il est possible de faire des comparaisons multiples sur une seule ligne, ce qui permet de vérifier si une valeur se trouve dans un intervalle ou si elle satisfait plusieurs conditions sans avoir à répéter la variable plusieurs fois.
+
+- **Fonctionnement** :  
+  Dans une comparaison multiple, Python vérifie chaque condition séquentiellement. L'exemple `0 < a < 10` est équivalent à dire que `a` est supérieur à 0 **et** inférieur à 10.
+
+- **Avantages** :  
+  Cette méthode rend le code plus lisible et concis, en évitant de répéter les conditions avec des opérateurs logiques comme `and`.
+
+:::
+
+
+
+## Conditions imbriquées
+
+::: {.columns}
+::: {.column width="50%"}
+
+* Il est possible d'imbriquer des conditions.
+
+```{python}
+a = 5
+if a > 0:
+  if a < 10:
+    print("a est entre 0 et 10")
+  else:
+    print("a est plus grand que 10")
+else:
+  print("a est plus petit que 0")
+```
+
+:::
+::: {.column width="50%"}
+
+* Souvent  `elif`  permet d'éviter l'imbriquation.
+
+```{python}
+a = 5
+if a > 0 and a < 10:
+  print("a est entre 0 et 10")
+elif a > 10:
+  print("a est plus grand que 10")
+else:
+  print("a est plus petit que 0")
+```
+
+:::
+:::
+
+::: notes
+
+**Conditions imbriquées**
+
+- **Imbrication des conditions** :  
+  Il est possible d'imbriquer des conditions, c'est-à-dire de placer une instruction `if` à l'intérieur d'une autre. Cela permet de gérer des scénarios plus complexes, mais peut parfois rendre le code moins lisible.
+
+---
+
+- **Utilisation de `elif` pour éviter l'imbrication** :  
+  L'utilisation de **`elif`** permet souvent d'éviter une imbrication excessive, en gardant le code plus simple et plus lisible. Plutôt que d'utiliser plusieurs `if` imbriqués, vous pouvez combiner des conditions avec des opérateurs logiques et utiliser `elif` pour des alternatives.
+
+Les exemples montrent comment imbriquer des conditions et comment utiliser `elif` pour simplifier le code.
+
+:::
+
+
+## Cas spéciaux : valeurs nulles ou vides
+
+* Python considère certains objets comme **faux**, même s'ils ne sont pas strictement égaux à `False` : 
+
+    - La chaîne de caractères vide `""`
+    - La liste vide `[]`
+    - Le nombre `0`
+    - La valeur `None`
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+texte = ""
+if texte:
+    print("texte a des caractères")
+else:
+    print("texte est vide")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+nombre = 0
+if nombre:
+    print("nombre n'est pas nul")
+else:
+    print("nombre est nul")
+```
+
+:::
+:::
+
+::: notes
+
+- **Conditions booléennes spéciales** :  
+  En Python, certains objets sont automatiquement évalués à `False` dans les conditions, comme les listes vides, les chaînes vides, ou le nombre zéro. Cela permet d'écrire des conditions plus concises et d'éviter des comparaisons explicites.
+
+- **Exemple avec une chaîne** :  
+  Dans l'exemple avec `my_string`, une chaîne vide est également évaluée comme `False`. Si la chaîne contenait des caractères, le bloc `if` s'exécuterait, mais dans ce cas, c'est le bloc `else` qui est exécuté, indiquant que la chaîne est vide.
+
+- **Utilité** :  
+  Ces cas spéciaux permettent de rendre les conditions plus lisibles et concises, en évitant des comparaisons explicites comme `if len(my_list) == 0` pour vérifier si une collection est vide.
+
+:::
+
+## Cas spéciaux : valeurs nulles ou vides
+
+* Les collections sont évaluées comme `False` lorsqu'elles sont vides et `True` lorsqu'elles contiennent des éléments : 
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+ma_liste = []
+if ma_liste:
+    print("liste a des éléments")
+else:
+    print("liste est vide")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+ma_liste = ["a", "b", "c"]
+if ma_liste:
+    print("liste a des éléments")
+else:
+    print("liste est vide")
+```
+
+:::
+:::
+
+* Utiliser `len()` pour tester la longueur d'une liste :
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+ma_liste = []
+if len(ma_liste) > 0:
+    print("liste a des éléments")
+else:
+    print("liste est vide")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+ma_liste = ["a", "b", "c"]
+if len(ma_liste) > 0:
+    print("liste a des éléments")
+else:
+    print("liste est vide")
+```
+
+:::
+:::
+
+
+::: notes
+
+- **Collections dans les conditions** :  
+  En Python, vous pouvez tester si une collection (comme une liste ou un dictionnaire) est vide ou non sans utiliser **`len()`**. Une liste vide est automatiquement évaluée à `False`, tandis qu'une liste avec des éléments est évaluée à `True`.
+
+- **Comparaison avec `len()`** :  
+  Utiliser **`len()`** pour vérifier si une collection est vide est une autre approche, mais elle est moins concise. **`if not my_list`** est plus idiom
+:::
+
+<!--
+
+## Comparaisons avec l'opérateur `is`
+
+* Pour vérifier si une variable est **`None`** :
+
+```{python}
+a = None
+if a is None:
+  print("a ne contient aucune valeur")
+```
+
+* Pour vérifier si deux variables font référence au même objet :
+
+```{python}
+list1 = [1, 2, 3]
+list2 = [1, 2, 3]
+list3 = list1
+
+if list1 is not list2:
+  print("list1 et list2 sont des objets différents")
+
+if list1 is list3:
+  print("list1 et list3 sont le même objet")
+```
+
+
+::: notes
+
+- **Opérateurs `is` et `is not`** :  
+  L'opérateur **`is`** vérifie si deux variables partagent le même espace en mémoire, tandis que **`is not`** vérifie si elles sont différentes. Cela est utile pour comparer des objets comme des listes ou vérifier si une variable est vide avec `None`.
+
+- **Exemple 1 - `None`** :  
+  Lorsqu'on utilise **`is`** avec **`None`**, on vérifie si une variable est vide. Cela est une manière courante de tester si une variable a été initialisée ou non.
+
+- **Exemple 2 - Listes avec `is not`** :  
+  Dans cet exemple, bien que `list1` et `list2` contiennent les mêmes valeurs, elles sont des objets différents en mémoire. **`is not`** renvoie `True` car elles ne pointent pas vers le même emplacement. En revanche, **`is`** renvoie `True` pour `list1` et `list3`, car `list3` est une référence directe à `list1`.
+
+- **Utilité** :  
+  Ces opérateurs sont utiles pour vérifier si deux variables pointent vers le même objet ou non, notamment dans les comparaisons d'objets complexes comme des listes ou pour tester si une variable est initialisée.
+
+  - **Comparaison avec `==`**
+  Même si les listes `list1` et `list2` contiennent les mêmes valeurs, **`is not`** renvoie `True` car elles ne sont pas le même objet en mémoire. Par contre, **`is`** renvoie `True` pour `list1` et `list3` car elles pointent vers le même objet.
+
+:::
+-->
+
+<!-- ## Utilisation de `pass`
+
+Le mot-clé **`pass`** est utilisé pour définir un bloc de code vide, permettant d'écrire une condition sans action immédiate.
+
+**Exemple :**
+```python
+if a > 0:
+    pass  # Placeholder pour du code futur
+```
+
+Cela n'a aucun effet, mais peut être utile lors du développement.
+
+::: notes
+
+- **`pass`** :  
+  Le mot-clé **`pass`** est utilisé pour définir un bloc de code vide. Il est souvent utilisé comme placeholder pour des conditions ou des boucles que vous prévoyez de compléter plus tard.
+
+- **Utilité** :  
+  Cela permet de maintenir la structure du code et d'éviter des erreurs de syntaxe lorsque vous souhaitez reporter l'implémentation d'une partie du programme.
+
+::: 
+
+## Comparaison avec des collections
+
+* **`all()`** permet de vérifier si **tous** les éléments sont vrais:
+
+```{python}
+a = b = c = 1
+conditions = [a > 0, b > 0, c > 0]
+if all(conditions):
+  print("Tous les nombres sont positifs")
+```
+
+* Similaire à l'opérateur **`and`**, où toutes les conditions doivent être vraies pour que l'expression renvoie `True`.
+
+```{python}
+if a > 0 and b > 0 and c > 0:
+  print("Tous les nombres sont positifs")
+```
+
+* Dans les deux cas, la condition est vraie uniquement si toutes les expressions sont vraies.
+
+::: notes
+
+- **Fonction `all()`** :  
+  **`all()`** renvoie `True` si **tous** les éléments dans une collection sont vrais, comme un ensemble de conditions connectées par l'opérateur **`and`**. Si une condition est fausse, **`all()`** renverra `False`.
+
+- **Comparaison avec `and`** :  
+  L'opérateur **`and`** relie les conditions de manière séquentielle, et toutes doivent être vraies pour que l'expression entière soit vraie. **`all()`** permet de simplifier cette écriture en une seule fonction, ce qui rend le code plus concis.
+
+- **Avantages** :  
+  **`all()`** rend le code plus compact et permet de gérer plus facilement des listes de conditions sans avoir à répéter l'opérateur **`and`** entre chaque condition.
+
+:::
+
+
+## Comparaison avec des collections
+
+* **`any()`** permet de vérifier si **au moins un** des éléments est vrai :
+
+```{python}
+a = b = -1; c = -1
+conditions = [a > 0, b > 0, c < 0]
+if any(conditions):
+    print("Au moins un nombre satisfait la condition")
+```
+
+* Similaire à l'opérateur **`or`**, où une seule condition vraie :
+
+```{python}
+if a > 0 or b > 0 or c < 0:
+    print("Au moins un nombre satisfait la condition")
+```
+
+* Dans les deux cas: `True` dès qu'une des conditions est vraie.
+
+::: notes
+
+- **Fonction `any()`** :  
+  **`any()`** renvoie `True` si **au moins un** élément dans une collection est vrai, comme un ensemble de conditions connectées par l'opérateur **`or`**. Si toutes les conditions sont fausses, **`any()`** renverra `False`.
+
+- **Comparaison avec `or`** :  
+  L'opérateur **`or`** relie les conditions, et il suffit qu'une seule soit vraie pour que l'expression entière soit vraie. **`any()`** simplifie cette écriture en une seule fonction, facilitant ainsi le traitement de plusieurs conditions.
+
+- **Avantages** :  
+  **`any()`** permet de simplifier les conditions multiples sans répéter l'opérateur **`or`** entre chaque condition, rendant le code plus lisible et plus facile à maintenir.
+
+:::
+
+
+## Gestion d'erreurs avec les exceptions
+
+Pour gérer les erreurs dans un programme :
+
+- **`try`** : Contient le code à "risque".
+- **`except`** : Gère l'erreur si elle survient dans le bloc `try`.
+- **`finally`** : Contient du code qui sera toujours exécuté.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| error: True
+a = 1
+try:
+    print(10 / a)
+except ZeroDivisionError:
+    print("Erreur : Division par zéro")
+finally:
+    print("Fin de l'opération")
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| error: True
+a = 0
+try:
+    print(10 / a)
+except ZeroDivisionError:
+    print("Erreur : Division par zéro")
+finally:
+    print("Fin de l'opération")
+```
+
+:::
+:::
+
+::: notes
+
+- **Bloc `try`** :  
+  Le bloc **`try`** contient le code "à risque", c'est-à-dire des opérations susceptibles de générer une erreur (comme une division par zéro). Il est utilisé pour surveiller les erreurs potentielles sans arrêter le programme.
+
+- **Bloc `except`** :  
+  Si une erreur survient dans le bloc **`try`**, Python passe immédiatement au bloc **`except`**. Ce bloc contient le code qui gère l'erreur. Par exemple, dans ce cas, si une **`ZeroDivisionError`** (division par zéro) est levée, un message d'erreur est affiché.
+
+- **Bloc `finally`** :  
+  Le bloc **`finally`** est exécuté quoi qu'il arrive, qu'une erreur ait été levée ou non. C'est ici que l'on peut exécuter des actions importantes qui doivent toujours être réalisées, comme fermer un fichier ou afficher un message final.
+
+- **Utilité générale** :  
+  Les blocs **`try`**, **`except`**, et **`finally`** permettent de gérer les erreurs de manière propre et structurée dans un programme Python. Ils garantissent que même en cas d'erreur, certaines opérations cruciales sont toujours exécutées, rendant ainsi le programme plus robuste et fiable.
+
+:::
+-->
+
+## Tables de vérité
+
+* Les tables de vérité montrent le résultat des opérations logiques pour toutes les combinaisons possibles.
+* Tables pour `and` et `or`, où `A` et `B` sont deux conditions :
+
+::: {.columns}
+::: {.column width="50%"}
+
+| A     | B     | A and B |
+|-------|-------|---------|
+| **True**  | **True**  | **True**    |
+| True  | False | False   |
+| False | True  | False   |
+| False | False | False   |
+
+:::
+::: {.column width="50%"}
+
+| A     | B     | A or B  |
+|-------|-------|---------|
+| True  | True  | True    |
+| True  | False | True    |
+| False | True  | True    |
+| **False** | **False** | **False**   |
+
+:::
+:::
+
+::: notes
+
+**Tables de vérité**
+
+- Les tables de vérité montrent le résultat des opérations logiques `and` et `or` pour toutes les combinaisons possibles de deux conditions.
+- Elles aident à comprendre le comportement des opérateurs logiques.
+- La table de vérité pour **`and`** montre que le résultat est `True` uniquement si **les deux** conditions sont vraies.
+- La table de vérité pour **`or`** montre que le résultat est `True` si **au moins une** des conditions est vraie.
+
+Ces tables sont essentielles pour comprendre le fonctionnement des opérateurs logiques.
+
+:::
+
+
+## Exemple: Tables de vérité
+
+* Exemple de table de verité avec `and` :
+
+```python
+age = 18
+citoyen = True
+
+if age >= 18 and citoyen == True:
+    print("Vous pouvez voter.")
+else:
+    print("Vous ne pouvez pas voter.")
+```
+
+<p>
+
+| age >= 18     | citoyen | age >= 18 and citoyen |
+|-------|-------|---------|
+| True  | True  | True    |
+| True  | False | False   |
+| False | True  | False   |
+| False | False | False   |
+</p>
+
+::: notes
+
+**Exemple : Tables de vérité avec `and`**
+
+- Cet exemple illustre une condition combinée à l'aide de l'opérateur logique **`and`**.
+  - `and` signifie **ET** logique : l'expression complète est vraie **seulement si toutes les conditions sont vraies**.
+
+- **Contexte du code** :
+  - La condition `if age >= 18 and citoyen == True` vérifie deux choses :
+    - que la personne a **au moins 18 ans**,
+    - et qu’elle est **citoyenne**.
+  - Si ces deux conditions sont vraies, la personne peut voter.
+
+- **Table de vérité** :
+  - Permet de visualiser les résultats possibles de l'expression en fonction des deux conditions.
+  - Elle montre que l'expression globale est `True` **uniquement si les deux conditions sont vraies**.
+
+- **Utilité pédagogique** :
+  - Une table de vérité est un excellent moyen de comprendre le fonctionnement des opérateurs logiques (`and`, `or`, `not`), en testant toutes les combinaisons possibles.
+
+Ce type d’exemple est fondamental pour introduire les bases de la logique booléenne en programmation.
+
+:::
+
+
+## Table de vérité pour `not`
+
+* La table de vérité pour l'opérateur `not` montre l'inversion de la valeur logique d'une condition :
+
+
+::: {.columns}
+::: {.column width="40%"}
+
+| A     | not A |
+|-------|-------|
+| True  | False |
+| False | True  |
+
+:::
+::: {.column width="60%"}
+
+
+| age < 18  | not (age < 18) |
+|-------|-------|
+| True  | False |
+| False | True  |
+
+:::
+:::
+
+
+* Exemple si une personne est majeure ou mineure :
+
+```{python}
+age = 18
+if not age < 18:
+    print("Vous êtes majeur.")
+else:
+    print("Vous êtes mineur.")
+```
+
+
+::: notes
+
+**Table de vérité pour `not`**
+
+- L'opérateur **`not`** inverse la valeur logique d'une condition.
+- Si la condition est `True`, **`not`** la rend `False`.
+- Si la condition est `False`, **`not`** la rend `True`.
+
+Cette table est utile pour comprendre comment l'opérateur **`not`** modifie les conditions dans les expressions logiques.
+
+:::

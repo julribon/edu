@@ -1,0 +1,432 @@
+---
+title: "Nettoyage de Données avec Pandas"
+subtitle: Introduction à la Science des Données avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    # toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    #show-notes: separate-page
+---
+
+```{python}
+#| echo: False
+import os
+import sys
+sys.path.append(os.path.abspath('modules'))
+```
+
+
+## Aujourd'hui
+
+- Nettoyage de données avec Pandas.
+  - Doublons.
+  - Données manquantes.
+  - Mauvais formats.
+  - Données incorrectes.
+
+## Un set de données
+
+- Le fichier CSV contient 32 lignes et 5 colonnes :
+	-	Duration : la durée de l’activité en minutes.
+	-	Date : la date de l’activité (en format texte).
+	-	Pulse : le pouls enregistré pendant l’activité.
+	-	Maxpulse : le pouls maximal atteint.
+	-	Calories : les calories brûlées durant l’activité.
+
+
+```{python}
+import pandas as pd
+df = pd.read_csv('data/dirtydata.csv')
+print(df.head(3))
+```
+
+::: notes
+
+**Un set de données d'activités physiques**
+
+- **Description générale** :
+  - Le fichier `dirtydata.csv` contient des informations sur 32 sessions d'activité physique. Chaque ligne correspond à une session, et chaque colonne représente une caractéristique de cette session.
+
+- **Colonnes du DataFrame** :
+  - **Duration** : La durée de chaque activité en minutes.
+  - **Date** : La date de l’activité, avec des formats parfois incohérents (par exemple, `'2020/12/01'` et `20201226`).
+  - **Pulse** : Le pouls moyen enregistré pendant l’activité.
+  - **Maxpulse** : Le pouls maximal atteint au cours de l’activité.
+  - **Calories** : Le nombre de calories brûlées, avec certaines valeurs manquantes.
+
+- **Aperçu des données** :
+  - Ce fichier contient des valeurs aberrantes et des incohérences, notamment :
+    - Des valeurs de `Duration` anormalement élevées (par exemple, `450`).
+    - Des formats de date variés.
+    - Des valeurs manquantes dans les colonnes `Date` et `Calories`.
+    - Des valeurs en double (par exemple, deux lignes identiques le `2020/12/12`).
+
+Avant l'analyse, il sera nécessaire de nettoyer les données pour traiter ces anomalies et garantir la qualité des informations.
+
+:::
+
+
+## Nettoyage des données
+
+- **Objectif** : corriger les erreurs dans un ensemble de données.  
+- **Types de problèmes** (non exhaustif, du plus simple au plus complexe) :
+  - **Doublons** : enregistrements identiques/répétés.
+  - **Données manquantes** : absence de données.
+  - **Mauvais format** : ne respectent pas le format attendu (p.ex. texte au lieu de nombres, dates mal formatées).
+  - **Données incorrectes** : valeurs incohérentes ou erronées (p.ex. une date impossible ou un âge négatif).
+
+::: notes
+
+**Nettoyage des données**
+
+- **Objectif** :  
+  Le nettoyage des données vise à corriger les erreurs et incohérences dans un ensemble de données pour garantir leur qualité, leur cohérence, et leur fiabilité avant l’analyse.
+
+- **Types de problèmes courants** (classés du plus simple au plus complexe) :
+  - **Doublons** :  
+    - Les doublons sont des enregistrements identiques ou répétés qui peuvent fausser les analyses et doivent être supprimés.
+  - **Données manquantes** :  
+    - Certaines valeurs sont absentes. Les données manquantes peuvent être comblées par des méthodes de remplacement (valeurs moyennes, médianes) ou ignorées selon le contexte.
+  - **Mauvais format** :  
+    - Les données ne respectent pas le format attendu, comme des textes dans une colonne de nombres ou des dates mal formatées. Ces incohérences peuvent nécessiter des conversions ou des reformattages.
+  - **Données incorrectes** :  
+    - Certaines valeurs sont incohérentes ou erronées, telles que des âges négatifs ou des dates impossibles. Les données incorrectes doivent être identifiées et corrigées ou supprimées si nécessaire.
+
+Ces étapes de nettoyage permettent d’obtenir des données plus précises et fiables, prêtes pour des analyses plus approfondies.
+
+:::
+
+
+## Doublons
+
+- Détection :
+
+```{python}
+print(df.duplicated().tail(3))
+print(df[df.duplicated()])
+print(f"Taille : {df.shape}, Doublons : {df.duplicated().sum()}")
+```
+
+- Suppression :
+
+```{python}
+df_clean = df.drop_duplicates()
+print(f"Taille : {df_clean.shape}, Doublons : {df_clean.duplicated().sum()}")
+```
+
+::: notes
+
+**Doublons**
+
+- **Détection** :
+  - Les doublons dans un DataFrame peuvent être identifiés avec la méthode `duplicated()`, qui renvoie une Series booléenne indiquant si chaque ligne est un doublon (True) ou non (False).
+  - Exemple :
+    - `df.duplicated().tail(3)` affiche les trois dernières lignes, en précisant si elles sont doublées.
+    - `df[df.duplicated()]` affiche uniquement les lignes dupliquées dans le DataFrame.
+    - `df.duplicated().sum()` renvoie le nombre total de doublons, permettant une vue d’ensemble sur la proportion de doublons par rapport à la taille du DataFrame.
+
+- **Suppression** :
+  - La méthode `drop_duplicates()` permet de supprimer les doublons, créant un nouveau DataFrame sans enregistrements répétés.
+  - Exemple :
+    - `df_clean = df.drop_duplicates()` crée une version du DataFrame sans doublons.
+    - `df_clean.duplicated().sum()` permet de vérifier qu’il n’y a plus de doublons dans le DataFrame nettoyé.
+
+Le traitement des doublons est une étape essentielle pour éviter la répétition des données et garantir l’intégrité de l’analyse.
+
+:::
+
+## Données manquantes (détection)
+
+::: {.columns}
+::: {.column width="50%"}
+
+- Pour le DataFrame entier :
+
+```{python}
+print(df.info())
+```
+
+:::
+::: {.column width="50%"}
+
+- Par cellule :
+
+```{python}
+print(df.isnull().tail())
+```
+
+:::
+:::
+
+::: notes
+
+**Données manquantes (détection)**
+
+- **Pour le DataFrame entier** :
+  - La méthode `info()` affiche un résumé du DataFrame, incluant le nombre de valeurs non nulles par colonne. Cela permet de détecter rapidement les colonnes avec des valeurs manquantes.
+  - Exemple : `df.info()` montre le nombre total d'entrées pour chaque colonne et signale toute colonne ayant des valeurs manquantes.
+
+- **Par cellule** :
+  - La méthode `isnull()` renvoie un DataFrame booléen indiquant, pour chaque cellule, si une valeur est manquante (`True`) ou non (`False`).
+  - Par exemple, `df.isnull().tail()` affiche les dernières lignes du DataFrame, mettant en évidence les cellules avec des données manquantes.
+
+Ces techniques permettent une détection rapide et précise des valeurs manquantes, étape essentielle avant de décider d'un traitement pour ces données.
+
+:::
+
+
+
+## Données manquantes (suite)
+
+- Généralement, 2 types de traitements :
+  - **Suppression** : des lignes ou des colonnes.
+  - **Remplacement** : par une valeur arbitraire, par la moyenne, etc.
+
+- **Suppression** :
+
+```{python}
+print(df.dropna().tail())
+```
+
+::: notes
+
+**Données manquantes (suite)**
+
+- **Traitements courants** :
+  - **Suppression** : 
+    - On peut supprimer les lignes ou les colonnes contenant des valeurs manquantes, ce qui est souvent approprié lorsque la proportion de données manquantes est faible ou que les données ne sont pas essentielles à l’analyse.
+  - **Remplacement** :
+    - Les valeurs manquantes peuvent être remplacées par une valeur arbitraire, par la moyenne ou la médiane de la colonne, ou même par une valeur spécifique (comme 0 pour les valeurs numériques). Ce traitement est utile pour conserver la structure du DataFrame sans perdre d’informations.
+
+- **Suppression** :
+  - La méthode `dropna()` supprime toutes les lignes contenant au moins une valeur manquante, renvoyant un DataFrame nettoyé.
+  - Exemple : `df.dropna().tail()` affiche les dernières lignes du DataFrame sans valeurs manquantes, ce qui permet de vérifier que les lignes avec des données manquantes ont été supprimées.
+
+Ces méthodes permettent de gérer les données manquantes en fonction de l'importance des données et des besoins spécifiques de l’analyse.
+
+:::
+
+
+## Données manquantes (suite)
+
+- Les 2 types les plus courants de remplacement...
+
+::: {.columns}
+::: {.column width="50%"}
+
+- Par une valeur "arbitraire" :
+
+```{python}
+cal = df['Calories']
+print(cal.tail())
+print(cal.fillna(0).tail())
+```
+
+:::
+::: {.column width="50%"}
+
+- Par la moyenne :
+
+```{python}
+cal_mean = cal.mean()
+print(cal.fillna(cal_mean).tail())
+```
+
+:::
+:::
+
+
+::: notes
+
+**Données manquantes (suite)**
+
+- **Remplacement des valeurs manquantes** :
+  - Lorsqu'on choisit de ne pas supprimer les données manquantes, deux méthodes courantes de remplacement sont souvent utilisées pour remplir les cellules vides.
+
+- **Par une valeur "arbitraire"** :
+  - Vous pouvez remplacer les valeurs manquantes par une valeur fixe, comme `0`, en utilisant la méthode `fillna()`.
+  - Exemple : `df.fillna(0).tail()` remplace toutes les cellules vides par `0` et affiche les dernières lignes du DataFrame avec les valeurs manquantes remplacées.
+
+- **Par la moyenne** :
+  - Une approche courante pour les colonnes numériques est de remplacer les valeurs manquantes par la moyenne de la colonne. Cela conserve l’échelle de la donnée sans introduire de valeurs extrêmes.
+  - Exemple : 
+    ```python
+    cal_mean = df['Calories'].mean()
+    df['Calories'] = df['Calories'].fillna(cal_mean)
+    ```
+    Cette opération remplace les valeurs manquantes dans la colonne `Calories` par la moyenne calculée, fournissant ainsi une estimation raisonnable pour les données manquantes.
+
+Ces méthodes de remplacement permettent de traiter les valeurs manquantes en fonction du contexte et de la nature des données, contribuant à maintenir la cohérence des analyses.
+
+:::
+
+
+## Absences implicites vs explicites
+
+- **Absence explicite** :  valeur enregistrée, mais un code indique une absence (p.ex. `0`, `-1`, `9999`, `NaN`, `None`, etc.).
+- **Absence implicite** : valeur non enregistrée...
+
+```{python}
+stocks = pd.DataFrame({
+    'year': [2020, 2020, 2020, 2020, 2021, 2021, 2021],
+    'qtr': [1, 2, 3, 4, 2, 3, 4],
+    'price': [1.88, 0.59, 0.35, None, 0.92, 0.17, 2.66]
+})
+```
+
+> Une valeur manquante explicite est la présence d'une absence.
+> Une valeur manquante implicite est l'absence d'une présence.
+
+::: notes
+
+**Absences implicites vs explicites**
+
+- **Absence explicite** :
+  - Une absence explicite est enregistrée dans le jeu de données par une valeur spécifique ou un code indiquant qu'une donnée est manquante.
+  - Exemples courants : `NaN`, `None`, ou des valeurs particulières telles que `0`, `-1`, ou `9999` sont souvent utilisées pour signaler une absence de données.
+  - Dans l'exemple ci-dessus, la valeur `None` dans la colonne `price` indique explicitement l'absence de données pour le prix en fin d'année 2020.
+
+- **Absence implicite** :
+  - Une absence implicite correspond à des données non enregistrées du tout pour certains éléments attendus, indiquant une absence par omission.
+  - Par exemple, dans le DataFrame `stocks`, le premier trimestre de 2021 est totalement absent des enregistrements. Ce manque n'est pas marqué par une valeur spécifique, mais par l'absence complète de la ligne correspondante.
+
+- **Résumé** :
+  - Une **absence explicite** signifie que l'absence est délibérément marquée dans les données.
+  - Une **absence implicite** est simplement l'absence de données là où une présence était attendue.
+
+Ces distinctions sont importantes pour le nettoyage et le traitement des données, car elles affectent la manière dont on peut imputer ou interpréter les valeurs manquantes.
+
+:::
+
+## Absences implicites vs explicites (suite)
+
+```{python}
+def complete(df, cols):
+  return (
+        df.set_index(cols)          # Créer un index multi-niveaux
+          .unstack(fill_value=None) # Dépiler pour créer un DataFrame complet
+          .stack(dropna=False)      # Rempiler pour conserver les NaN
+          .reset_index()            # Réinitialiser l'index
+  )
+
+print(complete(stocks, ['year', 'qtr']))
+```
+
+::: notes
+
+**Absences implicites vs explicites (suite)**
+
+- **Compléter les absences implicites** :
+  - La fonction `complete(df, cols)` permet de compléter un DataFrame en ajoutant les combinaisons manquantes dans les colonnes spécifiées, transformant ainsi les absences implicites en absences explicites (NaN).
+  - Cette technique est particulièrement utile lorsque certaines combinaisons de valeurs sont attendues mais absentes, comme dans le cas de données manquantes pour certains trimestres d’une année.
+
+- **Fonctionnement de la fonction `complete()`** :
+  - **Étapes** :
+    - `set_index(cols)` : Crée un index multi-niveaux basé sur les colonnes spécifiées, ici `year` et `qtr`, pour préparer le DataFrame au remaniement.
+    - `unstack(fill_value=None)` : Transforme l'une des dimensions de l'index en colonnes, générant les combinaisons possibles. Les valeurs manquantes restent `None` ou `NaN`.
+    - `stack(dropna=False)` : Convertit à nouveau les colonnes en index tout en conservant les valeurs `NaN` pour les combinaisons manquantes.
+    - `reset_index()` : Réinitialise l'index pour revenir à un DataFrame classique avec les absences explicites.
+
+- **Exemple** :
+  - Appliquée à `stocks`, la fonction `complete(stocks, ['year', 'qtr'])` génère un DataFrame où tous les trimestres sont présents pour chaque année, même s'ils étaient absents dans les données d'origine.
+
+Ce processus est essentiel pour s'assurer que toutes les combinaisons attendues de valeurs sont représentées, facilitant ainsi les analyses et le traitement des données manquantes.
+
+:::
+
+# Mauvais formats et données incorrectes
+
+## Mauvais formats
+
+::: {.columns}
+::: {.column width="40%"}
+
+- Par exemple :
+
+```{python}
+df['Date'].tail(3)
+```
+
+:::
+::: {.column width="60%"}
+
+- Manipulation de chaînes :
+
+```{python}
+def convert_date(x):
+    return str(x).replace("/", "")
+df['Date'].apply(convert_date).tail(3)
+```
+
+:::
+:::
+
+- Et finalement conversion en datetime :
+
+```{python}
+df['Date'] = pd.to_datetime(df['Date'].apply(convert_date))
+print(df['Date'].tail(3))
+```
+
+::: notes
+
+**Mauvais format**
+
+- **Problème de format** :
+  - Les données peuvent parfois être enregistrées dans un format incorrect, ce qui complique les analyses. Par exemple, une colonne de dates peut contenir des chaînes de caractères non standardisées.
+
+- **Manipulation de chaînes** :
+  - Pour corriger ces formats, une fonction de manipulation de chaînes peut être appliquée pour transformer les valeurs dans un format cohérent.
+  - Exemple : La fonction `convert_date(x)` convertit les dates en supprimant les barres obliques (`/`) pour obtenir un format `AAAAMMJJ`.
+
+- **Conversion en datetime** :
+  - Une fois les chaînes correctement formatées, elles peuvent être converties en objets de type `datetime` pour une manipulation plus facile et des analyses chronologiques.
+  - Exemple : `pd.to_datetime(df['Date'].apply(convert_date))` convertit les dates en objets `datetime` après avoir appliqué la fonction de nettoyage `convert_date`.
+
+Ces étapes permettent de corriger les formats de données, garantissant ainsi que les colonnes sont prêtes pour les analyses sans incohérences de format.
+
+:::
+
+
+
+## Données incorrectes
+
+- Plus difficile à détecter/corriger, pas de règle générale.
+- **Exemples** :
+
+  ```{python}
+  print(df[df["Pulse"] <= 0]) # Pulse négatif.
+  print(df[df["Pulse"] > df["Maxpulse"]]) # Pulse supérieur à Maxpulse.
+  ```
+
+- Correction similaire aux données manquantes :
+  - Suppression,
+  - Remplacement par une valeur arbitraire,
+  - Remplacement par la moyenne, etc.
+
+::: notes
+
+**Données incorrectes**
+
+- **Nature du problème** :
+  - Les données incorrectes sont souvent plus difficiles à détecter et corriger, car elles ne suivent pas nécessairement des règles fixes. Ces erreurs peuvent résulter de saisies incorrectes, d’incohérences logiques, ou de valeurs aberrantes.
+  
+- **Exemples de détection** :
+  - Certaines incohérences peuvent être identifiées par des conditions logiques :
+    - `df[df["Pulse"] <= 0]` : Détecte les enregistrements où la fréquence cardiaque (Pulse) est inférieure ou égale à 0, ce qui est impossible et indique une erreur.
+    - `df[df["Pulse"] > df["Maxpulse"]]` : Identifie les cas où le pouls moyen (Pulse) dépasse le pouls maximal (Maxpulse), une incohérence logique.
+
+- **Méthodes de correction** :
+  - Les approches pour corriger ces erreurs sont similaires aux traitements des données manquantes :
+    - **Suppression** : Éliminer les lignes contenant des valeurs incorrectes.
+    - **Remplacement par une valeur arbitraire** : Par exemple, remplacer les valeurs incorrectes par une valeur plausible (comme une moyenne du groupe).
+    - **Remplacement par la moyenne ou une autre statistique** : Calculer la moyenne ou la médiane des valeurs correctes et les utiliser pour remplacer les valeurs incorrectes.
+
+Ces méthodes permettent de traiter les données incorrectes et d'améliorer la cohérence et la fiabilité du DataFrame.
+
+:::
+
+
+

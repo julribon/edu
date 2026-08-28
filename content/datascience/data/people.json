@@ -1,0 +1,17 @@
+{
+  "nom": [
+    "Alice",
+    "Bob",
+    "Charlie"
+  ],
+  "age": [
+    25,
+    30,
+    35
+  ],
+  "ville": [
+    "Paris",
+    "Lyon",
+    "Nice"
+  ]
+}

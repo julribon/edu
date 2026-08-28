@@ -21,7 +21,7 @@ The project is structured as follows:
 * `scripts/`: contain miscellenaous scripts.
 
 
-## Init
+## Initialization
 
 This project was setup using the following commands (to simply install, go to next section):
 
@@ -33,16 +33,17 @@ quarto create project
 ```
 
 Note: default values left for quarto.
- 
+
 
 ## Setup
 
-To start woking on the project, please first ensure that you have `git` and `uv` installed.
+To start woking on the project, please first ensure that you have `git`, `uv` and `quarto` installed.
 
 Pull project from github:
 
 ```
-git clone <repo-url> && cd course1
+git clone https://github.com/julribon/edu.git
+cd edu
 ```
 
 Activate the virtual environement:
@@ -50,9 +51,5 @@ Activate the virtual environement:
 ```
 source .venv/bin/activate
 ```
-
-
-
-
 
 

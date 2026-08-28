@@ -1,0 +1,2335 @@
+---
+title: Visualisation de données (1/2)
+subtitle: Introduction à la Science des Données avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    #show-notes: separate-page
+---
+
+```{python}
+#| echo: False
+import os
+import sys
+sys.path.append(os.path.abspath('modules'))
+```
+
+# Mauvaises visualisations
+
+## Warm-up (1/3)
+
+![Source : Herald Sun](../images/visualization/bad_error2.jpg)
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : Représentation trompeuse des proportions** :
+   - Bien que le graphique indique que 90 % des votes sont pour "NO" et 10 % pour "YES", la taille des sections du diagramme circulaire ne reflète pas correctement ces proportions.
+   - L'arc correspondant à "YES" (53 votes) semble visuellement beaucoup plus grand qu'il ne devrait l'être comparé à celui de "NO" (517 votes).
+   - Cela donne une fausse impression d’équilibre entre les deux options.
+
+2. **Utilisation incorrecte du diagramme circulaire** :
+   - Les diagrammes circulaires sont conçus pour représenter des parts proportionnelles d’un tout. Ici, la distorsion de ces proportions rend le graphique inutile voire trompeur.
+
+3. **Manque d'information contextuelle** :
+   - On ne sait pas si les 570 votes reflètent un échantillon représentatif ou si les résultats sont biaisés par le mode de collecte (appels téléphoniques payants).
+   - Aucun détail n'est fourni sur les limites ou les éventuels biais liés à la méthode utilisée.
+
+4. **Suggestion d'amélioration** :
+   - Utiliser un autre type de graphique, comme un bar chart, pour représenter les votes. Ce format permet une comparaison plus claire et précise des valeurs.
+   - Vérifier que la taille des segments dans un diagramme circulaire reflète bien les proportions des données.
+
+**Conclusion** :
+Ce graphique est un exemple classique de visualisation trompeuse. Il est essentiel d’être rigoureux dans la représentation des données pour éviter d’induire en erreur le public.
+
+:::
+
+## Warm-up (2/3)
+
+![Source : Demokratikus Koalíció](../images/visualization/bad_error1.jpg)
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : La somme des pourcentages ne totalise pas 100 %** :
+   - Les trois pourcentages indiqués (38 %, 22 %, 19 %) totalisent 79 %, ce qui est incohérent avec l'exigence d'un diagramme circulaire où la somme doit être de 100 %.
+   - Cette erreur compromet gravement la validité de la visualisation et rend impossible une interprétation précise des données.
+
+2. **Représentation incorrecte des proportions** :
+   - En plus de l'erreur de totalisation, les tailles des segments ne sont pas proportionnelles aux pourcentages annoncés.
+   - Par exemple :
+     - Dobrev Klára (38 %) occupe un espace visuellement exagéré comparé aux 22 % (Karácsony Gergely) et 19 % (Márki-Zay Péter).
+
+3. **Utilisation problématique d'un diagramme circulaire** :
+   - Les diagrammes circulaires nécessitent que la somme des parts soit égale à 100 %. Cette incohérence dans les données rend ce choix de visualisation inadapté.
+   - Un bar chart ou un tableau de données serait préférable pour représenter les pourcentages et clarifier les résultats.
+
+4. **Aspect graphique confus** :
+   - La grosse typographie pour "38 %" amplifie visuellement le poids de ce pourcentage, augmentant encore la confusion sur la répartition réelle.
+
+5. **Suggestions d'amélioration** :
+   - Vérifier et corriger les données pour qu'elles totalisent 100 % avant de les visualiser sous forme de diagramme circulaire.
+   - Envisager un graphique en barres ou un tableau de données pour une communication plus précise.
+   - Retirer ou séparer le message politique pour garantir une présentation neutre des données.
+
+**Conclusion** :
+La somme incorrecte des pourcentages est une erreur fondamentale qui rend ce graphique inutilisable pour une analyse objective. Il est essentiel de corriger les données et de choisir un format plus approprié pour garantir la clarté et l'exactitude de la visualisation.
+
+:::
+
+## Warm-up (3/3)
+
+![Source : CNN](../images/visualization/bad_error3.jpg)
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : Ordre décroissant des dates** :
+   - Les dates sur l'axe horizontal sont présentées dans un ordre décroissant (de 2021 à 2018), ce qui va à l'encontre de la convention habituelle où le temps progresse de gauche à droite.
+   - Cela peut dérouter le lecteur et rendre difficile l'interprétation de la progression des données.
+
+2. **Échelle tronquée** :
+   - L'axe vertical commence à **35 %** au lieu de **0 %**, ce qui exagère visuellement les variations entre les points.
+   - Les différences réelles entre les pourcentages (par exemple, 41 % et 48 %) sont modestes, mais apparaissent beaucoup plus importantes en raison de l'échelle choisie.
+
+3. **Présentation potentiellement trompeuse** :
+   - L'utilisation d'une ligne pour relier les points donne une impression de continuité, suggérant un changement progressif, alors que les données sont issues de périodes distinctes et probablement basées sur des sondages indépendants.
+   - Le message principal ("VIOLENT CRIME IS A VERY BIG PROBLEM") semble renforcé par une visualisation qui accentue artificiellement une tendance.
+
+4. **Manque de contexte** :
+   - Le graphique n'explique pas clairement ce que représentent les pourcentages (p. ex., pourcentage des répondants qui considèrent le crime violent comme un problème majeur ?).
+   - L'absence de détails sur la méthodologie (taille de l'échantillon, question posée, etc.) limite la compréhension de la fiabilité et de la validité des données.
+
+5. **Suggestions d’amélioration** :
+   - Réorganiser les dates sur l'axe horizontal dans un ordre chronologique croissant (de 2018 à 2021) pour respecter la convention temporelle standard.
+   - Ajuster l'échelle verticale pour commencer à **0 %**, ce qui donnerait une représentation plus fidèle des variations réelles.
+   - Utiliser des points discrets (au lieu d'une ligne continue) pour refléter la nature discontinue des données collectées à différents moments.
+   - Fournir plus de contexte sur les données, notamment sur la méthodologie des sondages et la définition précise des pourcentages.
+
+**Conclusion** :
+L'ordre décroissant des dates et l'échelle tronquée sont des choix de visualisation qui peuvent induire en erreur. Ces éléments, combinés au manque de contexte, réduisent la clarté et la fiabilité du graphique. Une réorganisation des axes et des choix graphiques plus neutres sont nécessaires pour une communication plus honnête.
+
+:::
+
+
+## Absence de contenu
+
+::: {.columns}
+::: {.column width='50%'}
+
+* Inutile d'utiliser des graphiques pour de très petites quantités de données.
+* Le cerveau humain est capable de saisir quelques valeurs.
+
+:::
+::: {.column width='50%'}
+
+![Source : talkwalker.com](../images/visualization/bad_data_content.png)
+
+:::
+:::
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : Utilisation superflue d’un graphique pour une petite quantité de données** :
+   - Le graphique illustre simplement deux valeurs (43.4 % pour les femmes et 56.6 % pour les hommes), qui pourraient être directement communiquées sous forme de texte.
+   - Le cerveau humain est tout à fait capable de comprendre et de comparer ces deux pourcentages sans l’aide d’un graphique.
+
+2. **Absence de contenu significatif** :
+   - Ce type de visualisation graphique, bien qu’esthétique, n’ajoute aucune information supplémentaire ou clarification par rapport à des données textuelles.
+   - L’utilisation de figurines rend la visualisation davantage décorative que fonctionnelle.
+
+3. **Impact sur la clarté et l'efficacité** :
+   - La représentation graphique ne permet pas une meilleure compréhension ou une analyse plus rapide des données.
+   - Pour des visualisations utiles, il est important d’ajouter des contextes ou des comparaisons significatives.
+
+4. **Suggestions d’amélioration** :
+   - Remplacer le graphique par une présentation textuelle directe des pourcentages :
+     - Exemple : *"Femmes : 43.4 %, Hommes : 56.6 %."*
+   - Si le contexte le justifie, utiliser des comparaisons ou des visualisations supplémentaires (p. ex., évolution des pourcentages dans le temps ou comparaison avec une autre population).
+
+**Conclusion** :
+Ce graphique illustre un problème classique d'utilisation excessive des visualisations pour des données simples. Il est essentiel de réserver les graphiques pour des données complexes ou volumineuses où leur utilisation apporte une réelle valeur ajoutée.
+
+:::
+
+
+## Pertinence des données
+
+::: {.columns}
+::: {.column width='60%'}
+
+* Une visualisation n'a de valeur que si les données sont pertinentes.
+  * Exemple: prédire le S\&P500 avec la production de beurre au Bangladesh ([David Leinweber](https://en.wikipedia.org/wiki/David_Leinweber)).
+
+:::
+
+::: {.column width='40%'}
+
+![](../images/visualization/bad_data_relevance.jpg)
+
+:::
+:::
+
+* La créativité ne peut pas compenser des données de mauvaise qualité.
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : Pertinence douteuse des données** :
+   - Ce graphique tente de corréler les victoires des équipes originales de la NFL au Super Bowl avec les retours positifs du S&P 500.
+   - Cette relation est arbitraire et n’a pas de base logique ou statistique solide pour soutenir une telle corrélation.
+
+2. **Exemple de corrélation fallacieuse** :
+   - La corrélation entre deux variables ne signifie pas une causalité. Ce graphique illustre une corrélation sans relation significative ou causale, rendant la visualisation inutile pour la prise de décision ou l'analyse.
+   - Un exemple similaire serait de prédire les mouvements du S&P 500 à l'aide de la production de beurre au Bangladesh, une idée humoristique mais absurde, soulignée par David Leinweber.
+
+3. **Manque de contexte explicatif** :
+   - Aucune explication n'est fournie sur la méthodologie utilisée pour établir cette corrélation.
+   - Le graphique ne précise pas pourquoi ou comment ces deux ensembles de données (NFL et S&P 500) devraient être liés, laissant le lecteur confus.
+
+4. **Impact sur la crédibilité** :
+   - Une telle visualisation, basée sur des données sans pertinence apparente, nuit à la crédibilité de l'analyse ou de l'institution qui l'a produite.
+   - Les visualisations doivent s'appuyer sur des données de qualité et pertinentes pour être utiles et significatives.
+
+5. **Suggestions d’amélioration** :
+   - Réviser les données utilisées pour établir des relations plus significatives et logiques.
+   - Utiliser des visualisations pour explorer des corrélations ayant une base explicative ou pratique.
+   - Éviter les comparaisons arbitraires qui risquent de discréditer le message ou l’analyse.
+
+**Conclusion** :
+La créativité dans les visualisations ne peut pas compenser l'absence de pertinence ou la mauvaise qualité des données. Ce graphique illustre une corrélation fallacieuse, soulignant l'importance de sélectionner des données ayant une relation claire et logique avant de les visualiser.
+
+:::
+
+
+
+## Complexité
+
+> Aussi simple que possible, mais aussi complexe que nécessaire.
+
+::: {.columns}
+::: {.column width='50%'}
+
+* La complexité inutile peut être introduite par 
+    - des éléments décoratifs,
+    - des couleurs,
+    - des effets 3D,
+    - etc.
+
+:::
+::: {.column width='50%'}
+
+![Source : Cawley S, et al. (2004), Cell 116:499-509, Figure 1](../images/visualization/bad_complexity.jpg)
+
+:::
+:::
+
+::: notes
+
+**Analyse critique du graphique**
+
+1. **Problème principal : Complexité inutile** :
+   - L'effet 3D appliqué au diagramme circulaire rend les proportions difficiles à interpréter avec précision et n'ajoute aucune valeur analytique.
+   - Les segments semblent déformés à cause de la perspective, ce qui complique la comparaison des proportions.
+
+2. **Problèmes liés à l'utilisation du diagramme circulaire** :
+   - Les diagrammes circulaires ne sont pas idéaux pour comparer plusieurs catégories, surtout lorsqu'elles sont proches en taille (par exemple, 24 % pour "Novel" et 22 % pour "5’ to known gene").
+   - D'autres visualisations, comme un bar chart, seraient plus adaptées pour afficher ces proportions.
+
+3. **Manque de lisibilité** :
+   - Les couleurs utilisées pour chaque segment sont assez similaires, ce qui rend leur distinction difficile, en particulier pour les lecteurs daltoniens.
+   - Le texte explicatif situé en dehors du graphique nécessite une attention supplémentaire pour comprendre les données, au lieu d'être intégré directement dans la visualisation.
+
+4. **Suggestions d’amélioration** :
+   - Supprimer l'effet 3D et utiliser un diagramme circulaire 2D si ce type de graphique doit être conservé.
+   - Envisager un bar chart ou un autre graphique plus lisible et précis pour montrer les proportions.
+   - Utiliser des couleurs contrastées et un design minimaliste pour éviter toute distraction et maximiser la clarté.
+
+5. **Conclusion** :
+   - Une visualisation efficace doit être aussi simple que possible, mais aussi complexe que nécessaire. Ici, les éléments décoratifs comme l'effet 3D et les couleurs mal choisies ajoutent une complexité inutile, détournant l'attention de l'information clé.
+
+:::
+
+## Distorsion
+
+
+::: {.columns}
+::: {.column width='60%'}
+
+* **Définition** : [déformation des valeurs représentées](https://en.wikipedia.org/wiki/Misleading_graph).
+  - Fallacieux souvent utilisé comme synonyme de distordu.
+  - Peut être délibérée ou accidentelle.
+  - Utile de savoir comment produire ces visualisations.
+
+:::
+::: {.column width='40%'}
+
+![](../images/visualization/bad_distorsion.png){width=80%}
+
+![](../images/visualization/bad_distorsion2.jpg){width=80%}
+
+
+
+:::
+:::
+
+Sources : statisticshowto.com/ and Canal 13
+
+::: notes
+
+**Analyse critique des graphiques : distorsion**
+
+1. **Problème principal : Déformation des valeurs représentées** :
+   - Les deux graphiques présentent une distorsion des proportions, rendant les visualisations fallacieuses.
+
+2. **Graphique 1 : "Top Tax Rate"**
+   - Bien que la différence entre les valeurs (35 % et 39.6 %) soit relativement faible, les barres ne sont pas proportionnelles :
+     - La barre représentant 39.6 % est visuellement environ trois fois plus grande que celle représentant 35 %.
+   - Cette distorsion amplifie exagérément l'augmentation perçue du taux d'imposition.
+   - **Cause principale** : l'axe vertical ne commence pas à 0 %, mais à un pourcentage arbitraire proche de 34 %. Cela exagère artificiellement les écarts.
+
+3. **Graphique 2 : "Évolution des crimes violents"**
+   - Les barres représentant les pourcentages (30.7 %, 22.8 %, et 27.3 %) sont également déformées :
+     - La barre pour 22.8 % est nettement plus petite que les autres, même si la différence réelle est modeste.
+     - Les variations entre les années semblent visuellement beaucoup plus importantes qu'elles ne le sont en réalité.
+   - **Cause principale** : l'axe vertical ne commence pas à 0 %, ce qui amplifie les différences.
+
+4. **Impact sur l’interprétation** :
+   - Ces graphiques induisent en erreur en exagérant visuellement les écarts entre les valeurs.
+   - Cela peut influencer les opinions ou les décisions des spectateurs en les manipulant inconsciemment.
+
+5. **Distorsion : intentionnelle ou accidentelle ?**
+   - Les distorsions peuvent être délibérées pour manipuler l’audience ou accidentelles en raison d’un manque de compétence dans la conception graphique.
+   - Dans tous les cas, elles nuisent à la qualité de la communication.
+
+6. **Suggestions d’amélioration** :
+   - Toujours commencer l'axe vertical à 0 % pour garantir une représentation proportionnelle des données.
+   - Respecter les proportions entre les valeurs et les tailles des barres.
+   - Utiliser une échelle cohérente et uniforme sur l’axe vertical pour éviter toute amplification visuelle injustifiée.
+   - Si nécessaire, ajouter des annotations ou du texte pour clarifier les différences réelles.
+
+7. **Conclusion** :
+   - Ces graphiques sont des exemples classiques de distorsion visuelle. Une visualisation responsable exige que les proportions reflètent fidèlement les données, sans manipuler l’interprétation du spectateur.
+   - Commencer les axes à 0 % est une règle de base pour éviter des interprétations erronées.
+
+:::
+
+## Facteur de mensonge
+
+- Origines fréquentes de distorsion :
+    - Effets 3D.
+    - Échelle linéaire pour représenter des valeurs en aire ou volume.
+- Le "facteur de mensonge" :
+    - Mesure de la distorsion dans un graphique.
+        - $\mbox{facteur de mensonge} = \frac{\mbox{taille de l'effet dans le graphique}}{\mbox{taille de l'effet dans les données}}$
+    - Si $> 1$, le graphique exagère l'effet.
+
+::: notes
+
+**Facteur de mensonge**
+
+1. **Concept** :
+   - Le "facteur de mensonge" est une mesure quantitative utilisée pour évaluer à quel point un graphique déforme ou exagère les données qu'il représente.
+   - Défini par la formule :
+     \[
+     \text{Facteur de mensonge} = \frac{\text{Taille de l'effet dans le graphique}}{\text{Taille de l'effet dans les données}}
+     \]
+   - Lorsque le facteur de mensonge est supérieur à 1, cela signifie que le graphique exagère l'effet représenté par les données.
+
+2. **Origines fréquentes de distorsion** :
+   - **Effets 3D** :
+     - Les éléments graphiques en 3D donnent souvent une impression de volume ou de profondeur, exagérant la taille des segments ou des barres.
+     - Par exemple, un segment d'un diagramme circulaire en 3D semble plus important en raison de la perspective.
+   - **Échelles linéaires pour des représentations en aire ou volume** :
+     - Utiliser des échelles linéaires pour représenter des aires ou volumes amplifie les différences perçues.
+     - Une augmentation linéaire des données peut se traduire par une augmentation exponentielle en aire ou volume.
+
+3. **Exemple d'exagération** :
+   - Si une valeur double dans les données (par exemple, de 20 à 40), mais la barre associée dans le graphique devient quatre fois plus grande, le facteur de mensonge serait de 2, car l'effet visuel est deux fois plus grand que l'effet réel.
+
+4. **Applications du facteur de mensonge** :
+   - Identifier et corriger les distorsions dans les graphiques.
+   - S'assurer que la taille des effets représentés visuellement correspond fidèlement aux données sous-jacentes.
+
+5. **Suggestions pour réduire les facteurs de mensonge** :
+   - Éviter les effets 3D à moins qu'ils ne soient absolument nécessaires.
+   - Utiliser des échelles appropriées (p. ex., échelle logarithmique si les données varient sur plusieurs ordres de grandeur).
+   - Vérifier que la taille des effets dans les graphiques reflète avec précision les données.
+
+**Conclusion** :
+Le facteur de mensonge est un outil essentiel pour évaluer l'intégrité d'un graphique. Un graphique responsable doit avoir un facteur de mensonge proche de 1 pour garantir une représentation honnête et précise des données.
+
+:::
+
+## Exemple
+
+![Source : NY Times](../images/visualization/lie_factor1.jpg)
+
+$$
+\mbox{facteur de mensonge} = \frac{\frac{5.3 - 0.6}{0.6}}{\frac{27.5 - 18}{18}} = 14.8!
+$$
+
+::: notes
+
+**Analyse du graphique : Exagération via le facteur de mensonge**
+
+1. **Problème principal : Exagération visuelle** :
+   - Ce graphique représente l'évolution de l'économie de carburant (miles par gallon) entre 1978 et 1985 à l'aide de la longueur d'une ligne.
+   - Bien que l'amélioration soit réelle, la visualisation amplifie de manière disproportionnée l'effet grâce à une distorsion des longueurs.
+
+2. **Calcul du facteur de mensonge** :
+   - Dans les données, l'économie de carburant passe de 18 mpg (1978) à 27.5 mpg (1985), soit une augmentation de **52.8 %**.
+   - Dans le graphique, la ligne passe de 0.6 pouces (1978) à 5.3 pouces (1985), soit une augmentation de **783 %**.
+   - Le facteur de mensonge est donné par la formule :
+     \[
+     \text{Facteur de mensonge} = \frac{\text{Taille de l'effet dans le graphique}}{\text{Taille de l'effet dans les données}}
+     \]
+     Substitution des valeurs :
+     \[
+     \text{Facteur de mensonge} = \frac{\frac{5.3 - 0.6}{0.6}}{\frac{27.5 - 18}{18}} = 14.8
+     \]
+     Ce graphique exagère donc l'effet réel par un facteur de 14.8 !
+
+3. **Problèmes visuels spécifiques** :
+   - La longueur de la ligne est utilisée pour représenter une augmentation linéaire des données, mais cela amplifie les différences de manière disproportionnée.
+   - L'effet de "perspective" ajouté au graphique déforme encore plus la perception des écarts.
+
+4. **Impact sur l'interprétation** :
+   - Le spectateur est induit en erreur, percevant une amélioration beaucoup plus spectaculaire que ce que les données justifient réellement.
+
+5. **Suggestions d'amélioration** :
+   - Utiliser un graphique en barres avec une échelle correcte pour refléter la croissance proportionnelle.
+   - Éviter l'utilisation de longueurs ou d'éléments visuels non proportionnels pour représenter des augmentations.
+
+6. **Conclusion** :
+   - Ce graphique illustre parfaitement comment une distorsion visuelle peut créer une perception exagérée d'un changement. Le calcul du facteur de mensonge aide à quantifier cette exagération et à sensibiliser à l'importance de représentations honnêtes des données.
+
+:::
+
+
+## Produire des visualisations de qualité
+
+- Trois règles principales :
+    - Si l'histoire est simple, gardez-la simple.
+    - Si l'histoire est complexe, simplifiez-la.
+    - Dites la vérité -- ne déformez pas les données.
+
+- Visualisations **complètes** et **appropriées à leur but** :
+  - Défauts d'Excel souvent mauvais, pas de camembert!
+  - Axes étiquetés et unités indiquées.
+  - Titre et légende pour des infos supplémentaires (p.ex., couleurs ou types de lignes) nécessaires.
+
+::: notes
+
+**Produire des visualisations de qualité**
+
+1. **Trois règles principales** :
+   - **Si l'histoire est simple, gardez-la simple** :
+     - Ne surchargez pas une visualisation avec des éléments décoratifs ou inutiles.
+     - Optez pour des graphiques épurés, qui mettent en avant les informations essentielles.
+   - **Si l'histoire est complexe, simplifiez-la** :
+     - Décomposez des informations complexes en plusieurs visualisations ou mettez en avant les éléments clés.
+     - Évitez de submerger le spectateur avec trop de détails en un seul graphique.
+   - **Dites la vérité -- ne déformez pas les données** :
+     - Respectez les proportions et les relations dans les données.
+     - Évitez les distorsions visuelles, comme les axes tronqués ou les effets 3D.
+
+2. **Caractéristiques des visualisations efficaces** :
+   - **Complètes** :
+     - Inclure toutes les informations nécessaires, telles que les axes, les unités et les légendes.
+     - Les étiquettes doivent clairement indiquer la signification des données.
+   - **Appropriées à leur but** :
+     - Choisir le bon type de graphique pour représenter les données (p.ex., barres pour les comparaisons, lignes pour les tendances).
+     - Éviter les graphiques inadaptés, comme les diagrammes circulaires (camemberts) pour des comparaisons de proportions complexes.
+
+3. **Éléments techniques essentiels** :
+   - **Axes étiquetés et unités** :
+     - Toujours indiquer ce que représentent les axes (par exemple, "Années" sur l'axe X et "Ventes (milliers)" sur l'axe Y).
+   - **Titres informatifs** :
+     - Le titre doit résumer clairement le message principal du graphique.
+   - **Légendes claires** :
+     - Si des couleurs, des motifs ou des lignes différentes sont utilisées, expliquer leur signification dans une légende.
+
+4. **Mauvais exemples courants** :
+   - Les défauts d'outils comme Excel (par exemple, camemberts 3D avec proportions trompeuses).
+   - Axes non étiquetés ou unités absentes, rendant la compréhension difficile.
+   - Graphiques surchargés de texte ou de données inutiles.
+
+5. **Conclusion** :
+   - Une bonne visualisation est claire, honnête et adaptée à son public. Elle met en avant les données sans les déformer et facilite la prise de décision ou la compréhension.
+
+:::
+
+
+# Introduction à Seaborn
+
+<!-- https://seaborn.pydata.org/tutorial/introduction.html -->
+
+## Seaborn
+
+```{python}
+import seaborn as sns
+```
+
+- Bibliothèque qui permet de créer des graphiques statistiques en Python.
+- S'intègre étroitement avec les structures de données de Pandas (Series et DataFrame).
+- Aide à explorer et comprendre les données.
+
+```{python}
+tips = sns.load_dataset("tips")
+print(tips.head())
+```
+
+::: notes
+
+**Seaborn : Bibliothèque pour la visualisation de données**
+
+1. **Présentation de Seaborn** :
+   - **Qu'est-ce que Seaborn ?**
+     - Une bibliothèque Python pour créer des visualisations statistiques.
+     - Fournit une interface intuitive pour travailler avec des données complexes et générer des graphiques informatifs.
+   - **Pourquoi l'utiliser ?**
+     - Seaborn est étroitement intégré avec **Pandas**, facilitant la manipulation et la visualisation de données au sein de **DataFrames**.
+     - Ses outils permettent d'explorer rapidement des relations et tendances statistiques dans un jeu de données.
+
+2. **Intégration avec Pandas** :
+   - Seaborn accepte les objets Pandas (`Series` ou `DataFrame`) comme structures de données principales.
+   - Cette intégration permet d'utiliser directement les colonnes comme arguments des fonctions Seaborn, ce qui simplifie le code.
+   - Exemple d'intégration : le dataset `tips`, utilisé pour des exemples pratiques dans la documentation, est chargé comme un `DataFrame`.
+
+3. **Chargement des datasets** :
+   - Fonction `sns.load_dataset()` :
+     - Permet de charger rapidement des datasets d'exemple intégrés à Seaborn.
+     - Ces datasets sont des `DataFrames` Pandas standard et peuvent également être chargés avec `pandas.read_csv()` ou créés manuellement.
+   - Exemple avec `tips` :
+     - Ce dataset contient des informations sur les pourboires dans un restaurant, souvent utilisé pour illustrer des concepts statistiques comme la distribution des données ou les relations entre variables.
+
+4. **Flexibilité avec d'autres structures de données** :
+   - Bien que Seaborn soit conçu pour fonctionner avec Pandas, il accepte également d'autres structures, comme des tableaux NumPy ou des dictionnaires Python.
+   - Cette flexibilité permet de s'adapter à divers formats de données.
+
+5. **Conclusion** :
+   - Seaborn est une bibliothèque puissante et facile à utiliser pour explorer visuellement des relations statistiques dans les données.
+   - Grâce à son intégration avec Pandas, il simplifie le processus de création de graphiques clairs et informatifs, rendant l'analyse plus rapide et plus intuitive.
+
+:::
+
+
+## Première visualisation
+
+```{python}
+sns.relplot(
+    data=tips,
+    x="total_bill", y="tip", col="time",
+    hue="smoker", style="smoker", size="size",
+)
+```
+
+::: notes
+
+**Première visualisation avec Seaborn**
+
+1. **Explication du code** :
+   - La fonction **`sns.relplot()`** permet de visualiser des relations entre variables quantitatives et qualitatives.
+   - **Paramètres utilisés** :
+     - `data=tips` : indique le dataset à utiliser (ici, le DataFrame `tips`).
+     - `x="total_bill", y="tip"` : définit les variables sur les axes X et Y.
+     - `col="time"` : crée des graphiques séparés pour chaque valeur unique de la colonne "time" (p.ex., déjeuner ou dîner).
+     - `hue="smoker", style="smoker"` : différencie les fumeurs et non-fumeurs par couleur (`hue`) et style de marqueur (`style`).
+     - `size="size"` : ajuste la taille des marqueurs en fonction de la colonne "size" (taille de la table).
+
+2. **Visualisation multi-dimensionnelle** :
+   - Ce graphique montre comment cinq variables du dataset `tips` interagissent en un seul appel de fonction :
+     - **Total de l'addition** (`total_bill`),
+     - **Pourboire** (`tip`),
+     - **Moment de la journée** (`time`),
+     - **Statut fumeur/non-fumeur** (`smoker`),
+     - **Taille de la table** (`size`).
+
+3. **Avantages de Seaborn** :
+   - **Approche déclarative** :
+     - L'utilisateur se concentre uniquement sur les données et leur rôle dans la visualisation.
+     - Pas besoin de spécifier les attributs visuels en détail (p.ex., couleurs, styles ou tailles), Seaborn s'en charge automatiquement.
+   - **Traduction automatique** :
+     - Seaborn traduit les informations du DataFrame Pandas en arguments compréhensibles pour Matplotlib.
+   - **Simplicité et flexibilité** :
+     - Permet de créer des graphiques complexes en une seule ligne de code, simplifiant l'analyse exploratoire.
+
+4. **Exemple d'utilisation** :
+   - Ce graphique pourrait être utilisé pour analyser les tendances dans les pourboires selon le montant total de l'addition, le moment de la journée et si les clients sont fumeurs ou non.
+
+5. **Conclusion** :
+   - Avec **`relplot()`**, Seaborn rend l'exploration de relations multi-variées simple et intuitive.
+   - Ce type de visualisation est idéal pour extraire rapidement des insights significatifs d'un dataset complexe.
+
+:::
+
+## Les trois types de visualisations
+
+<!-- - Seaborn en propose trois principaux :
+
+  - relationnelles (`relplot`),
+  - de distribution (`displot`),
+  - catégorielles (`catplot`). -->
+
+
+| Type | Fonction | Permet d'explorer |
+|--------|----------|-------------------------------------|
+| Relationel | [`relplot`](https://seaborn.pydata.org/generated/seaborn.relplot.html)   | la relation entre variables |
+| Distribution | [`displot`](https://seaborn.pydata.org/generated/seaborn.displot.html)  | la distribution d'un ensemble de données univariées ou bivariées |
+| Catégoriel | [`catplot`](https://seaborn.pydata.org/generated/seaborn.catplot.html)  | la relation entre une variable numérique et une ou plusieurs variables catégorielles |
+
+- Aujourd'hui : les visualisations relationnelles.
+
+<!-- https://seaborn.pydata.org/tutorial/relational.html -->
+
+::: notes
+
+**Les trois types principaux de visualisations avec Seaborn**
+
+1. **Introduction** :
+   - Seaborn propose trois grandes familles de visualisations pour couvrir différents types d'analyses :
+     - Relationnelles,
+     - De distribution,
+     - Catégorielles.
+   - Chaque type de graphique est conçu pour répondre à des questions spécifiques sur les données.
+
+2. **Résumé des types de visualisations** :
+
+| **Type**         | **Fonction**                                      | **Objectif principal**                                          |
+|-------------------|--------------------------------------------------|-----------------------------------------------------------------|
+| **Relationnel**   | [`relplot`](https://seaborn.pydata.org/generated/seaborn.relplot.html) | Explorer les relations entre deux (ou plusieurs) variables.     |
+| **Distribution**  | [`displot`](https://seaborn.pydata.org/generated/seaborn.displot.html) | Examiner la répartition des valeurs pour une ou deux variables. |
+| **Catégoriel**    | [`catplot`](https://seaborn.pydata.org/generated/seaborn.catplot.html) | Étudier les relations entre des variables numériques et catégorielles. |
+
+3. **Focus sur les visualisations relationnelles** :
+   - Les visualisations relationnelles (fonction **`relplot`**) permettent d'explorer les liens entre deux variables quantitatives et de les segmenter selon des variables qualitatives.
+   - Elles sont idéales pour identifier des corrélations ou des tendances.
+
+4. **À venir** :
+   - Aujourd'hui, l'accent est mis sur les **visualisations relationnelles**.
+   - D'autres types (distribution et catégoriel) seront explorés ultérieurement.
+
+5. **Importance** :
+   - Comprendre quel type de graphique utiliser en fonction de la question que l'on se pose sur les données est essentiel pour une analyse efficace.
+
+:::
+
+
+## Visualiser les relations entre variables
+
+- **Objectif** : exploration 
+    - des relations entre deux variables,
+    - et de comment cette relation dépend d'autres variables.
+- Visualisations 2D enrichies par des variables additionelles grâce à la couleur, la taille, le style, les facettes, etc.
+<!-- - Permet de visualiser des relations complexes en utilisant des représentations simples et facilement compréhensibles. -->
+- 3 fonctions Seaborn :
+    - `relplot()` (fonction principale),
+    - `scatterplot()` (nuage de points),
+    - `lineplot()` (graphique linéaire).
+
+::: notes
+
+**Visualiser les relations entre variables**
+
+1. **Objectif principal** :
+   - Explorer les relations entre deux variables quantitatives.
+   - Étudier comment ces relations varient en fonction d'autres variables qualitatives ou quantitatives.
+   - Exemple : analyser comment les pourboires (variable Y) dépendent du montant total de l'addition (variable X) et sont influencés par des facteurs comme le moment de la journée ou le statut fumeur/non-fumeur.
+
+2. **Avantages des visualisations relationnelles** :
+   - **Enrichissement visuel** : 
+     - Les graphiques 2D peuvent être augmentés en intégrant des informations supplémentaires à l'aide de la couleur (`hue`), de la taille (`size`), du style (`style`), ou des facettes (`col`, `row`).
+   - **Détection des tendances et des relations** :
+     - Les représentations visuelles permettent de rapidement identifier des corrélations, des patterns ou des anomalies dans les données.
+
+3. **Fonctions principales de Seaborn** :
+   - **`relplot()`** :
+     - Fonction principale pour les visualisations relationnelles.
+     - Permet de créer des graphiques de type nuage de points ou graphique linéaire.
+     - Facilité d'enrichissement avec des variables supplémentaires (via `hue`, `size`, `style`, etc.).
+   - **`scatterplot()`** :
+     - Utilisée pour créer des nuages de points (par défaut avec `relplot(kind="scatter")`).
+     - Idéal pour examiner des relations entre deux variables quantitatives.
+   - **`lineplot()`** :
+     - Créée des graphiques linéaires (par défaut avec `relplot(kind="line")`).
+     - Adaptée pour visualiser des tendances dans des données temporelles ou continues.
+
+4. **Pourquoi visualiser les relations ?** :
+   - La visualisation est une étape clé dans l'analyse statistique :
+     - Elle aide à comprendre comment les variables sont liées entre elles.
+     - Elle met en évidence des patterns, des tendances et des dépendances que les analyses numériques seules peuvent manquer.
+   - Lorsqu'elles sont bien conçues, les visualisations exploitent les capacités du système visuel humain pour interpréter rapidement les données.
+
+5. **Conclusion** :
+   - Les visualisations relationnelles combinent simplicité et puissance :
+     - Elles permettent de représenter des relations complexes dans des graphiques clairs et compréhensibles.
+     - Grâce à leur capacité à enrichir les graphiques avec des variables additionnelles, elles facilitent l'analyse exploratoire et la communication des insights.
+
+:::
+
+# Nuages de points
+
+## Nuage de points
+
+```{python}
+#| eval: false
+sns.relplot(data=tips, x="total_bill", y="tip")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- La base pour les relations entre deux variables numériques.
+- Chaques points représente une observation.
+- Défaut de [`relplot()`](https://seaborn.pydata.org/tutorial/relational.html) via `kind="scatter"`.
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip")
+```
+
+:::
+:::
+
+::: notes
+
+**Nuage de points (scatter plot)**
+
+1. **Objectif principal** :
+   - Visualiser la **relation entre deux variables numériques**.
+   - Chaque point dans le nuage représente une observation individuelle dans le jeu de données.
+
+2. **Caractéristiques clés** :
+   - **Points individuels** :
+     - Chaque point correspond à une paire de valeurs (X, Y) tirées des colonnes du DataFrame.
+   - **Distribution conjointe** :
+     - Le nuage de points permet d'examiner la distribution conjointe des deux variables.
+     - Facilite l'identification de relations, tendances, clusters ou anomalies.
+
+3. **Fonction utilisée** :
+   - **`sns.relplot()`** (par défaut avec `kind="scatter"`) :
+     - Fonction idéale pour les relations entre deux variables numériques.
+     - Peut être enrichie avec des attributs supplémentaires (`hue`, `size`, `style`, etc.) pour inclure plus de dimensions dans l'analyse.
+   - **`sns.scatterplot()`** :
+     - Une fonction spécifique pour les nuages de points (utilisée automatiquement dans `relplot` avec `kind="scatter"`).
+
+4. **Pourquoi utiliser un nuage de points ?** :
+   - **Analyse exploratoire** :
+     - Détecter des corrélations ou relations non linéaires entre deux variables.
+   - **Identification des patterns** :
+     - Identifier des regroupements ou des anomalies dans les données.
+     - Exemple : relation entre le total d'une addition (`total_bill`) et le pourboire (`tip`) dans un restaurant.
+
+5. **Exemple avec Seaborn** :
+   - Appel simple : `sns.relplot(data=tips, x="total_bill", y="tip")`.
+   - Ce graphique montre comment le montant de l'addition (X) et le pourboire (Y) sont liés.
+
+6. **Limites et extensions** :
+   - Limité aux relations entre deux variables numériques.
+   - Pour des relations plus complexes, enrichir le graphique avec des couleurs, des tailles ou des styles (`hue`, `size`, `style`).
+
+**Conclusion** :
+Le nuage de points est une visualisation essentielle pour explorer visuellement les relations entre deux variables numériques, fournissant un aperçu clair et informatif des tendances et des anomalies.
+
+:::
+
+
+## Couleur des points
+
+- Points représentés en deux dimensions : ajout d'une troisième en colorant les points selon une autre variable. 
+- **Sémantique de teinte** : la couleur prend une signification.
+
+
+::: {.columns}
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="smoker")
+```
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", height=3)
+```
+
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="size")
+```
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="size", height=3)
+```
+
+:::
+:::
+
+
+<!-- 
+::: {.columns}
+::: {.column width='33%'}
+
+- **Qualitative** : pas d'ordre, pour des catégories.
+  - `deep`, `pastel`, `dark`, `muted`, `bright`, `colorblind`.
+
+:::
+::: {.column width='33%'}
+
+- **Séquentielle** : ordre de luminosité, pour des données ordonnées.
+  - `rocket`, `mako`, `flare`, `crest`, `magma`, `viridis`.
+
+:::
+::: {.column width='33%'}
+
+- **Divergente** : deux palettes séquentielles avec un point central.
+  - `vlag`, `icefire`, `cubehelix`.
+
+:::
+::: -->
+
+
+::: notes
+
+**Couleur des points : Ajout d'une dimension avec la sémantique de teinte (`hue`)**
+
+1. **Objectif principal** :
+   - Ajouter une troisième dimension à un nuage de points en **colorant les points** selon une variable supplémentaire.
+   - La couleur des points fournit une **sémantique de teinte**, où la signification de chaque couleur est liée à une valeur spécifique de la variable.
+
+2. **Caractéristiques clés** :
+   - **Sémantique de teinte (`hue`)** :
+     - Permet de différencier les groupes ou catégories dans les données à l'aide de couleurs.
+     - Peut être appliqué à des variables qualitatives (catégories) ou quantitatives (valeurs continues).
+   - **Interprétation visuelle** :
+     - Les groupes ou tendances deviennent immédiatement reconnaissables grâce aux couleurs.
+
+3. **Exemples d'utilisation** :
+   - **Catégories (qualitatives)** :
+     - Si `hue="smoker"`, les couleurs distinguent les fumeurs et non-fumeurs.
+     - Cela permet d'analyser comment le statut de fumeur influence la relation entre le montant total de l'addition (`total_bill`) et le pourboire (`tip`).
+   - **Valeurs continues (quantitatives)** :
+     - Si `hue="size"`, les couleurs représentent différentes tailles de tables (nombre de clients).
+     - Cette approche peut révéler des patterns liés à la taille des groupes.
+
+4. **Exemple avec Seaborn** :
+   - Ajouter une couleur pour une variable qualitative :
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker")
+     ```
+   - Ajouter une couleur pour une variable quantitative :
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", hue="size")
+     ```
+
+5. **Avantages** :
+   - Enrichit le graphique avec une dimension supplémentaire tout en restant clair et lisible.
+   - Facilite l'exploration des interactions complexes entre plusieurs variables.
+
+6. **Limites** :
+   - Trop de catégories ou une variable quantitative avec une large gamme de valeurs peuvent rendre l'interprétation difficile.
+   - Assurez-vous que les couleurs choisies sont perceptibles et interprétables par le public cible.
+
+**Conclusion** :
+L'ajout de la couleur dans un nuage de points est un moyen simple mais puissant de représenter des données multi-dimensionnelles, améliorant la compréhension visuelle des relations dans le dataset.
+
+:::
+
+
+## Style des points (1/2)
+
+```{python}
+#| eval: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="smoker")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- **Sémantique de style** : distinguer les points en utilisant des formes différentes.
+- Permet de souligner la différence entre les classes et améliorer l'accessibilité
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="smoker")
+```
+
+
+:::
+:::
+
+::: notes
+
+**Ajout de la sémantique de style (`style`)**
+
+1. **Objectif principal** :
+   - Distinguer visuellement les points sur un graphique en utilisant **différentes formes** (style des marqueurs).
+   - La sémantique de style complète ou remplace la sémantique de teinte (`hue`) en permettant de différencier des groupes ou classes sans utiliser uniquement des couleurs.
+
+2. **Caractéristiques clés** :
+   - **Différenciation par style** :
+     - Chaque catégorie d'une variable est représentée par un style/marqueur différent (p.ex., rond pour les non-fumeurs, croix pour les fumeurs).
+   - **Accessibilité améliorée** :
+     - Aide les spectateurs daltoniens ou ceux ayant des difficultés à percevoir les différences de couleur.
+
+3. **Exemple d'utilisation** :
+   - Utilisation combinée de `hue` et `style` pour distinguer une variable qualitative :
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="smoker")
+     ```
+   - Dans cet exemple :
+     - La couleur distingue les fumeurs/non-fumeurs (`hue="smoker"`).
+     - Le style des marqueurs renforce cette distinction (`style="smoker"`).
+
+4. **Avantages** :
+   - Ajoute une **redondance visuelle** : si la couleur n'est pas perceptible, les styles permettent toujours de différencier les catégories.
+   - Facilite la distinction entre catégories dans des datasets complexes.
+
+5. **Limites** :
+   - Trop de styles différents peuvent rendre le graphique confus ou illisible.
+   - L'utilisation simultanée de `hue` et `style` doit être cohérente pour éviter de surcharger l'interprétation.
+
+6. **Conclusion** :
+   - L'ajout de la sémantique de style est un outil précieux pour améliorer l'accessibilité et fournir des distinctions claires entre groupes, surtout dans des visualisations multi-dimensionnelles.
+
+:::
+
+## Style des points (2/2)
+
+```{python}
+#| eval: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="time")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- Permet aussi d'ajouter une dimension supplémentaire.
+- Doit être fait avec soin, l'oeil est beaucoup moins sensible à la forme qu'à la couleur.
+
+:::
+::: {.column width='40%'}
+
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="time")
+```
+
+:::
+:::
+
+::: notes
+
+**Style des points : Ajouter une dimension avec soin**
+
+1. **Objectif principal** :
+   - Utiliser la **sémantique de style** (`style`) pour ajouter une dimension supplémentaire à un graphique, en combinant des formes différentes avec des couleurs (`hue`).
+   - Cela permet de représenter des informations supplémentaires tout en maintenant une visualisation claire.
+
+2. **Exemple d'utilisation** :
+   - Dans cet exemple, les points sont différenciés par :
+     - **Couleur (`hue="smoker"`)** : pour représenter les fumeurs et non-fumeurs.
+     - **Style (`style="time"`)** : pour distinguer le moment de la journée (déjeuner ou dîner).
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", style="time")
+     ```
+
+3. **Points importants** :
+   - **Complémentarité avec `hue`** :
+     - L'ajout de styles permet de distinguer des catégories supplémentaires tout en conservant l'information de teinte (`hue`).
+   - **Perception visuelle** :
+     - L'œil humain est plus sensible aux couleurs qu'aux formes. Utiliser la sémantique de style pour des informations secondaires.
+   - **Clarté du graphique** :
+     - Veillez à ne pas surcharger la visualisation, car trop de formes différentes peuvent rendre l'interprétation difficile.
+
+4. **Avantages** :
+   - Ajoute une **dimension supplémentaire** sans surcharger l'axe X, l'axe Y ou les couleurs.
+   - Rend les visualisations plus riches et informatives.
+
+5. **Limites** :
+   - Les formes multiples peuvent être difficiles à distinguer dans des graphiques très denses.
+   - À utiliser avec parcimonie, surtout dans des jeux de données complexes ou avec des catégories très nombreuses.
+
+6. **Conclusion** :
+   - La sémantique de style est un outil efficace pour enrichir une visualisation, mais doit être utilisée avec soin pour garantir que le graphique reste lisible et compréhensible.
+
+:::
+
+
+## Taille des points
+
+```{python}
+#| eval: false
+sns.relplot(data=tips, x="total_bill", y="tip", size="size")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- **Sémantique de taille** : la taille des points est proportionnelle à une variable.
+- La valeur est normalisée pour être utilisée comme taille de point.
+  - P.ex., `sizes=(10, 100)` pour contrôler la plage de tailles.
+
+:::
+
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=tips, x="total_bill", y="tip", size="size")
+```
+
+:::
+:::
+
+::: notes
+
+**Taille des points : Représentation d'une dimension supplémentaire**
+
+1. **Objectif principal** :
+   - Utiliser la **sémantique de taille** (`size`) pour représenter une variable supplémentaire sur un graphique.
+   - La taille des points est proportionnelle aux valeurs de cette variable, permettant de visualiser une relation multi-dimensionnelle.
+
+2. **Caractéristiques clés** :
+   - **Normalisation automatique** :
+     - Les valeurs de la variable sont normalisées pour s'adapter à une plage de tailles par défaut.
+     - Cela garantit que les points restent visibles et interprétables.
+   - **Personnalisation de la plage** :
+     - La plage de tailles peut être ajustée avec l'argument `sizes=(min_size, max_size)`.
+     - Exemple : `sizes=(10, 100)` contrôle la taille minimale et maximale des points.
+
+3. **Exemple avec Seaborn** :
+   - La taille des points représente ici la variable `size` (taille des tables dans le dataset `tips`).
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", size="size")
+     ```
+
+4. **Avantages** :
+   - Ajoute une **dimension visuelle supplémentaire** sans encombrer le graphique.
+   - Permet de comparer l'importance relative des observations.
+   - Très utile pour analyser des relations pondérées ou des distributions inégales.
+
+5. **Limites** :
+   - **Perception visuelle** :
+     - L'œil humain est moins précis pour interpréter les tailles que les positions ou les couleurs.
+   - **Sur-encombrement** :
+     - Si les points sont trop nombreux ou de tailles très différentes, cela peut rendre le graphique confus.
+
+6. **Conclusion** :
+   - La sémantique de taille est idéale pour représenter une variable quantitative supplémentaire.
+   - À utiliser de manière judicieuse pour maintenir la clarté et l'efficacité du graphique.
+
+:::
+
+
+## Facettes
+
+```{python}
+#| eval: false
+sns.relplot(data=tips, x="total_bill", y="tip",
+  hue="smoker", col="time"
+)
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- Pas toujours efficace d'utiliser les sémantiques de teinte, style, etc.
+- Alternative : un graphique par valeur de la variable catégorielle.
+  - `col` / `col_wrap`: pour les facettes colonnes et nombre de colonnes par lignes.
+  - `row` : pour les facettes lignes.
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="smoker", col="time", height=3
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Facettes : Diviser les données en sous-graphes**
+
+1. **Objectif principal** :
+   - Créer plusieurs sous-graphes (facettes), chacun correspondant à une valeur différente d'une variable catégorielle.
+   - Alternative aux sémantiques de teinte (`hue`), style (`style`), ou taille (`size`) lorsque ces dimensions surchargent un graphique.
+
+2. **Caractéristiques clés** :
+   - **Facettes colonnes (`col`)** :
+     - Divise les sous-graphes en colonnes alignées horizontalement.
+   - **Facettes lignes (`row`)** :
+     - Divise les sous-graphes en lignes alignées verticalement.
+   - **Nombre de colonnes par ligne (`col_wrap`)** :
+     - Permet de limiter le nombre de facettes par ligne et de passer automatiquement à la suivante.
+
+3. **Exemple avec Seaborn** :
+   - Cet exemple divise les données par la variable `time` (déjeuner ou dîner), tout en utilisant la teinte (`hue="smoker"`) pour distinguer les fumeurs/non-fumeurs.
+     ```python
+     sns.relplot(data=tips, x="total_bill", y="tip", hue="smoker", col="time")
+     ```
+
+4. **Avantages** :
+   - Facilite l'analyse de la relation principale dans des sous-groupes spécifiques.
+   - Améliore la lisibilité lorsque les points d'un graphique combiné deviennent difficiles à interpréter.
+   - Permet de visualiser des interactions spécifiques à un sous-groupe.
+
+5. **Limites** :
+   - **Nombre de facettes** :
+     - Trop de facettes peuvent encombrer l'affichage, surtout dans des graphiques complexes.
+   - **Interprétation globale** :
+     - Les facettes isolent les données, ce qui peut rendre plus difficile l'observation de tendances globales.
+
+6. **Conclusion** :
+   - Les facettes sont un outil puissant pour segmenter les données et fournir une analyse plus ciblée.
+   - À utiliser lorsque des sémantiques comme `hue` ou `style` ne suffisent pas ou deviennent confuses.
+
+<!-- https://seaborn.pydata.org/tutorial/relational.html#showing-multiple-relationships-with-facets
+   -->
+
+:::
+
+# Graphiques en ligne
+
+## Au delà des nuages de points
+
+- Nuages de points : efficaces, mais pas toujours appropriés.
+- P.ex., pour comprendre les changements au cours du temps.
+
+  ```{python}
+  #| eval: false
+  dowjones = sns.load_dataset("dowjones")
+  sns.relplot(data=dowjones, x="Date", y="Price", kind="line")
+  ```
+
+  ```{python}
+  #| echo: false
+  dowjones = sns.load_dataset("dowjones")
+  ```
+
+::: {.columns}
+::: {.column width='60%'}
+
+```{python}
+print(dowjones.head(3))
+```
+
+- Alternative : graphique linéaire.
+- Utilisation de `kind="line"` pour `relplot()`.
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=dowjones, x="Date", y="Price", kind="line", height=4)
+```
+
+:::
+:::
+
+::: notes
+
+**Au-delà des nuages de points : Graphiques linéaires**
+
+1. **Pourquoi aller au-delà des nuages de points ?**
+   - Bien que les nuages de points soient excellents pour explorer les relations entre deux variables, ils ne conviennent pas toujours à certains types de données, comme les séries temporelles.
+   - Lorsqu'on analyse des données qui évoluent dans le temps ou montrent des tendances continues, un graphique linéaire peut être plus approprié.
+
+2. **Graphiques linéaires avec Seaborn** :
+   - Utilisation de `relplot()` avec l'argument `kind="line"`.
+   - Ce type de graphique relie les points de données consécutifs pour mettre en évidence des tendances ou des évolutions.
+
+3. **Exemple avec un dataset de séries temporelles** :
+   - Le dataset `dowjones` montre les fluctuations de l'indice Dow Jones sur une période donnée.
+     ```python
+     sns.relplot(data=dowjones, x="Date", y="Price", kind="line")
+     ```
+
+4. **Avantages des graphiques linéaires** :
+   - **Visualisation des tendances** :
+     - Illustre les variations continues ou progressives d'une variable en fonction d'une autre (p. ex., temps).
+   - **Identification des cycles ou anomalies** :
+     - Permet de détecter des points de rupture ou des patterns récurrents.
+
+5. **Limites** :
+   - Moins utile si les points ne suivent pas un ordre naturel ou chronologique.
+   - Une trop grande densité de données peut rendre la ligne illisible.
+
+6. **Quand choisir un graphique linéaire ?**
+   - Lorsque les données ont une dimension ordonnée (comme les dates ou les séquences).
+   - Idéal pour représenter des séries temporelles, des processus continus ou des tendances générales.
+
+**Conclusion** :
+Les graphiques linéaires sont un complément essentiel aux nuages de points, particulièrement adaptés pour visualiser les tendances et évolutions dans des séries temporelles ou des données continues.
+
+:::
+
+## Aggrégation et incertitude (1/2)
+
+- Ensembles de données avec plusieurs observations pour chaque valeur de "x" ?
+
+  ```{python}
+  #| eval: false
+  fmri = sns.load_dataset("fmri")
+  sns.relplot(data=fmri, x="timepoint", y="signal", kind="line")
+  ```
+
+```{python}
+#| echo: false
+fmri = sns.load_dataset("fmri")
+```
+
+::: {.columns}
+::: {.column width='65%'}
+
+```{python}
+print(fmri.head(4))
+```
+
+- Défaut de seaborn : moyenne et intervalle de confiance à 95%.
+
+:::
+
+::: {.column width='35%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", height=4)
+```
+
+:::
+:::
+
+::: notes
+
+**Agrégation et incertitude (1/2)**
+
+1. **Problème à résoudre** :
+   - Lorsqu'un ensemble de données contient plusieurs observations pour une même valeur de `x`, il est difficile de représenter toutes les données de manière lisible.
+   - Exemple : les données `fmri` contiennent plusieurs mesures du signal cérébral pour chaque point temporel (`timepoint`).
+
+2. **Solution par défaut de Seaborn** :
+   - Lorsqu'on utilise `relplot()` avec `kind="line"`, Seaborn calcule automatiquement la **moyenne** pour chaque valeur de `x`.
+   - De plus, Seaborn ajoute un **intervalle de confiance** (IC) à 95 %, qui est représenté par une bande autour de la courbe.
+
+3. **Avantages de l'approche** :
+   - **Synthèse visuelle** :
+     - La moyenne fournit une courbe claire qui résume la tendance générale.
+   - **Représentation de l'incertitude** :
+     - L'IC permet de visualiser la variabilité ou la précision des estimations pour chaque point.
+
+4. **Exemple avec Seaborn** :
+   - Visualiser les signaux cérébraux au fil du temps avec `relplot` :
+     ```python
+     sns.relplot(data=fmri, x="timepoint", y="signal", kind="line")
+     ```
+   - Ce graphique montre la moyenne des signaux pour chaque point temporel, accompagnée d'une bande indiquant l'incertitude.
+
+5. **Limites** :
+   - Les intervalles de confiance dépendent de la variabilité des données et de la taille de l'échantillon pour chaque `x`.
+   - Si les données sont fortement asymétriques ou contiennent des valeurs aberrantes, la moyenne et l'IC peuvent ne pas refléter la réalité.
+
+6. **Quand utiliser cette approche ?**
+   - Idéal pour les séries temporelles ou autres données où plusieurs observations partagent les mêmes valeurs de `x`.
+   - Convient lorsque l'on souhaite communiquer une tendance générale tout en tenant compte de la variabilité.
+
+**Conclusion** :
+L'agrégation et la représentation de l'incertitude sont des outils puissants pour simplifier des ensembles de données complexes et transmettre des informations claires et fiables.
+
+:::
+
+
+
+## Aggrégation et incertitude (2/2)
+
+- Le calcul des intervales de confiance par défaut peut prendre du temps pour de grands ensembles de données.
+
+::: {.columns}
+::: {.column width='50%'}
+
+- Alternative 1 :  désactiver l'aggrégation avec `errorbar=None`.
+
+  ```{python}
+  #| echo: false
+  sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", height=3, errorbar=None)
+  ```
+
+:::
+::: {.column width='50%'}
+
+- Alternative 2 : utiliser la déviation standard avec `errorbar="sd"`.
+
+  ```{python}
+  #| echo: false
+  sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", height=3, errorbar="sd")
+  ```
+
+:::
+:::
+
+::: notes
+
+**Agrégation et incertitude (2/2)**
+
+1. **Problème potentiel avec l'agrégation par défaut** :
+   - Le calcul des intervalles de confiance (IC) par défaut dans Seaborn peut être lent pour des ensembles de données volumineux.
+   - Les IC standard (95 %) ne sont pas toujours pertinents ou nécessaires pour tous les types d'analyse.
+
+2. **Alternatives pour gérer l'agrégation** :
+   - **Alternative 1 : Désactiver complètement l'agrégation**
+     - Utiliser `errorbar=None` pour désactiver les intervalles d'erreur.
+     - Utile si vous souhaitez afficher toutes les observations sans aucun résumé statistique.
+     - Exemple :
+       ```python
+       sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", errorbar=None)
+       ```
+   - **Alternative 2 : Utiliser la déviation standard**
+     - Remplacer les intervalles de confiance par la déviation standard (`errorbar="sd"`).
+     - Cela montre la variabilité des données au lieu de la précision de la moyenne.
+     - Exemple :
+       ```python
+       sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", errorbar="sd")
+       ```
+
+3. **Quand utiliser ces alternatives ?**
+   - **Désactiver l'agrégation** :
+     - Lorsque vous souhaitez explorer toutes les données brutes sans résumé.
+   - **Déviation standard** :
+     - Lorsque vous souhaitez visualiser la variabilité au sein des données, plutôt que la précision de la moyenne.
+
+4. **Avantages des alternatives** :
+   - Réduction du temps de calcul pour les grands ensembles de données.
+   - Plus de flexibilité pour adapter les visualisations à des besoins spécifiques.
+
+5. **Limites des alternatives** :
+   - En désactivant l'agrégation (`errorbar=None`), le graphique peut devenir confus si les données brutes sont denses.
+   - Les déviations standard (`errorbar="sd"`) ne tiennent pas compte de la taille de l'échantillon, contrairement aux IC.
+
+6. **Conclusion** :
+   - Ces alternatives permettent d'adapter la gestion de l'agrégation et de l'incertitude selon le contexte.
+   - Elles offrent plus de contrôle et réduisent le risque de surcharge de calculs ou de mauvaise interprétation des données.
+
+:::
+
+
+## Mappages sémantiques
+
+```{python}
+#| eval: false
+sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", hue="event")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- Ajout de la sémantique de teinte pour distinguer les événements.
+- Fonctionne de manière similaire aux les nuages de points.
+
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", hue="event", height=4)
+```
+
+:::
+:::
+
+::: notes
+
+**Mappages sémantiques dans les graphiques linéaires**
+
+1. **Objectif principal** :
+   - Utiliser la **sémantique de teinte** (`hue`) pour distinguer les différentes catégories d'une variable sur un graphique linéaire.
+   - Cela permet de représenter plusieurs séries dans un même graphique tout en conservant leur distinction.
+
+2. **Fonctionnement similaire aux nuages de points** :
+   - Comme pour les nuages de points (`scatterplot`), les mappages sémantiques ajoutent des informations supplémentaires grâce à des couleurs.
+   - Chaque couleur représente une catégorie distincte de la variable choisie.
+
+3. **Exemple avec Seaborn** :
+   - Dans cet exemple, la variable `event` est utilisée pour colorer les lignes, ce qui distingue les différents types d'événements cérébraux dans le dataset `fmri` :
+     ```python
+     sns.relplot(data=fmri, x="timepoint", y="signal", kind="line", hue="event")
+     ```
+
+4. **Avantages des mappages sémantiques** :
+   - **Clarté visuelle** :
+     - Permet de distinguer rapidement les séries correspondant à différentes catégories.
+   - **Flexibilité** :
+     - Peut être combiné avec d'autres sémantiques, comme le style (`style`) ou la taille (`size`), pour des visualisations encore plus riches.
+
+5. **Limites** :
+   - **Surcharge visuelle** :
+     - Trop de catégories peuvent rendre le graphique confus.
+   - **Problème de perception** :
+     - Certaines couleurs peuvent être difficiles à distinguer, notamment pour les personnes daltoniennes.
+
+6. **Quand utiliser la teinte (`hue`) ?**
+   - Lorsqu'il est nécessaire de visualiser et de comparer plusieurs séries en parallèle.
+   - Utile pour explorer des relations complexes entre plusieurs variables.
+
+**Conclusion** :
+Les mappages sémantiques, comme la teinte, enrichissent les graphiques en ajoutant des dimensions supplémentaires tout en maintenant leur lisibilité. Ils sont particulièrement efficaces pour analyser et communiquer des relations catégoriques sur des graphiques linéaires.
+
+:::
+
+
+## Style des lignes
+
+2 attributs :  `dashes` (style des lignes) et `markers` (présence de marqueurs).
+
+::: {.columns}
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+sns.relplot(
+    data=fmri, kind="line",
+    x="timepoint", y="signal",
+    hue="region", style="event",
+)
+```
+
+```{python}
+#| echo: false
+sns.relplot(
+    data=fmri, kind="line",
+    x="timepoint", y="signal",
+    hue="region", style="event",
+    height=3
+)
+```
+
+
+
+::: 
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+sns.relplot(
+    data=fmri, kind="line",
+    x="timepoint", y="signal",
+    hue="region", style="event",
+    dashes=False, markers=True,
+)
+```
+
+```{python}
+#| echo: false
+sns.relplot(
+    data=fmri, kind="line",
+    x="timepoint", y="signal",
+    hue="region", style="event",
+    dashes=False, markers=True,
+    height=3
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Style des lignes dans les graphiques linéaires**
+
+1. **Personnalisation des lignes** :
+   - Seaborn offre deux attributs principaux pour modifier l'apparence des lignes dans un graphique :
+     - **`dashes`** :
+       - Permet de contrôler le style des lignes (pleines, pointillées, etc.).
+     - **`markers`** :
+       - Ajoute des marqueurs à chaque point de données (cercle, carré, etc.).
+
+2. **Mappages sémantiques** :
+   - Le style des lignes peut être mappé à une variable catégorielle grâce à l'argument `style`.
+   - Exemple :
+     ```python
+     sns.relplot(
+         data=fmri, kind="line",
+         x="timepoint", y="signal",
+         hue="region", style="event"
+     )
+     ```
+     - Ici, les couleurs (`hue`) distinguent les régions, tandis que les styles de lignes (`style`) différencient les événements.
+
+3. **Combinaisons de styles** :
+   - **Lignes pleines avec marqueurs** :
+     - En désactivant les tirets (`dashes=False`) et en activant les marqueurs (`markers=True`), les points de données sont mis en évidence tout en maintenant une ligne continue.
+     ```python
+     sns.relplot(
+         data=fmri, kind="line",
+         x="timepoint", y="signal",
+         hue="region", style="event",
+         dashes=False, markers=True
+     )
+     ```
+
+4. **Avantages des styles personnalisés** :
+   - **Lisibilité accrue** :
+     - Les marqueurs mettent en évidence les points de données spécifiques.
+   - **Flexibilité visuelle** :
+     - Les styles de lignes et les marqueurs aident à distinguer plusieurs séries dans un même graphique.
+
+5. **Limites des styles** :
+   - **Complexité visuelle** :
+     - Trop de styles différents peuvent rendre le graphique confus.
+   - **Perception des styles** :
+     - Les styles de lignes (comme les tirets) peuvent être moins visibles que les couleurs.
+
+6. **Quand utiliser ces options ?**
+   - Lorsque vous avez plusieurs séries à représenter et que vous souhaitez différencier les données en utilisant autre chose que les couleurs.
+   - Utile pour des graphiques en noir et blanc ou pour améliorer l'accessibilité.
+
+**Conclusion** :
+La personnalisation des styles de lignes et l'ajout de marqueurs sont des outils puissants pour clarifier les graphiques linéaires. Ils permettent de distinguer facilement différentes catégories tout en mettant en avant les points de données clés.
+
+:::
+
+
+
+
+## Facettes
+
+```{python}
+#| eval: false
+sns.relplot(data=fmri, kind="line", x="timepoint", y="signal",
+    hue="region"
+    col="event"
+)
+```
+
+::: {.columns}
+::: {.column width='50%'}
+
+- Comme pour les nuages de points, les facettes offrent une alternative aux sémantiques de teinte, style, etc.
+- Un graphique pour chaque valeur de la variable catégorielle.
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=fmri, kind="line", x="timepoint", y="signal",
+    hue="region", col="event",
+    height=3.5
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Facettes dans les graphiques linéaires**
+
+1. **Concept des facettes** :
+   - Les facettes divisent les données en sous-ensembles et créent un graphique séparé pour chaque sous-ensemble.
+   - Cette méthode est une alternative aux sémantiques comme la teinte (`hue`) ou le style (`style`).
+
+2. **Pourquoi utiliser des facettes ?**
+   - Lorsque les graphiques deviennent surchargés à cause de nombreuses catégories, les facettes simplifient la visualisation en séparant les catégories dans des sous-graphiques.
+   - Elles permettent une comparaison plus claire entre les groupes.
+
+3. **Exemple avec Seaborn** :
+   - L'exemple suivant divise les données du dataset `fmri` en deux facettes, une pour chaque type d'événement (`event`), tout en différenciant les régions (`region`) par des couleurs :
+     ```python
+     sns.relplot(
+         data=fmri, kind="line",
+         x="timepoint", y="signal",
+         hue="region", col="event"
+     )
+     ```
+
+4. **Avantages des facettes** :
+   - **Clarté visuelle** :
+     - Chaque facette montre uniquement un sous-ensemble des données, évitant la surcharge d'informations.
+   - **Comparaisons facilitées** :
+     - Les facettes permettent de comparer les sous-groupes côte à côte.
+   - **Flexibilité** :
+     - Possibilité de créer des facettes en colonnes (`col`) ou en lignes (`row`).
+
+5. **Limites** :
+   - Trop de facettes peuvent rendre la visualisation difficile à interpréter.
+   - Nécessite un espace d'affichage suffisant, surtout avec un grand nombre de catégories.
+
+6. **Quand utiliser les facettes ?**
+   - Lorsque vous avez plusieurs catégories dans une variable et que vous souhaitez les examiner séparément.
+   - Particulièrement utile pour visualiser les relations complexes en décomposant les données.
+
+**Conclusion** :
+Les facettes sont un outil puissant pour organiser les données complexes et les rendre plus lisibles. Elles permettent une exploration approfondie des données tout en conservant une visualisation claire et compréhensible.
+
+:::
+
+
+## Mesures répétées
+
+```{python}
+#| eval: false
+sns.relplot(data=fmri, kind="line", x="timepoint", y="signal",
+    hue="region", col="event",
+    estimator=None, units="subject"
+)
+```
+
+::: {.columns}
+::: {.column width='50%'}
+
+- **Mesures répétées** : données où plusieurs mesures sont prises pour chaque sujet.
+- Utilisation de `units="subject"` pour indiquer les répétitions.
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| echo: false
+sns.relplot(data=fmri, kind="line", x="timepoint", y="signal",
+    hue="region", col="event",
+    estimator=None, units="subject",
+    height=3.5
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Mesures répétées dans les graphiques linéaires**
+
+1. **Concept des mesures répétées** :
+   - Les mesures répétées surviennent lorsque plusieurs observations sont prises pour le même sujet (ou unité d'analyse).
+   - Cela peut introduire de la dépendance dans les données, ce qui nécessite une représentation spéciale.
+
+2. **Utilisation dans Seaborn** :
+   - Avec la fonction `relplot` et un graphique linéaire, vous pouvez visualiser ces données en précisant :
+     - **`units`** :
+       - Spécifie la colonne qui identifie les unités de répétition (p. ex., les sujets).
+     - **`estimator=None`** :
+       - Désactive le calcul des statistiques d'agrégation (comme la moyenne), pour afficher chaque mesure individuellement.
+
+3. **Exemple** :
+   - Le graphique suivant montre les données de signal cérébral pour chaque sujet, différenciées par région (`region`) et divisées en facettes par type d'événement (`event`) :
+     ```python
+     sns.relplot(
+         data=fmri, kind="line",
+         x="timepoint", y="signal",
+         hue="region", col="event",
+         estimator=None, units="subject"
+     )
+     ```
+
+4. **Avantages de visualiser les mesures répétées** :
+   - **Transparence** :
+     - Toutes les observations sont affichées, ce qui permet de détecter des variations entre les sujets.
+   - **Analyse exploratoire** :
+     - Permet d'explorer la variabilité intra- et inter-sujets.
+
+5. **Limites** :
+   - **Surcharge visuelle** :
+     - Si le nombre de sujets est important, le graphique peut devenir illisible.
+   - **Manque de résumé statistique** :
+     - Les tendances générales peuvent être difficiles à percevoir sans agrégation.
+
+6. **Quand utiliser cette approche ?**
+   - Lorsque vous souhaitez examiner directement les données brutes et comprendre la variabilité au sein des sujets.
+   - Utile dans des études où les différences entre sujets sont importantes (p. ex., neurosciences, psychologie).
+
+**Conclusion** :
+Visualiser les mesures répétées avec `units` et `estimator=None` offre une perspective précieuse sur la structure des données, en mettant en lumière la variabilité individuelle.
+
+:::
+
+
+
+# Personalisation des graphiques
+
+## Personnalisation des graphiques
+
+- Comme mentionné, un graph complet doit être :
+  - approprié à son but,
+  - avoir des axes étiquetés et des unités indiquées,
+  - avoir un titre et une légende pour des informations supplémentaires.
+- Seaborn permet ce genre de personnalisation.
+
+::: notes
+
+**Personnalisation des graphiques avec Seaborn**
+
+1. **Pourquoi personnaliser les graphiques ?**
+   - Un graphique clair et informatif est essentiel pour communiquer efficacement les résultats.
+   - La personnalisation améliore la lisibilité et l'impact visuel tout en rendant les visualisations appropriées à leur objectif.
+
+2. **Éléments clés d'un graphique complet :**
+   - **Adéquation au but** :
+     - Le type de graphique doit correspondre à la question posée ou au message à transmettre.
+   - **Axes étiquetés et unités indiquées** :
+     - Les axes doivent avoir des noms clairs et inclure les unités de mesure, si nécessaire.
+   - **Titre et légende** :
+     - Un titre descriptif et une légende claire apportent un contexte et permettent de comprendre rapidement le graphique.
+
+3. **Personnalisation dans Seaborn** :
+   - Seaborn offre plusieurs options pour personnaliser les graphiques :
+     - Ajouter un titre : `.set_title("Titre du graphique")`.
+     - Étiqueter les axes : `.set(xlabel="Nom de l'axe X", ylabel="Nom de l'axe Y")`.
+     - Ajuster la légende : `.legend(title="Titre de la légende")`.
+   - Ces personnalisations sont accessibles via des méthodes de l'objet matplotlib sous-jacent ou via des paramètres Seaborn.
+
+4. **Avantages d'une personnalisation efficace :**
+   - **Communication claire** :
+     - Permet au lecteur de comprendre rapidement le contenu et les conclusions du graphique.
+   - **Focus sur les données** :
+     - Réduit les distractions visuelles inutiles en mettant l'accent sur les informations importantes.
+   - **Impact visuel** :
+     - Améliore l'esthétique, rendant les graphiques plus engageants.
+
+5. **Quand personnaliser ?**
+   - Toujours, surtout pour des présentations ou des publications.
+   - Lorsqu'une visualisation doit transmettre un message clair et précis à un public spécifique.
+
+**Conclusion** :
+La personnalisation des graphiques est une étape cruciale pour transformer des données brutes en une visualisation claire, informative et impactante. Seaborn fournit les outils nécessaires pour répondre à ces exigences tout en maintenant une facilité d'utilisation.
+
+:::
+
+
+## Annotation des axes et titre
+
+```{python}
+#| eval: false
+g = sns.relplot(data=dowjones, x="Date", y="Price", kind="line")
+g.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+```
+
+::: {.columns}
+::: {.column width='60%'}
+
+- Techniquement, `relplot()` renvoie un objet de type `FacetGrid`.
+- Cet objet a de nombreuses méthodes pour personnaliser le graphique.
+- `set()` permet de personnaliser les étiquettes des axes, le titre, etc.
+
+:::
+::: {.column width='40%'}
+
+```{python}
+#| echo: false
+g = sns.relplot(data=dowjones, x="Date", y="Price", kind="line", height=4)
+g.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+```
+
+:::
+:::
+
+::: notes
+
+**Annotation des axes et ajout d'un titre dans Seaborn**
+
+1. **Pourquoi annoter les axes et ajouter un titre ?**
+   - Les annotations et titres offrent un contexte essentiel au lecteur.
+   - Ils expliquent ce que chaque axe représente et décrivent globalement le graphique.
+
+2. **Personnalisation avec `FacetGrid`** :
+   - Seaborn, via des fonctions comme `relplot()`, renvoie un objet de type `FacetGrid`.
+   - Cet objet contient des méthodes pour personnaliser le graphique, y compris les axes et le titre.
+
+3. **Exemple avec `set()`** :
+   - La méthode `set()` permet d'ajouter ou de modifier :
+     - Les étiquettes des axes (`xlabel`, `ylabel`).
+     - Le titre global du graphique (`title`).
+   - Exemple :
+     ```python
+     g = sns.relplot(
+         data=dowjones, x="Date", y="Price", kind="line"
+     )
+     g.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+     ```
+
+4. **Avantages d'utiliser `set()`** :
+   - **Simplicité** :
+     - Une seule méthode permet de personnaliser plusieurs éléments du graphique.
+   - **Lisibilité accrue** :
+     - Les titres et étiquettes aident à transmettre un message clair et direct.
+
+5. **Meilleures pratiques** :
+   - Les titres doivent être concis et informatifs.
+   - Les étiquettes des axes doivent inclure les unités de mesure lorsque c'est pertinent (p. ex., "Price (USD)").
+   - Le style doit être cohérent sur tous les graphiques d'une même présentation ou analyse.
+
+6. **Conclusion** :
+   - Les annotations et titres améliorent considérablement la qualité et la clarté des visualisations.
+   - Avec Seaborn, ces personnalisations sont simples et accessibles via l'objet `FacetGrid`.
+
+:::
+
+## Annotations et facettes
+
+```{python}
+#| eval: false
+g = sns.relplot(tips, x="total_bill", y="tip", col="sex", row="time")
+g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+```
+
+::: {.columns}
+::: {.column width='50%'}
+
+- Les facettes peuvent aussi être annotées.
+- `set_titles()` permet de personnaliser leurs titres.
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| echo: false
+g = sns.relplot(tips, x="total_bill", y="tip", col="sex", row="time", height=2)
+g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+```
+
+:::
+:::
+
+::: notes
+
+**Annotations et personnalisation des facettes avec Seaborn**
+
+1. **Pourquoi annoter les facettes ?**
+   - Les facettes divisent les données en sous-graphes. Chacun doit être clairement annoté pour indiquer à quoi il correspond.
+   - Les annotations aident à interpréter rapidement les données représentées dans chaque facette.
+
+2. **Méthodes de personnalisation** :
+   - **`set()`** :
+     - Ajoute ou modifie les étiquettes des axes de toutes les facettes.
+     - Exemple :
+       ```python
+       g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+       ```
+   - **`set_titles()`** :
+     - Personnalise les titres des colonnes et des lignes des facettes.
+     - Paramètres :
+       - `col_template` : format pour les titres des colonnes.
+       - `row_template` : format pour les titres des lignes.
+     - Exemple :
+       ```python
+       g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+       ```
+
+3. **Exemple avec `FacetGrid`** :
+   - Visualisation des pourboires (`tip`) en fonction du montant total de l'addition (`total_bill`), catégorisée par sexe (`sex`) et moment (`time`) :
+     ```python
+     g = sns.relplot(
+         tips, x="total_bill", y="tip", col="sex", row="time"
+     )
+     g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+     g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+     ```
+
+4. **Avantages d'annoter les facettes** :
+   - **Clarté** :
+     - Les titres personnalisés facilitent la compréhension de chaque facette.
+   - **Esthétique** :
+     - Des annotations bien conçues améliorent la présentation globale.
+
+5. **Meilleures pratiques** :
+   - Utilisez des titres descriptifs mais concis.
+   - Assurez-vous que les étiquettes des axes soient visibles et compréhensibles.
+   - Harmonisez le style des annotations sur toutes les facettes.
+
+**Conclusion** :
+Les annotations des facettes renforcent la lisibilité et la pertinence des visualisations. Avec Seaborn, elles peuvent être facilement configurées grâce à des méthodes intuitives comme `set()` et `set_titles()`.
+
+:::
+
+
+## Changer limites/graduations des axes
+
+
+```{python}
+#| eval: false
+g = sns.relplot(tips, x="total_bill", y="tip", col="sex", row="time")
+g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+g.set(xlim=(0, 60), ylim=(0, 12), xticks=[10, 30, 50], yticks=[2, 6, 10])
+```
+
+::: {.columns}
+::: {.column width='50%'}
+
+- En plus des étiquettes, les limites et les graduations des axes peuvent être changées.
+- A nouveau, `set()` est utilisé.
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| echo: false
+g = sns.relplot(tips, x="total_bill", y="tip", col="sex", row="time", height=2)
+g.set(xlabel="Total bill ($)", ylabel="Tip ($)")
+g.set_titles(col_template="{col_name} patrons", row_template="{row_name}")
+g.set(xlim=(0, 60), ylim=(0, 12), xticks=[10, 30, 50], yticks=[2, 6, 10])
+g.tight_layout()
+```
+
+:::
+:::
+
+
+::: notes
+
+**Modification des limites et graduations des axes avec Seaborn**
+
+1. **Pourquoi modifier les limites et les graduations des axes ?**
+   - Les limites permettent de concentrer l'analyse sur une plage de données spécifique.
+   - Les graduations assurent une lisibilité et une interprétation plus facile des axes.
+
+2. **Utilisation de `set()` pour les axes** :
+   - La méthode `set()` permet de configurer :
+     - **Limites des axes** : `xlim` et `ylim`.
+     - **Graduations des axes** : `xticks` et `yticks`.
+   - Exemple :
+     ```python
+     g.set(
+         xlim=(0, 60), ylim=(0, 12),  # Définir les limites
+         xticks=[10, 30, 50], yticks=[2, 6, 10]  # Définir les graduations
+     )
+     ```
+
+3. **Application à un `FacetGrid`** :
+   - Visualisation des pourboires (`tip`) en fonction du montant total de l'addition (`total_bill`), avec des facettes par sexe (`sex`) et moment (`time`) :
+     ```python
+     g = sns.relplot(
+         tips, x="total_bill", y="tip", col="sex", row="time"
+     )
+     g.set(
+         xlabel="Total bill ($)", ylabel="Tip ($)",
+         xlim=(0, 60), ylim=(0, 12),
+         xticks=[10, 30, 50], yticks=[2, 6, 10]
+     )
+     ```
+
+4. **Avantages de personnaliser les axes** :
+   - **Lisibilité accrue** :
+     - Les graduations adaptées rendent les graphiques plus compréhensibles.
+   - **Focus analytique** :
+     - En ajustant les limites, on peut se concentrer sur une plage de données pertinente.
+   - **Harmonisation** :
+     - Utile lorsque plusieurs graphiques doivent avoir des échelles comparables.
+
+5. **Meilleures pratiques** :
+   - Choisissez des limites et graduations adaptées à vos données et à votre message.
+   - Assurez-vous que les graduations soient suffisamment espacées pour éviter la surcharge visuelle.
+   - Utilisez des nombres ronds pour les graduations lorsque possible, pour plus de clarté.
+
+**Conclusion** :
+La modification des limites et graduations des axes est une étape clé pour produire des graphiques lisibles, informatifs et bien adaptés à leur objectif. Avec Seaborn, cette personnalisation est simple grâce à la méthode `set()`.
+
+:::
+
+
+## Changer l'échelle des axes
+
+- Parfois, les échelles linéaires ne sont pas appropriées : `yscale` et `xscale` permettent de les modifier.
+- P.ex., utiliser une échelle logarithmique pour des données très variables, des croissances exponentielles, etc.
+
+::: {.columns}
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+g = sns.relplot(data=dowjones, x="Date", y="Price", kind="line")
+```
+
+```{python}
+#| echo: false
+g = sns.relplot(data=dowjones, x="Date", y="Price", kind="line", height=3.5)
+g.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+```
+
+:::
+::: {.column width='50%'}
+
+```{python}
+#| eval: false
+g.set(yscale="log")
+```
+
+```{python}
+#| echo: false
+p = sns.relplot(data=dowjones, x="Date", y="Price", kind="line", height=3.5)
+p.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+p.set(yscale="log")
+```
+
+:::
+:::
+
+::: notes
+
+**Modification de l'échelle des axes avec Seaborn**
+
+1. **Pourquoi changer l'échelle des axes ?**
+   - Une échelle linéaire peut ne pas être adaptée à toutes les données, notamment lorsqu'il y a des différences de grandeurs importantes entre les valeurs.
+   - Une échelle logarithmique ou autre peut rendre les tendances plus claires et faciliter l'interprétation.
+
+2. **Accès aux axes via `FacetGrid`** :
+   - La méthode set permet de personnaliser les axes d'un graphique, y compris l'échelle :
+     - **`yscale`** : pour l'axe des ordonnées (Y).
+     - **`xscale`** : pour l'axe des abscisses (X).
+
+3. **Exemple d'utilisation** :
+   - Visualisation des prix du Dow Jones avec une échelle logarithmique sur l'axe des ordonnées :
+     ```python
+     p = sns.relplot(data=dowjones, x="Date", y="Price", kind="line")
+     p.set(ylabel="Price (USD)", title="Dow Jones Industrial Average")
+     p.set(yscale="log")
+     ```
+
+4. **Avantages des échelles personnalisées** :
+   - **Echelle logarithmique** :
+     - Représente les données de manière proportionnelle, montrant les ordres de grandeur.
+     - Utile pour visualiser des valeurs très variables (p.ex. croissance exponentielle).
+   - **Echelle personnalisée** :
+     - Permet une meilleure représentation pour des données spécifiques.
+
+5. **Meilleures pratiques** :
+   - Indiquez clairement l'échelle sur le graphique (p.ex., dans le titre ou les étiquettes d'axes).
+   - Utilisez des échelles adaptées à vos données et à votre objectif analytique.
+   - Testez différentes échelles pour trouver celle qui maximise la clarté et l'information du graphique.
+
+**Conclusion** :
+Changer l'échelle des axes est un outil puissant pour adapter la visualisation à la nature des données. En utilisant les attributs des axes dans Seaborn, cette personnalisation est simple et flexible.
+
+:::
+
+
+
+## Changer les couleurs
+
+<!-- https://seaborn.pydata.org/tutorial/color_palettes.html -->
+
+- **Palette de couleurs** : ensemble de couleurs ordonnées.
+    - [`sns.color_palette()`](https://seaborn.pydata.org/tutorial/color_palettes.html#palette-tutorial)
+
+- Les 3 propriétés principales d'une couleur :
+    - Teinte : distingue les "différentes couleurs".
+    <svg  width="440" height="55"><rect x="0" y="0" width="55" height="55" style="fill:#e77c8d;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="55" y="0" width="55" height="55" style="fill:#c69255;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="110" y="0" width="55" height="55" style="fill:#98a255;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="165" y="0" width="55" height="55" style="fill:#56ad74;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="220" y="0" width="55" height="55" style="fill:#5aa9a2;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="275" y="0" width="55" height="55" style="fill:#5ea5c5;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="330" y="0" width="55" height="55" style="fill:#a291e1;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="385" y="0" width="55" height="55" style="fill:#e274cf;stroke-width:2;stroke:rgb(255,255,255)"/></svg>
+
+
+    - Saturation : intensité de la couleur.
+    <svg  width="440" height="55"><rect x="0" y="0" width="55" height="55" style="fill:#8c8c8c;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="55" y="0" width="55" height="55" style="fill:#828996;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="110" y="0" width="55" height="55" style="fill:#79869f;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="165" y="0" width="55" height="55" style="fill:#6f83a9;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="220" y="0" width="55" height="55" style="fill:#6581b3;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="275" y="0" width="55" height="55" style="fill:#5b7ebd;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="330" y="0" width="55" height="55" style="fill:#527bc6;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="385" y="0" width="55" height="55" style="fill:#4878d0;stroke-width:2;stroke:rgb(255,255,255)"/></svg>
+
+
+    - Luminosité : quantité de lumière réfléchie par la couleur.
+    <svg  width="440" height="55"><rect x="0" y="0" width="55" height="55" style="fill:#1a1a1a;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="55" y="0" width="55" height="55" style="fill:#27344d;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="110" y="0" width="55" height="55" style="fill:#345082;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="165" y="0" width="55" height="55" style="fill:#416ab6;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="220" y="0" width="55" height="55" style="fill:#618ad5;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="275" y="0" width="55" height="55" style="fill:#91acdf;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="330" y="0" width="55" height="55" style="fill:#c2d0e9;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="385" y="0" width="55" height="55" style="fill:#f2f2f2;stroke-width:2;stroke:rgb(255,255,255)"/></svg>
+
+
+::: notes
+
+**Comprendre les Propriétés des Couleurs et leur Utilisation dans les Visualisations**
+
+**1. Qu'est-ce qu'une palette de couleurs ?**
+
+  - Une palette de couleurs est un ensemble ordonné de couleurs utilisées pour représenter des données dans une visualisation.
+  - Dans Seaborn, on utilise souvent la fonction [`sns.color_palette()`](https://seaborn.pydata.org/tutorial/color_palettes.html#palette-tutorial) pour définir ou manipuler ces palettes.
+
+**2. Les Trois Dimensions Principales des Couleurs :**
+
+**a. Teinte :**
+
+  - La teinte distingue les couleurs dans leur "nature" (exemple : rouge, bleu, vert).
+  - Elle est essentielle pour coder des variables catégoriques où chaque catégorie a une couleur unique.
+  - Exemple : la teinte est utilisée pour différencier des classes dans un graphique à nuages de points.
+
+**b. Saturation :**
+
+  - La saturation définit l'intensité ou la pureté d'une couleur.
+  - Une saturation plus élevée rend une couleur plus vive, tandis qu'une saturation plus faible la rend plus terne.
+  - Cela aide à coder des valeurs d'intensité ou d'importance dans une visualisation.
+
+**c. Luminosité :**
+
+  - La luminosité représente la quantité de lumière réfléchie par une couleur.
+  - Des couleurs plus lumineuses apparaissent plus proches du blanc, et des couleurs moins lumineuses, plus sombres.
+  - Utilisée pour coder des informations liées à des niveaux ou des gradients.
+
+**3. Pourquoi ces propriétés sont-elles importantes ?**
+
+  - Une visualisation bien conçue utilise les dimensions de la couleur de manière stratégique pour améliorer la lisibilité, la compréhension et l'impact visuel.
+  - Par exemple :
+    - **Teinte** : pour représenter différentes catégories (ex. : classes dans une légende).
+    - **Saturation** : pour souligner les points importants ou moins importants.
+    - **Luminosité** : pour indiquer des intensités ou des gradients.
+
+**4. Meilleures pratiques dans l'utilisation des couleurs :**
+
+  - **Clarté visuelle** : Choisissez des palettes qui maximisent la distinction entre les catégories ou les niveaux.
+  - **Compatibilité** : Assurez-vous que la palette est adaptée aux lecteurs daltoniens (ex. : palettes perceptuelles comme celles de Seaborn).
+  - **Consistance** : Utilisez la même palette pour des variables similaires dans plusieurs graphiques.
+
+**En résumé**, les couleurs ne sont pas seulement décoratives. Elles doivent être utilisées avec intention pour transmettre les données de manière efficace et esthétique.
+
+:::
+
+
+## Palettes qualitatives
+
+::: {.columns}
+::: {.column width='60%'}
+
+- La teinte représente les catégories.
+- Palettes dans seaborn : `deep`, `pastel`, `dark`, `muted`, `bright`, `colorblind`.
+- Par exemple :
+
+```{python}
+#| eval: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="smoker",
+  palette="deep"
+)
+```
+
+:::
+::: {.column width='40%'}
+
+![](../images/visualization/color_palettes_22_0.svg)
+
+:::
+:::
+
+
+::: notes
+
+**Palettes Qualitatives dans Seaborn**
+
+**1. Qu'est-ce qu'une palette qualitative ?**
+
+  - Une palette qualitative utilise la **teinte** pour représenter des catégories distinctes dans une visualisation.
+  - Chaque couleur de la palette correspond à une catégorie, facilitant la différenciation.
+
+**2. Palettes disponibles dans Seaborn :**
+
+  - Seaborn propose plusieurs palettes qualitatives adaptées à différents contextes :
+    - **`deep`** : Une palette par défaut avec des couleurs vives et distinctes.
+    - **`pastel`** : Des teintes plus douces pour un effet subtil.
+    - **`dark`** : Des couleurs plus sombres, idéales pour des fonds clairs.
+    - **`muted`** : Un équilibre entre les palettes `pastel` et `deep`.
+    - **`bright`** : Des couleurs vibrantes pour attirer l'attention.
+    - **`colorblind`** : Une palette optimisée pour les spectateurs daltoniens.
+
+**3. Exemple pratique :**
+
+  - Lors de la visualisation des données catégoriques avec des couleurs, choisissez une palette adaptée au ton ou à l'objectif de votre graphique. 
+  - Par exemple, utilisez la palette `deep` pour des catégories bien distinctes ou `pastel` pour une approche plus subtile.
+
+**4. Bonne pratique :**
+
+  - Assurez-vous que les couleurs sont suffisamment distinctes pour être facilement différenciées, même par des personnes atteintes de daltonisme.
+  - Vérifiez que la palette choisie est cohérente avec l'esthétique et le ton général de la présentation.
+
+En utilisant les palettes qualitatives, vous pouvez renforcer l'impact visuel et la lisibilité de vos graphiques, en facilitant l'interprétation des catégories par vos lecteurs.
+
+:::
+
+
+## Palettes séquentielles
+
+::: {.columns}
+::: {.column width='60%'}
+
+- La luminosité représente une valeur continue.
+- Par exemple :
+
+```{python}
+#| eval: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="size",
+  palette="crest"
+)
+```
+
+- Palettes inversées  avec `_r` :
+
+  - `rocket` ![](../images/visualization/rocket.png){width=50%}
+  - `rocket_r` ![](../images/visualization/rocket_r.png){width=50%}
+
+
+:::
+::: {.column width='40%'}
+
+- Disponible dans seaborn :
+
+  - `rocket` ![](../images/visualization/rocket.png){width=40%}
+
+  - `mako` ![](../images/visualization/mako.png){width=40%}
+
+  - `flare` ![](../images/visualization/flare.png){width=40%}
+
+  - `crest` ![](../images/visualization/crest.png){width=40%}
+
+  - `magma` ![](../images/visualization/magma.png){width=40%}
+
+  - `viridis` ![](../images/visualization/viridis.png){width=40%}
+
+:::
+:::
+
+::: notes
+
+**Palettes Séquentielles dans Seaborn**
+
+**1. Qu'est-ce qu'une palette séquentielle ?**
+
+  - Une palette séquentielle utilise des variations de **luminosité** pour représenter une échelle de valeurs continues.
+  - Idéal pour représenter des données **ordonnées**, comme des mesures ou des intensités.
+
+**2. Pourquoi utiliser une palette séquentielle ?**
+
+  - Mettre en avant des valeurs croissantes ou décroissantes.
+  - Aider à distinguer les **valeurs basses** des **valeurs hautes**.
+
+**3. Palettes séquentielles disponibles dans Seaborn :**
+
+  - Plusieurs palettes préconfigurées adaptées à différents contextes :
+    - **`rocket`** : Palette rougeâtre foncée.
+    - **`mako`** : Palette bleuâtre intense.
+    - **`flare`** : Dégradé lumineux orienté vers des jaunes.
+    - **`crest`** : Palette aquatique subtile.
+    - **`magma`** et **`viridis`** : Palettes populaires pour leurs dégradés bien équilibrés.
+
+**4. Fonctionnalité spéciale :**
+
+  - **Inversion des palettes** :
+    - Ajoutez `_r` à la fin du nom de la palette pour inverser ses couleurs.
+    - Exemple :
+      - `rocket` : du rouge foncé au blanc.
+      - `rocket_r` : du blanc au rouge foncé.
+
+**5. Bonne pratique :**
+
+  - Choisissez une palette qui reflète naturellement l'échelle de vos données (par exemple, des valeurs croissantes pour des températures ou des scores).
+  - Utilisez des palettes inversées lorsque vous souhaitez **changer la priorité visuelle** (par exemple, pour mettre en avant les faibles valeurs).
+
+En conclusion, les palettes séquentielles sont un outil puissant pour représenter des données continues de manière intuitive et esthétique, tout en guidant l'attention du lecteur vers les valeurs importantes.
+
+:::
+
+
+## Palettes divergentes
+
+::: {.columns}
+::: {.column width='60%'}
+
+- Deux palettes séquentielles avec un point central.
+- Utilisées pour les données où les valeurs basses et hautes sont toutes deux intéressantes et couvrent une valeur médiane (souvent 0) qui doit être atténuée.
+
+```{python}
+#| eval: false
+sns.relplot(
+  data=tips, x="total_bill", y="tip",
+  hue="size",
+  palette="vlag"
+)
+```
+
+:::
+::: {.column width='40%'}
+
+- Palettes disponibles :
+
+  - `vlag` ![](../images/visualization/vlag.png){width=40%}
+
+  - `icefire` ![](../images/visualization/icefire.png){width=40%}
+
+  - `spectral` ![](../images/visualization/spectral.png){width=40%}
+
+  - `coolwarm` ![](../images/visualization/coolwarm.png){width=40%}
+
+:::
+:::
+
+
+::: notes
+
+**Palettes Divergentes dans Seaborn**
+
+**1. Qu'est-ce qu'une palette divergente ?**
+
+  - Une combinaison de **deux palettes séquentielles** qui se rejoignent à un point central (souvent une valeur neutre, comme **0**).
+  - Utile pour représenter des données avec une **valeur médiane importante**, par exemple :
+    - Écart par rapport à la moyenne.
+    - Changements positifs et négatifs (p. ex., gains/pertes).
+
+**2. Pourquoi utiliser une palette divergente ?**
+
+  - Permet de différencier clairement les valeurs **au-dessus** et **en-dessous** du point central.
+  - Met en évidence les **écarts significatifs**, tout en atténuant les valeurs proches du centre.
+
+**3. Palettes divergentes disponibles dans Seaborn :**
+
+  - **`vlag`** : Transition douce entre le rouge et le bleu pâle.
+  - **`icefire`** : Contraste élevé entre des tons froids (bleus) et chauds (oranges).
+  - **`spectral`** : Un spectre complet avec une transition centrale.
+  - **`coolwarm`** : Palette classique pour des écarts de température ou des valeurs de gradient.
+
+**4. Application typique :**
+
+  - Visualiser des différences ou des écarts importants tout en gardant une attention particulière sur les valeurs proches du centre.
+  - Par exemple :
+    - Températures autour d'une moyenne saisonnière.
+    - Résultats financiers autour d'une valeur neutre.
+
+**5. Bonne pratique :**
+
+  - Choisissez une palette divergente lorsque la **symétrie** autour d'une valeur centrale est essentielle à la compréhension des données.
+  - Ajustez les nuances pour maximiser la lisibilité des différences significatives.
+
+En conclusion, les palettes divergentes sont idéales pour interpréter des écarts relatifs avec une emphase sur une valeur médiane ou neutre, tout en fournissant une représentation visuelle claire et esthétique.
+
+:::
+
+
+<!-- ## Résumé
+
+| Type                                  | Description                                           |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `kind="scatter"` | Nuage de points avec regroupements sémantiques.                                     |
+| `kind="line"`       | Graphique linéaire avec regroupements sémantiques.                                  |
+                              | -->

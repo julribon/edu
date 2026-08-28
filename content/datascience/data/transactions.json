@@ -1,0 +1,219 @@
+[
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-02",
+        "type": "buy",
+        "asset": "AAPL",
+        "quantity": 8
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-02",
+        "type": "buy",
+        "asset": "AMZN",
+        "quantity": 2
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-03",
+        "type": "sell",
+        "asset": "BAYRY",
+        "quantity": 4
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-03",
+        "type": "buy",
+        "asset": "FB",
+        "quantity": 11
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-04",
+        "type": "sell",
+        "asset": "GOOGL",
+        "quantity": 3
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-05",
+        "type": "sell",
+        "asset": "MSFT",
+        "quantity": 17
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-05",
+        "type": "sell",
+        "asset": "NFLX",
+        "quantity": 6
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-08",
+        "type": "buy",
+        "asset": "NSRGY",
+        "quantity": 39
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-08",
+        "type": "sell",
+        "asset": "NVS",
+        "quantity": 36
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-09",
+        "type": "buy",
+        "asset": "RHHBY",
+        "quantity": 66
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-10",
+        "type": "sell",
+        "asset": "SNY",
+        "quantity": 37
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-10",
+        "type": "buy",
+        "asset": "TSLA",
+        "quantity": 24
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-11",
+        "type": "buy",
+        "asset": "AAPL",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-11",
+        "type": "buy",
+        "asset": "AMZN",
+        "quantity": 3
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-15",
+        "type": "sell",
+        "asset": "FB",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-16",
+        "type": "sell",
+        "asset": "GOOGL",
+        "quantity": 20
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-17",
+        "type": "sell",
+        "asset": "MSFT",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-18",
+        "type": "buy",
+        "asset": "NFLX",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-18",
+        "type": "sell",
+        "asset": "NSRGY",
+        "quantity": 40
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-18",
+        "type": "buy",
+        "asset": "NVS",
+        "quantity": 30
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-18",
+        "type": "buy",
+        "asset": "RHHBY",
+        "quantity": 50
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-22",
+        "type": "buy",
+        "asset": "SNY",
+        "quantity": 100
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-23",
+        "type": "sell",
+        "asset": "TSLA",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-24",
+        "type": "buy",
+        "asset": "AAPL",
+        "quantity": 15
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-25",
+        "type": "buy",
+        "asset": "AMZN",
+        "quantity": 3
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-25",
+        "type": "buy",
+        "asset": "NFLX",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-26",
+        "type": "buy",
+        "asset": "FB",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-29",
+        "type": "buy",
+        "asset": "NVS",
+        "quantity": 10
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-29",
+        "type": "buy",
+        "asset": "RHHBY",
+        "quantity": 50
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-29",
+        "type": "sell",
+        "asset": "TSLA",
+        "quantity": 30
+    },
+    {
+        "portfolio": "P0006",
+        "date": "2019-04-30",
+        "type": "sell",
+        "asset": "SNY",
+        "quantity": 50
+    }
+]

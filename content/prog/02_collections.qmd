@@ -1,0 +1,1792 @@
+---
+title: "Collections: `List`"
+subtitle: Introduction à la Programmation avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    # show-notes: true
+---
+
+# Collections
+
+## Types primitifs vs collections
+
+::: {.columns}
+::: {.column width="50%"}
+
+* **Type primitif:** stocke une seule valeur à la fois.
+
+
+:::
+::: {.column width="50%"}
+
+* **Collection:** stocke plusieurs valeurs et de plusieur types.
+
+:::
+::: 
+
+
+::: notes
+
+* **Type primitif :**  
+  Un type primitif stocke une seule valeur à la fois. Cela inclut des types comme `int`, `float`, `bool` ou `str`. Chaque variable de type primitif contient une seule donnée.
+
+* **Collection :**  
+  Une collection stocke plusieurs valeurs, qui peuvent être de différents types. Les collections incluent des types comme `list`, `tuple`, `dict`, ou `set`. Elles permettent de regrouper plusieurs éléments dans une seule structure de données.
+
+:::
+
+
+```{mermaid}
+%%| echo: false
+%%| 
+
+flowchart TD
+    A(Type)
+    B(Primitif)
+    C(Nombre)
+    C1(Entier)
+    C2(Flottant)
+    C3(Complex)
+    C4(Booléen)
+    D(Collection)
+    D1(Liste)
+    D2(Tuple)
+    D3(Set)
+    D4(Dictionary)
+    E(Texte)
+
+    A-->B
+    A-->D
+    B-->C
+    C-->C1
+    C-->C2
+    C-->C3
+    C1-->C4
+    B-->E
+    D-->D1
+    D-->D2
+    D-->D3
+    D-->D4
+```
+
+
+## Collection
+
+* Itérable permettant stocker des éléments de différents types
+* Choix d'une collection: considérer ses propriétés pour que le programme soit efficace, sûr et correct.
+* Les 4 types de collections de base sont
+
+    * `List`: collection d'objets ordonnée et modifiable
+    * `Dictionary`: collection non ordonnée de paires clé-valeur
+    * `Tuple`: collection d'objets ordonnée et non modifiable
+    * `Set`: collection non ordonnée d'objets uniques
+
+::: notes
+
+**Collection**
+
+- Une collection est un itérable qui permet de regrouper plusieurs éléments, potentiellement de types différents, dans une seule structure. Contrairement aux types primitifs, les collections peuvent stocker plusieurs valeurs à la fois, ce qui les rend très utiles pour gérer des groupes de données.
+
+- **Choix d'une collection :**  
+  Il est important de choisir la bonne collection en fonction des besoins du programme. Chaque type de collection a des caractéristiques spécifiques qui influencent les performances, la sécurité et la facilité de manipulation des données. Il faut donc choisir la collection la plus adaptée en fonction des opérations que vous allez effectuer (recherche, modification, ajout d'éléments, etc.).
+
+- **Les 4 types de collections de base sont :**
+  - **`List`** :  
+    Une liste est une collection ordonnée où l'ordre des éléments est maintenu. Elle est modifiable, ce qui signifie que vous pouvez ajouter, supprimer ou modifier des éléments après la création de la liste. C'est le type de collection le plus couramment utilisé pour stocker des séries de données.
+    
+  - **`Dictionary`** :  
+    Un dictionnaire est une collection non ordonnée qui stocke des paires clé-valeur. Chaque élément du dictionnaire est associé à une clé unique. C'est utile pour rechercher des valeurs en fonction d'une clé spécifique, plutôt que par position comme dans une liste.
+    
+  - **`Tuple`** :  
+    Un tuple est similaire à une liste, mais il est immuable (non modifiable). Une fois créé, vous ne pouvez pas changer, ajouter ou supprimer des éléments. Les tuples sont utilisés lorsque vous voulez vous assurer que les données ne seront pas modifiées.
+    
+  - **`Set`** :  
+    Un set est une collection non ordonnée qui ne contient que des éléments uniques. Il est souvent utilisé pour éliminer les doublons ou pour tester si un élément existe dans une collection. Les éléments d'un set ne sont pas accessibles par index car l'ordre n'est pas garanti.
+
+Ces collections permettent de gérer efficacement des ensembles de données complexes dans les programmes Python.
+
+:::
+
+
+# List
+
+## La `List`
+
+::: {.columns}
+::: {.column width="52%" #vcenter}
+
+* Collection d'objets **ordonnée** et **modifiable**.
+* Application: listes de courses, de noms, de nombres, de coordonnées, etc.
+* Création avec des crochets `[]` ou la fonction `list()`
+
+<p>
+```{python}
+liste = ["a", 1, 3.14, False]
+print(liste)
+```
+</p>
+
+:::
+::: {.column width="48%" #vcenter}
+
+```{dot}
+//| echo: false
+//| fig-width: 5
+
+digraph G {
+    graph [margin=0];
+    rankdir=LR;
+    
+    // Define the style for list elements and index numbers
+    node [shape=box, style=filled, fillcolor=lightblue];
+
+    // List elements
+    a[label="a"];
+    b[label="1"];
+    c[label="3.14"];
+    d[label="False"];
+
+    // Horizontal connections for list elements
+    a -> b -> c -> d;
+
+        // Positive index numbers (above the elements)
+    node [shape=plaintext];
+    idx0[label="0"];
+    idx1[label="1"];
+    idx2[label="2"];
+    idx3[label="3"];
+
+    // Connect positive indexes above the list elements
+    idx0 -> a [dir=none];
+    idx1 -> b [dir=none];
+    idx2 -> c [dir=none];
+    idx3 -> d [dir=none];
+
+    // Alignment of nodes to create the correct vertical order
+    { rank=same; a; b; c; d; }
+    { rank=same; idx0; idx1; idx2; idx3; }
+
+    // Set the ranks to vertically align elements with their indexes
+    {rank=min; idx0; idx1; idx2; idx3;}  // Positive indexes above
+}
+```
+
+:::
+:::
+
+
+::: notes
+**La `List`**
+
+- Une **`List`** est une collection d'objets ordonnée et modifiable. Cela signifie que les éléments conservent leur ordre d'insertion et peuvent être modifiés après la création de la liste. C'est l'une des structures de données les plus flexibles en Python.
+
+  Exemple :  
+  `liste = ["a", 1, 3.14, False]` crée une liste contenant les éléments `"a"`, `1`, `3.14`, et `False`.
+
+- **Applications** :  
+  Les listes sont utilisées pour gérer des ensembles d'éléments, comme des listes de courses, des listes de noms, des nombres ou des coordonnées. Elles sont pratiques lorsque vous devez manipuler un groupe d'éléments dans un ordre spécifique.
+
+  Exemple :  
+  Une liste de courses `courses = ["pommes", "bananes", "poires"]` peut être facilement modifiée pour ajouter ou supprimer des éléments.
+
+- **Création** :  
+  Une liste peut être créée en utilisant des crochets `[]` ou avec la fonction `list()`. Les éléments de la liste peuvent être de différents types, ce qui en fait une structure polyvalente pour stocker des données hétérogènes.
+
+  Exemple :  
+  `liste = ["a", 2, True]` crée une liste contenant une chaîne, un entier et un booléen.
+
+Les listes sont très flexibles et permettent de gérer efficacement des ensembles de données modifiables.
+:::
+
+## Indexation et modification
+
+<p>
+```{python}
+# | output-location: column
+liste = ["a", 1, 3.14, False]
+print(type(liste))
+```
+</p>
+
+::: {.columns}
+::: {.column width="50%" #vcenter}
+
+* Au moyen de l'opérateur `[]`, indexation
+  * à partir de 0,
+  * négative depuis le dernier élément.
+
+```{python}
+print(liste[1], liste[-1])
+```
+
+* Modification d'un élément
+
+```{python}
+liste[1] = "z"
+print(liste)
+```
+
+:::
+::: {.column width="50%" #vcenter}
+
+```{dot}
+//| echo: false
+//| fig-width: 5
+
+digraph G {
+    graph [margin=0];
+    rankdir=LR;
+    
+    // Define the style for list elements and index numbers
+    node [shape=box, style=filled, fillcolor=lightblue];
+
+    // List elements
+    a[label="a"];
+    b[label="1"];
+    c[label="3.14"];
+    d[label="False"];
+
+    // Horizontal connections for list elements
+    a -> b -> c -> d;
+
+    // Positive index numbers (above the elements)
+    node [shape=plaintext];
+    idx0[label="0"];
+    idx1[label="1"];
+    idx2[label="2"];
+    idx3[label="3"];
+
+    // Negative index numbers (below the elements)
+    neg_idx4[label="-4"];
+    neg_idx3[label="-3"];
+    neg_idx2[label="-2"];
+    neg_idx1[label="-1"];
+
+    // Connect positive indexes above the list elements
+    idx0 -> a [dir=none];
+    idx1 -> b [dir=none];
+    idx2 -> c [dir=none];
+    idx3 -> d [dir=none];
+
+    // Connect negative indexes below the list elements
+    a -> neg_idx4 [style=dashed, dir=none];
+    b -> neg_idx3 [style=dashed, dir=none];
+    c -> neg_idx2 [style=dashed, dir=none];
+    d -> neg_idx1 [style=dashed, dir=none];
+
+    // Alignment of nodes to create the correct vertical order
+    { rank=same; idx0; idx1; idx2; idx3; }
+    { rank=same; a; b; c; d; }
+    { rank=same; neg_idx4; neg_idx3; neg_idx2; neg_idx1; }
+
+    // Set the ranks to vertically align elements with their indexes
+    {rank=min; idx0; idx1; idx2; idx3;}  // Positive indexes above
+    {rank=max; neg_idx4; neg_idx3; neg_idx2; neg_idx1;} // Negative indexes below
+}
+```
+
+:::
+:::
+
+::: notes
+
+L'indexation et la modification des éléments d'une liste sont des opérations courantes en Python. Elles permettent d'accéder à des éléments spécifiques et de les modifier selon les besoins.
+
+- **Indexation** :  
+  Comme pour les chaînes de caractères, chaque élément d'une liste est accessible par son index, qui commence à 0. Cela signifie que le premier élément a l'index 0, le deuxième l'index 1, et ainsi de suite.
+
+  Exemple :  
+  Pour accéder au deuxième élément de la liste `liste = ["a", "b", "c", "d"]`, utilisez `liste[1]`, qui renvoie `"b"`.
+
+- **Index négatif** :  
+  Python permet d'accéder aux éléments d'une liste en utilisant des indices négatifs, où `-1` représente le dernier élément, `-2` l'avant-dernier, et ainsi de suite. Cela simplifie l'accès aux éléments en partant de la fin de la liste sans avoir besoin de connaître sa longueur.
+
+  Exemple :  
+  `liste[-1]` accède au dernier élément de la liste, ici `"c"`.
+
+- **Modification** :  
+  Vous pouvez également modifier les éléments en les réaffectant à un index donné.
+
+  Exemple :  
+  `liste[1]` accède au deuxième élément de la liste, ici `"b"`.  
+  `liste[1] = "z"` modifie le deuxième élément pour `"z"`, donnant `liste = ["a", "z", "c"]`.
+:::
+
+
+## Découpage de liste
+
+```{python}
+lettres = ["a", "b", "c", "d"]
+```
+
+* Permet d'extraire et manipuler une partie de la liste
+  * Similaire à l'indexation, mais avec une plage d'index
+  * Syntaxe : `liste[début:fin:pas]` 
+* Inclusif pour le début, exclusif pour la fin :
+
+```{python}
+#| output-location: column
+print(lettres[2:4])
+```
+
+* Avec pas :
+```{python}
+#| output-location: column
+print(lettres[1:4:2])
+```
+
+<!--
+* Avec index et/ou pas négatif :
+```{python}
+#| output-location: column
+print(lettres[-4:-1])
+print(lettres[3:1:-1])
+print(lettres[::-1])
+```
+-->
+
+::: notes
+**Découpage de liste**
+
+Le découpage (ou "slicing") permettent d'accéder et de manipuler facilement des sous-parties d'une liste en Python.
+
+- **Découpage (slicing)** :  
+  Le découpage permet d'extraire une partie de la liste en spécifiant une plage d'index. Le début de la plage est inclusif, tandis que la fin est exclusive.
+
+  Exemple :  
+  `lettres[2:4]` renvoie les éléments entre les index 2 (inclus) et 4 (exclus), soit `["c", "d"]`.
+
+- **Découpage avec pas** :  
+  Vous pouvez aussi spécifier un "pas" pour sauter des éléments dans la plage sélectionnée. Par défaut, le pas est 1, mais vous pouvez le modifier pour extraire des éléments de manière régulière.
+
+  Exemple :  
+  `lettres[0:4:2]` renvoie les éléments à des intervalles de 2, soit `["a", "c"]`.
+
+<!--
+- **Découpage avec index et/ou pas négatif** :  
+  Il est possible d'utiliser des index et des pas négatifs. Un index négatif compte à rebours depuis la fin de la liste, et un pas négatif inverse l'ordre des éléments.
+
+  Exemple :  
+  `lettres[-4:-1]` renvoie les éléments de l'index -4 (premier élément) à -1 (dernier élément exclus), soit `["a", "b", "c"]`.  
+  `lettres[3:1:-1]` renvoie les éléments dans l'ordre inverse de l'index 3 à 2, soit `["d", "c"]`.  
+  `lettres[::-1]` renverse entièrement la liste, renvoyant `["d", "c", "b", "a"]`.
+-->
+
+L'indexation et le découpage sont des outils puissants pour extraire et manipuler des sous-ensembles de listes.
+:::
+
+## Ajout d'élément
+
+```{python}
+lettres = ["a", "c", "d"]
+```
+
+* Ajout d'un élément à la fin de la liste
+```{python}
+lettres.append("e")
+print(lettres)
+```
+
+* Ajout d'un élément à une position donnée (avec son index)
+```{python}
+lettres.insert(1, "b")
+print(lettres)
+```
+
+
+::: notes
+
+**Ajout d’éléments à une liste**
+
+- **Méthode `append()`** :
+  - Permet d’ajouter un élément à la **fin** d’une liste.
+  - C’est la manière la plus simple d’ajouter un élément sans se soucier de sa position.
+  - Exemple : ajouter `"e"` à la fin de `["a", "c", "d"]` donne `["a", "c", "d", "e"]`.
+
+- **Méthode `insert(index, valeur)`** :
+  - Permet d’insérer un élément à une **position précise**, en spécifiant son index.
+  - Tous les éléments à partir de cet index sont décalés d’un cran vers la droite.
+  - Exemple : insérer `"b"` à l’index `1` dans `["a", "c", "d"]` donne `["a", "b", "c", "d"]`.
+
+- Ces méthodes permettent de construire ou modifier dynamiquement une liste selon les besoins du programme.
+
+:::
+
+
+## Suppression
+
+```{python}
+lettres = ["a", "b", "c", "d"]
+```
+
+* Suppression à la fin de la liste
+```{python}
+#| output-location: column
+lettres.pop()
+print(lettres)
+```
+
+* Suppression en utilisant un index
+```{python}
+#| output-location: column
+lettres.pop(1)
+print(lettres)
+```
+
+* Suppression en utilisant une valeur
+```{python}
+#| output-location: column
+lettres.remove("a")
+print(lettres)
+```
+
+
+::: notes
+
+**Suppression d’éléments d’une liste**
+
+- **Méthode `pop()` sans argument** :
+  - Supprime le **dernier élément** de la liste.
+  - Utile pour retirer un élément récemment ajouté ou traiter une liste comme une pile (LIFO).
+
+- **Méthode `pop(index)`** :
+  - Supprime l’élément à la **position spécifiée** par l’index.
+  - Permet de retirer un élément précis en fonction de sa position.
+
+- **Méthode `remove(valeur)`** :
+  - Supprime la **première occurrence** de la valeur spécifiée dans la liste.
+  - Si la valeur n’existe pas dans la liste, une erreur est levée.
+
+- Ces méthodes permettent de gérer dynamiquement le contenu d’une liste, en fonction de la structure ou des règles d’un algorithme.
+
+:::
+
+
+
+## Concaténation de listes
+
+Concaténation = combinaison de deux parties en une seule.
+```{python}
+lettres1 = ["a", "b", "c"]
+lettres2 = ["d", "e", "f"]
+```
+
+* Concaténation de listes avec l'opérateur `+`
+```{python}
+lettres = lettres1 + lettres2
+print(lettres)
+```
+
+* Concaténation d'une liste à une autre avec `extend()`
+```{python}
+lettres1.extend(lettres2)
+print(lettres1)
+```
+
+::: notes
+
+**Concaténation de listes**
+
+- **Principe** :
+  - La concaténation consiste à **combiner deux listes** pour en former une seule.
+
+- **Opérateur `+`** :
+  - Crée une **nouvelle liste** contenant tous les éléments des deux listes originales.
+  - Les listes d’origine ne sont pas modifiées.
+  - Exemple : `["a", "b"] + ["c", "d"]` donne `["a", "b", "c", "d"]`.
+
+- **Méthode `extend()`** :
+  - Ajoute tous les éléments d’une liste à la **fin de la liste courante**.
+  - La première liste est **modifiée directement** (pas de nouvelle liste).
+  - Exemple : `["a", "b"].extend(["c", "d"])` donne `["a", "b", "c", "d"]`.
+
+- Ces deux méthodes permettent d’assembler des listes selon qu’on souhaite créer une nouvelle liste ou modifier une liste existante.
+
+:::
+
+
+
+
+## Longueur d'une liste
+
+Avec la fonction `len()` on peut calculer la longueur d'un texte, mais aussi la longueur d'une liste.
+
+* Rappel: calculer le nombre de caractères d'un texte
+
+```{python}
+message = "J'adore la programmation!"
+print( len(message) )
+```
+
+* Calcul de la longueur d'une liste
+```{python}
+lettres = ["a", "b", "c", "d"]
+print( len(lettres) )
+```
+
+```{python}
+noms = ["Alice", "Bob", "Charles", "David"]
+print( len(noms) )
+```
+
+::: notes
+
+**Longueur d’une liste**
+
+- **Fonction `len()`** :
+  - Permet de connaître la **taille d’une liste**, c’est-à-dire le nombre d’éléments qu’elle contient.
+  - Fonction également utilisée pour compter le nombre de caractères dans une chaîne de caractères.
+
+- **Applications** :
+  - Sur une **chaîne de caractères**, `len()` retourne le nombre total de caractères, y compris les espaces et la ponctuation.
+  - Sur une **liste**, `len()` retourne le nombre total d’éléments (peu importe leur type).
+
+- **Utilité** :
+  - Pratique pour parcourir une liste avec une boucle, valider une condition sur la taille, ou simplement informer l'utilisateur du contenu.
+
+- La fonction `len()` est donc polyvalente et essentielle pour manipuler des structures de données comme les listes ou les chaînes.
+
+:::
+
+
+
+## Réorganisation d'une liste
+
+```{python}
+lettres = ["b", "d", "a", "c"]
+```
+
+* Inverser une liste
+```{python}
+#| output-location: column
+lettres.reverse()
+print(lettres)
+```
+
+* Trier une liste
+```{python}
+#| output-location: column
+lettres.sort()
+print(lettres)
+```
+
+* Trier une liste de manière inversée
+```{python}
+#| output-location: column
+lettres.sort(reverse=True)
+print(lettres)
+```
+
+::: notes
+
+**Réorganisation d’une liste**
+
+- **Méthode `reverse()`** :
+  - Inverse l’ordre des éléments dans la liste **en place** (modifie directement la liste).
+  - Ne trie pas la liste, elle conserve simplement les éléments dans l’ordre inverse.
+
+- **Méthode `sort()`** :
+  - Trie les éléments d’une liste en ordre **alphabétique** (ou croissant pour des nombres).
+  - Modifie la liste d’origine, ne crée pas de copie.
+  - Les éléments doivent être de types comparables (pas de mélange entre chaînes et nombres).
+
+- **Option `reverse=True` dans `sort()`** :
+  - Permet de trier la liste en ordre **décroissant** (alphabétique inverse ou du plus grand au plus petit).
+  - Pratique pour visualiser les éléments du plus grand au plus petit ou dans un ordre inversé logique.
+
+- Ces opérations facilitent l’organisation et la mise en forme des données pour des tâches de traitement, d’affichage ou de recherche.
+
+:::
+
+
+
+## Comptage
+
+On peut compter le nombre d'occurrences d'un élément avec la fonction `count`.
+
+```{python}
+lettres = ["a", "a", "b", "c", "c", "c"]
+```
+
+* Compter le nombre de lettres `"a"` dans la liste (Ici, on affiche de suite le résultat avec `print()`):
+
+```{python}
+print( lettres.count("a") )
+```
+
+* Compter le nombre de lettres `"c"` dans la liste. (Ici, le nombre est d'abord stocké dans une variable `compte`):
+
+```{python}
+compte = lettres.count("c")
+print(compte)
+```
+
+::: notes
+
+**Comptage d’éléments dans une liste**
+
+- **Méthode `count(valeur)`** :
+  - Permet de compter combien de fois une **valeur donnée** apparaît dans une liste.
+  - Retourne un **entier** correspondant au nombre d’occurrences.
+
+- **Exemples** :
+  - Si `"a"` apparaît deux fois dans la liste, `lettres.count("a")` renvoie `2`.
+  - Utile pour des statistiques simples ou des vérifications (par exemple, détecter les doublons).
+
+- **Utilisation flexible** :
+  - Le résultat peut être utilisé directement avec `print()` ou stocké dans une variable pour un usage ultérieur.
+
+- Très utile pour analyser le contenu d’une liste, en particulier lorsqu’on travaille avec des données textuelles ou catégorielles.
+
+:::
+
+
+
+
+## Recherche
+
+Il est possible de déterminer si un élément se trouve ou non dans une liste.
+
+```{python}
+lettres = ["a", "b", "c", "d"]
+```
+
+* Rechercher un élément en utilisant le mot clé `in` :
+
+```{python}
+#| output-location: column
+print("a" in lettres)
+print("e" in lettres)
+```
+
+* Rechercher la **position** d'un élément avec la fonction `index()` :
+
+```{python}
+#| output-location: column
+#| error: true
+print(lettres.index("a"))
+print(lettres.index("e"))
+```
+
+Attention: si l'élément n'existe pas dans la liste, `index()` retournera une erreur.
+
+::: notes
+
+
+**Recherche d’éléments dans une liste**
+
+- **Opérateur `in`** :
+  - Permet de vérifier si un élément est **présent** dans une liste.
+  - Retourne un **booléen** (`True` ou `False`).
+  - Exemple : `"a" in lettres` renvoie `True`, mais `"e" in lettres` renvoie `False`.
+
+- **Méthode `index(valeur)`** :
+  - Retourne la **position (index)** de la première occurrence de l’élément dans la liste.
+  - Les index commencent à 0.
+  - Si l’élément **n’existe pas**, une **erreur est levée** (`ValueError`).
+
+- **Conseil pratique** :
+  - Avant d’utiliser `index()`, il est recommandé de vérifier la présence de l’élément avec `in` pour éviter les erreurs.
+
+- Ces méthodes sont utiles pour localiser ou valider des données dans une liste.
+
+:::
+
+
+<!--
+## Copier une liste 
+
+Pour copier une liste, on ne peut pas simplement créer une nouvelle variable (avec `=`).
+
+```{python}
+lettres = ["a", "b", "c", "d"]
+lettres2 = lettres
+```
+
+* Copier une liste en utilisant la fonction `copy()`
+
+```{python}
+lettres3 = lettres.copy()
+```
+
+* Copier en utilisant la fonction de conversion `list()`:
+
+```{python}
+lettres4 = list(lettres);
+```
+
+* L'affectation (`=`) va créer une référence, mais pas une copie!
+
+```{python}
+lettres[0] = "x";
+print(lettres2, lettres3, lettres4)
+```
+
+
+::: notes
+
+**Copier une liste**
+
+- **Problème avec l’affectation (`=`)** :
+  - Faire `lettres2 = lettres` ne crée **pas une nouvelle liste** mais une **référence** vers la même liste.
+  - Toute modification sur l’une affectera aussi l’autre.
+
+- **Méthode `copy()`** :
+  - Crée une **copie indépendante** de la liste.
+  - Après la copie, les deux listes sont séparées : modifier l’une n’affecte pas l’autre.
+
+- **Fonction `list()`** :
+  - Autre méthode pour créer une nouvelle liste à partir d’une liste existante.
+  - Produit le même résultat que `copy()`.
+
+- **Exemple pratique** :
+  - Si `lettres[0] = "x"` et que `lettres2` est une simple référence, alors `lettres2[0]` sera aussi `"x"`.
+  - En revanche, `lettres3` et `lettres4` resteront inchangées.
+
+- Copier correctement une liste est essentiel pour éviter des effets de bord non désirés lors de la manipulation de données.
+
+:::
+
+-->
+
+
+## Résumé des opérations sur une `List` {.smaller}
+
+| Opération | Description |
+|---|------|
+| `l[i]` ou `l[i] = x` | Accès à ou modification de l'élément à l'index `i` |
+| `l.append(x)` | Ajout de l'élément `x` à la fin de la liste |
+| `l.insert(i, x)` | Ajout de l'élément `x` à l'index `i` |
+| `l.pop()` ou `l.pop(i)` | Suppression du dernier élément ou de celui à l'index `i` |
+| `l.remove(x)` | Suppression de l'élément `x` |
+| `l + l2` | Concaténation de deux listes |
+| `l.extend(l2)` | Ajout des éléments de `l2` à la fin de `l` |
+| `l.sort()` | Tri de la liste |
+| `l.reverse()` | Inversion de la liste |
+| `x in l` ou `l.index(x)`  | Recherche de l'élément `x` ou de son index |
+| `l.count(x)` | Nombre d'occurrences de l'élément `x` |
+| `len(l)` | Longueur de la liste |
+
+<!--| `l.copy()` ou `list(l)` | Copie de la liste |-->
+
+::: notes
+
+**Résumé des opérations sur une `List`**
+
+Ce tableau récapitule les principales opérations que vous pouvez effectuer sur une liste en Python :
+
+- **Accès et modification** :
+  - `l[i]` : Accède à l'élément à l'index `i`.
+  - `l[i] = x` : Modifie l'élément à l'index `i` avec la valeur `x`.
+
+- **Ajout d'éléments** :
+  - `l.append(x)` : Ajoute l'élément `x` à la fin de la liste.
+  - `l.insert(i, x)` : Ajoute l'élément `x` à l'index `i`.
+
+- **Suppression d'éléments** :
+  - `l.pop()` : Supprime et renvoie le dernier élément de la liste.
+  - `l.pop(i)` : Supprime et renvoie l'élément à l'index `i`.
+  - `l.remove(x)` : Supprime la première occurrence de l'élément `x`.
+
+- **Concaténation et extension** :
+  - `l + l2` : Concatène deux listes et renvoie une nouvelle liste.
+  - `l.extend(l2)` : Ajoute les éléments de `l2` à la fin de `l`.
+
+- **Tri et inversion** :
+  - `l.sort()` : Trie les éléments de la liste en place.
+  - `l.reverse()` : Inverse l'ordre des éléments de la liste en place.
+
+- **Recherche et comptage** :
+  - `x in l` : Vérifie si l'élément `x` est présent dans la liste.
+  - `l.index(x)` : Renvoie l'index de la première occurrence de `x`.
+  - `l.count(x)` : Renvoie le nombre d'occurrences de `x` dans la liste.
+
+- **Longueur de la liste** :
+  - `len(l)` : Renvoie le nombre d'éléments dans la liste.
+
+<!--
+- **Copie de la liste** :
+  - `l.copy()` ou `list(l)` : Crée une copie de la liste.
+-->
+
+Ces opérations permettent de manipuler les listes de manière flexible et efficace dans vos programmes Python.
+
+:::
+
+
+<!--
+# Tuple
+
+## Le `Tuple`
+
+* Collection d'objets ordonnée et non modifiable
+  * On ne peut pas ajouter/supprimer/modifier un élément.
+  * Similaire à une liste, mais moins d'opérations possibles.
+  * Application: date de naissance, coordonnées RGB, coordonnées géographiques, etc.
+
+* Création avec des parenthèses `()` ou la fonction `tuple()`
+
+<p>
+```{python}
+#| output-location: column
+t = ("a", "b", "c"); print(t)
+```
+</p>
+
+* Accès aux éléments et découpage comme pour une liste
+```{python}
+#| output-location: column
+print(t[1])
+print(t[-1])
+print(t[0:2])
+```
+
+::: notes
+**Le `Tuple`**
+
+Un **`tuple`** est une collection d'objets ordonnée, mais **non modifiable**. Une fois créé, on ne peut pas ajouter, supprimer ou modifier les éléments d'un `tuple`. Cela le rend utile pour stocker des ensembles de données qui ne doivent pas être modifiés.
+
+- **Caractéristiques** :
+  - Un `tuple` est ordonné, ce qui signifie que l'ordre des éléments est conservé.
+  - Il est immuable, c'est-à-dire qu'aucune modification ne peut être faite après sa création.
+  - Il ressemble à une liste, mais avec des limitations du fait de son immuabilité, et donc il offre moins d'opérations possibles.
+  - Applications : coordonnées géographiques, date de naissance, coordonnées RGB, ou tout autre ensemble de données fixes.
+
+- **Création** :
+  Un `tuple` peut être créé en utilisant des parenthèses `()` ou la fonction `tuple()`.  
+  Exemple : `t = ("a", "b", "c")` crée un `tuple` contenant les éléments `"a"`, `"b"`, et `"c"`.
+
+- **Accès aux éléments et découpage** :
+  Comme pour une liste, les éléments d'un `tuple` peuvent être accessibles par leur index, en utilisant des indices positifs ou négatifs. Le découpage fonctionne également de la même manière que pour les listes.
+
+  Exemple :  
+  `t[1]` accède au deuxième élément, `"b"`.  
+  `t[-1]` accède au dernier élément, `"c"`.  
+  `t[0:2]` renvoie un sous-tuple contenant les deux premiers éléments, `("a", "b")`.
+
+Les `tuple` sont parfaits pour représenter des données qui ne doivent pas être modifiées et sont souvent utilisés pour des groupes de valeurs immuables.
+
+:::
+
+## Opérations sur un `Tuple`
+
+<p>
+```{python}
+#| output-location: column
+t = ("a", "b", "c")
+```
+</p>
+
+::: {.columns}
+::: {.column width="50%"}
+
+* Copie
+```{python}
+t1 = t; t2 = tuple(t); print(t1, t2)
+```
+
+* Recherche
+```{python}
+#| error: true
+print("b" in t, "z" in t)
+print(t.index("b"))
+print(t.index("z"))
+```
+
+:::
+::: {.column width="50%"}
+
+* Concaténation
+```{python}
+t2 = ("a", "b"); print(t + t2)
+```
+
+* Longueur
+```{python}
+print(len(t))
+```
+
+* Comptage d'occurrences
+```{python}
+print(t.count("a"), t.count("z"))
+```
+
+:::
+:::
+
+::: notes
+**Opérations sur un `Tuple`**
+
+Bien que les `tuple` soient immuables, vous pouvez tout de même effectuer certaines opérations utiles pour manipuler et interagir avec leurs éléments.
+Voici quelques-unes des opérations possibles sur un `tuple` :
+
+- **Copie** :  
+  Contrairement aux listes, lorsque vous affectez un `tuple` à une nouvelle variable, cela crée une nouvelle référence, mais en pratique, cela fonctionne comme une copie puisque le `tuple` est immuable.  
+  Exemple : `t1 = t` et `t2 = tuple(t)` créent deux variables qui pointent vers le même contenu immuable.
+
+- **Recherche** :  
+  Vous pouvez rechercher la présence d'un élément dans un `tuple` avec l'opérateur **`in`**. Vous pouvez aussi utiliser la méthode **`index()`** pour connaître la position d'un élément, bien qu'une erreur soit levée si l'élément n'existe pas.  
+  Exemple : `"b" in t` renvoie `True`, tandis que `"z" in t` renvoie `False`.  
+  `t.index("b")` renvoie l'index de `"b"`, mais `t.index("z")` génère une erreur si `"z"` n'est pas présent.
+
+- **Concaténation de tuples** :  
+  Vous pouvez concaténer deux tuples en utilisant l'opérateur **`+`**, qui renvoie un nouveau tuple combinant les éléments des deux tuples.
+
+  Exemple :  
+  `t + t2` concatène deux tuples, créant un nouveau tuple combiné.
+
+- **Longueur du tuple** :  
+  Utilisez **`len()`** pour obtenir le nombre total d'éléments dans un `tuple`.
+
+  Exemple :  
+  `len(t)` renvoie la longueur du tuple.
+
+- **Nombre d'occurrences d'un élément** :  
+  Utilisez **`count()`** pour savoir combien de fois un élément apparaît dans le `tuple`. Si l'élément n'est pas présent, la méthode renverra `0`.
+
+  Exemple :  
+  `t.count("a")` renvoie le nombre d'occurrences de `"a"` dans le tuple.  
+  `t.count("z")` renvoie `0` si `"z"` n'est pas présent dans le tuple.
+
+Ces opérations montrent comment les `tuple` peuvent être utilisés et manipulés dans vos programmes, bien que leur immuabilité limite les modifications directes.
+:::
+
+## Spécificités du `Tuple`
+
+<p>
+```{python}
+#| output-location: column
+t = ("a", "b", "c")
+```
+</p>
+
+* Conversion en liste et inversement
+  * Un `Tuple` converti en `List` devient modifiable!
+
+```{python}
+#| output-location: column
+l = list(t); print(l)
+l.append("a"); print(tuple(l))
+```
+
+* Création d'un `Tuple` avec un seul élément
+  * `t = (1)` crée un entier
+  * `t2 = (1,)` crée un `Tuple`
+```{python}
+#| output-location: column
+t1 = (1,); print(t1, type(t1))
+t2 = (1); print(t2, type(t2))
+```
+
+::: notes
+**Spécificités du `Tuple`**
+
+- **Conversion en liste et inversement** :  
+  Un **`tuple`** peut être converti en **`list`**, ce qui permet de modifier son contenu. Une fois les modifications effectuées, vous pouvez reconvertir la liste en tuple. Cela offre une flexibilité lorsque vous devez modifier temporairement des données immuables.
+
+  Exemple :  
+  `l = list(t)` convertit un `tuple` en liste, permettant des opérations telles que `l.append("a")`. Ensuite, `tuple(l)` reconvertit la liste en `tuple`.
+
+- **Création d'un `Tuple` avec un seul élément** :  
+  Lorsque vous créez un `tuple` avec un seul élément, il est nécessaire d'ajouter une virgule après cet élément. Sinon, Python interprétera l'expression comme un type primitif (par exemple, un entier).
+
+  Exemple :  
+  `t1 = (1,)` crée un `tuple` avec un seul élément, tandis que `t2 = (1)` crée un entier.
+
+Ces spécificités sont importantes à comprendre pour éviter des erreurs lors de la manipulation des tuples, en particulier lors de leur création ou conversion.
+:::
+
+## `Tuple` résumé {.smaller}
+
+| Opération | Description |
+|---|------|
+| `t[i]` | Accès à l'élément à l'index `i` |
+| `t + t2` | Concaténation de deux tuples |
+| `tuple(l)` | Conversion d'une liste en tuple |
+| `x in t`  | Recherche de l'élément `x` |
+| `t.index(x)` | Recherche de l'index de l'élément `x` |
+| `t.count(x)` | Compte le nombre d'occurrences de l'élément `x` |
+
+
+-->
+
+
+<!--
+
+# Set
+
+## Le `Set` (ensemble)
+
+* Collection non ordonnée d'objets uniques
+  * Application: liste de noms, mots, nombres uniques.
+
+<p>
+```{python}
+#| output-location: column
+s = {"a", "b", "c"}; print(s)
+```
+</p>
+
+* Remarque: les éléments ne sont ni indexés ni ordonnés!
+
+```{python}
+#| output-location: column
+#| error: true
+s[0]
+```
+
+* Longueur du set
+```{python}
+#| output-location: column
+print(len(s))
+```
+
+* Une fois un `Set` créé, il n'est plus possible de modifier ses éléments, mais on peut ajouter ou supprimer des éléments.
+
+::: notes
+**Le `Set` (ensemble)**
+
+Un **`set`** est une collection non ordonnée qui contient des objets **uniques**. Les ensembles sont utilisés pour stocker des éléments sans doublons.
+
+- **Caractéristiques** :
+  - Les éléments d'un `set` sont uniques, ce qui signifie que les doublons sont automatiquement éliminés.
+  - Les `set` ne sont ni indexés ni ordonnés, ce qui signifie que vous ne pouvez pas accéder à un élément spécifique par son index comme dans une liste ou un tuple.
+
+- **Applications** :  
+  Les `set` sont utiles pour stocker des collections d'éléments uniques, comme des noms, des mots, ou des nombres où l'ordre n'a pas d'importance.
+
+- **Création** :  
+  Un `set` peut être créé avec des accolades `{}` ou en utilisant la fonction **`set()`**.  
+  Exemple : `s = {"a", "b", "c"}` crée un `set` contenant les éléments `"a"`, `"b"`, et `"c"`.
+
+- **Remarque** :  
+  Les éléments d'un `set` ne sont pas ordonnés et ne peuvent pas être indexés. Si vous tentez d'accéder à un élément par index, cela provoquera une erreur.
+
+  Exemple : `s[0]` entraînera une erreur car les `set` ne supportent pas l'indexation.
+
+- **Longueur d'un `set`** :  
+  Vous pouvez obtenir le nombre d'éléments uniques dans un `set` en utilisant la fonction **`len()`**.  
+  Exemple : `len(s)` renvoie le nombre total d'éléments dans le `set`.
+
+- **Immuabilité** :  
+  Bien que vous ne puissiez pas modifier directement un élément d'un `set` (parce qu'il est non ordonné et immuable dans ses éléments), vous pouvez ajouter ou supprimer des éléments.
+
+Les `set` sont idéaux pour travailler avec des collections d'éléments où l'unicité et l'absence d'ordre sont des priorités.
+
+:::
+
+## Ajout et suppression d'éléments
+
+<p>
+```{python}
+#| output-location: column
+s = {"a", "b"}
+```
+</p>
+
+* Ajout d'un ou plusieurs éléments
+```{python}
+#| output-location: column
+s.add("d"); print(s)
+s.update(["e", "f"]); print(s)
+s.update({"g", "h"}); print(s)
+```
+
+<p>
+```{python}
+#| output-location: column
+s = {"a", "b", "c", "d"}
+```
+</p>
+
+* Suppression d'un élément
+
+```{python}
+#| output-location: column
+#| error: true
+s.discard("z"); print(s)
+s.remove("a"); print(s)
+s.discard("abc"); print(s)
+s.remove("abc"); print(s)
+```
+
+
+* Vider le set
+```{python}
+#| output-location: column
+s.clear(); print(s)
+```
+
+::: notes
+**Opérations sur un `Set`**
+
+Un **`set`** permet plusieurs opérations d'ajout et de suppression d'éléments, tout en maintenant l'unicité et la non-ordonnabilité des valeurs.
+
+- **Ajout d'un ou plusieurs éléments** :  
+  - Utilisez **`add()`** pour ajouter un seul élément au `set`.  
+  - Utilisez **`update()`** pour ajouter plusieurs éléments à la fois, provenant d'une liste, d'un autre `set`, ou de tout autre itérable.
+
+  Exemple :  
+  `s.add("d")` ajoute l'élément `"d"`.  
+  `s.update(["e", "f"])` ajoute plusieurs éléments d'une liste.  
+  `s.update({"g", "h"})` ajoute plusieurs éléments d'un autre `set`.
+
+- **Suppression d'un élément** :
+  - Utilisez **`remove()`** pour supprimer un élément spécifique. Si l'élément n'existe pas, cela génère une erreur.
+  - Utilisez **`discard()`** pour supprimer un élément sans générer d'erreur si l'élément n'existe pas.
+
+  Exemple :  
+  `s.remove("a")` supprime l'élément `"a"`, mais `s.remove("abc")` génère une erreur si `"abc"` n'existe pas.  
+  `s.discard("z")` ne génère pas d'erreur, même si `"z"` n'est pas présent dans le `set`.
+
+<!-- 
+- **Suppression du "dernier" élément** :
+  - Utilisez **`pop()`** pour supprimer et renvoyer un élément arbitraire du `set`. Étant donné que les `set` ne sont pas ordonnés, l'élément supprimé est imprévisible, donc on ne peut pas dire quel est le "dernier" élément.
+
+  Exemple :  
+  `s.pop()` supprime un élément arbitraire du `set`. 
+--
+
+- **Vider le `set`** :
+  - Utilisez **`clear()`** pour supprimer tous les éléments du `set`, le rendant vide.
+
+  Exemple :  
+  `s.clear()` vide entièrement le `set`, le laissant sans éléments.
+
+Ces opérations permettent de gérer efficacement l'ajout et la suppression d'éléments dans un `set`. Elles opérations montrent la flexibilité des `set` pour ajouter de nouveaux éléments ou en supprimer, tout en maintenant l'unicité des valeurs.
+:::
+
+## Sur/sous-ensemble, copie, recherche
+
+```{python}
+s = {"a", "b"}; s2 = {"a", "b", "c"}
+```
+
+* Sous-ensemble, sur-ensemble
+```{python}
+#| output-location: column
+print(s.issubset(s2))
+print(s2.issuperset(s))
+```
+
+* Copie
+  * Comme pour les listes, `s1 = s` crée une référence, pas une copie.
+```{python}
+#| output-location: column
+s1 = s; s2 = s.copy(); print(s1, s2)
+s.add("z"); print(s1, s2)
+```
+
+* Recherche
+```{python}
+#| output-location: column
+print("a" in s)
+print("z" in s)
+```
+
+::: notes
+
+**Opérations sur un `Set`**
+
+Les **`set`** offrent des opérations puissantes pour combiner et comparer des ensembles de données uniques.
+
+- **Sous-ensemble et sur-ensemble** :
+  - **`issubset()`** : Vérifie si un ensemble est un sous-ensemble d'un autre (si tous ses éléments sont dans l'autre).  
+    Exemple : `s.issubset(s2)` renvoie `True` car tous les éléments de `s` sont dans `s2`.
+  - **`issuperset()`** : Vérifie si un ensemble est un sur-ensemble d'un autre (s'il contient tous les éléments de l'autre).  
+    Exemple : `s2.issuperset(s)` renvoie `True` car `s2` contient tous les éléments de `s`.
+
+- **Copie** :  
+  Comme pour les listes, affecter un `set` à une autre variable avec **`s1 = s`** crée une référence au même ensemble. Pour créer une véritable copie, utilisez **`copy()`**.  
+  Exemple : `s1 = s` crée une référence, tandis que `s2 = s.copy()` crée une copie indépendante. Si vous modifiez `s`, cela affecte `s1` mais pas `s2`.
+
+- **Recherche d'un élément** :  
+  Utilisez l'opérateur **`in`** pour vérifier la présence d'un élément dans un ensemble.  
+  Exemple : `"a" in s` renvoie `True`, tandis que `"z" in s` renvoie `False`.
+:::
+
+## Opérations entre deux ensembles  {.smaller}
+
+<p>
+```{python}
+a = {1, 2, 3}; b = {3, 4, 5}
+```
+</p>
+
+::: {.columns}
+::: {.column width="50%"  #vcenter }
+
+* Union
+```{python}
+print(a.union(b), a | b)
+```
+
+* Intersection
+```{python}
+print(a.intersection(b), a & b) 
+```
+
+* Différence
+```{python}
+print(a.difference(b), a - b) 
+```
+
+* Différence symétrique
+```{python}
+print(a.symmetric_difference(b), a ^ b) 
+```
+
+:::
+::: {.column width="50%"  #vcenter}
+
+![](../images/collections/two_set_operations.webp)
+
+
+:::
+:::
+
+::: notes
+
+
+**Opérations entre deux ensembles**
+
+Les **`set`** permettent des opérations classiques entre ensembles à l'aide d'opérateurs ou de mé
+
+- **Union** (`|` ou `.union()`) :  
+  Combine tous les éléments des deux ensembles sans doublons.  
+  Exemple : `a | b` ou `a.union(b)` renvoie un ensemble contenant tous les éléments de `a` et `b`, soit `{1, 2, 3, 4, 5}`.
+
+- **Intersection** (`&` ou `.intersection()`) :  
+  Renvoie les éléments communs aux deux ensembles.  
+  Exemple : `a & b` ou `a.intersection(b)` renvoie `{3}` car c'est le seul élément commun entre `a` et `b`.
+
+- **Différence** (`-` ou `.difference()`) :  
+  Renvoie les éléments présents dans le premier ensemble mais pas dans le second.  
+  Exemple : `a - b` ou `a.difference(b)` renvoie `{1, 2}`, car ces éléments sont dans `a` mais pas dans `b`.
+
+- **Différence symétrique** (`^` ou `.symmetric_difference()`) :  
+  Renvoie les éléments qui ne sont présents que dans l'un des deux ensembles.  
+  Exemple : `a ^ b` ou `a.symmetric_difference(b)` renvoie `{1, 2, 4, 5}`.
+
+
+Ces opérations permettent de manipuler les ensembles de manière flexible, que ce soit pour obtenir des résultats sans modifier les ensembles d'origine.
+
+:::
+
+
+<!-- ## Opérations alternatives sur un `Set` {.smaller}
+
+<p>
+```{python}
+a = {1, 2, 3}; b = {3, 4, 5}
+```
+</p>
+
+::: {.columns}
+::: {.column width="50%"}
+
+#### Opérations entre deux ensembles 
+
+* Union (| ou .union())
+```{python}
+print(a | b) 
+```
+
+* Intersection (& ou .intersection())
+```{python}
+print(a & b) 
+```
+
+* Différence (- ou .difference())
+```{python}
+print(a - b) 
+```
+
+* Différence symétrique (^ ou .symmetric_difference())
+```{python}
+print(a ^ b) 
+```
+
+
+:::
+::: {.column width="50%"}
+
+#### Ajout d'éléments (in-place)
+
+* Mise à jour avec l'union (|= ou .update()) :
+
+```python
+a |= b  # a devient {1, 2, 3, 4, 5}
+```
+
+* Mise à jour avec l'intersection (&= ou .intersection_update()) :
+
+```python
+a &= b  # a devient {3}
+````
+
+* Mise à jour avec la différence (-= ou .difference_update()) :
+```python
+a -= b  # a devient {1, 2}
+```
+* Mise à jour avec la différence symétrique (^= ou .symmetric_difference_update()) :
+```python
+a ^= b  # a devient {1, 2, 4, 5}
+```
+:::
+::: 
+
+::: notes
+
+Les **`set`** permettent des opérations classiques entre ensembles à l'aide d'opérateurs ou de méthodes équivalentes.
+
+**Opérations entre deux ensembles**
+
+- **Union** (`|` ou `.union()`) :  
+  Combine tous les éléments des deux ensembles sans doublons.  
+  Exemple : `a | b` renvoie `{1, 2, 3, 4, 5}`.
+
+- **Intersection** (`&` ou `.intersection()`) :  
+  Renvoie les éléments communs aux deux ensembles.  
+  Exemple : `a & b` renvoie `{3}`.
+
+- **Différence** (`-` ou `.difference()`) :  
+  Renvoie les éléments présents dans le premier ensemble mais pas dans le second.  
+  Exemple : `a - b` renvoie `{1, 2}`.
+
+- **Différence symétrique** (`^` ou `.symmetric_difference()`) :  
+  Renvoie les éléments qui ne sont présents que dans l'un des deux ensembles.  
+  Exemple : `a ^ b` renvoie `{1, 2, 4, 5}`.
+
+**Ajout d'éléments (in-place)**
+
+Ces opérations modifient directement le `set` d'origine.
+
+- **Mise à jour avec l'union** (`|=` ou `.update()`) :  
+  Ajoute tous les éléments de l'autre ensemble au premier ensemble.  
+  Exemple : `a |= b` modifie `a` pour devenir `{1, 2, 3, 4, 5}`.
+
+- **Mise à jour avec l'intersection** (`&=` ou `.intersection_update()`) :  
+  Conserve uniquement les éléments communs aux deux ensembles.  
+  Exemple : `a &= b` modifie `a` pour devenir `{3}`.
+
+- **Mise à jour avec la différence** (`-=` ou `.difference_update()`) :  
+  Supprime les éléments du premier ensemble qui sont présents dans le second.  
+  Exemple : `a -= b` modifie `a` pour devenir `{1, 2}`.
+
+- **Mise à jour avec la différence symétrique** (`^=` ou `.symmetric_difference_update()`) :  
+  Garde les éléments qui ne sont présents que dans un seul des ensembles.  
+  Exemple : `a ^= b` modifie `a` pour devenir `{1, 2, 4, 5}`.
+
+Ces opérations permettent de manipuler les ensembles de manière flexible, que ce soit pour obtenir des résultats sans modifier les ensembles d'origine ou pour mettre à jour un ensemble directement.
+
+::: --
+
+
+## `Set` résumé {.smaller}
+
+| Opération | Description |
+|---|------|
+| `s.add(x)` | Ajout de l'élément `x` |
+| `s.update(l)` ou `s.update(s2)` | Ajout des éléments de `l` ou `s2` |
+| `s.remove(x)` ou `s.discard(x)` | Suppression de l'élément `x` |
+| `s.clear()` | Vider le set |
+| `s.union(s2)` | Union de deux sets |
+| `s.intersection(s2)` | Intersection de deux sets |
+| `s.difference(s2)` | Différence de deux sets |
+| `s.symmetric_difference(s2)` | Différence symétrique de deux sets |
+| `s.issubset(s2)` | Vérifie si `s` est un sous-ensemble de `s2` |
+| `s.issuperset(s2)` | Vérifie si `s` est un sur-ensemble de `s2` |
+| `x in s` | Recherche de l'élément `x` |
+
+-->
+
+<!--
+
+# Dictionary
+
+## Le `Dictionary`
+
+::: {.columns}
+::: {.column width="40%" #vcenter}
+
+* Collection
+  * non ordonnée,
+  * de paires clé-valeur.
+* Applications : dictionnaire de traduction, de synonymes, de coordonnées, etc.
+
+:::
+::: {.column width="60%" #vcenter}
+
+```{mermaid}
+%%| echo: false
+
+flowchart LR
+  classDef lightGray fill:#f2f2f2,stroke:#333,stroke-width:1px;
+
+  subgraph Keys
+    A("budget")
+    C("classe")
+    E("âge")
+  end
+
+  subgraph Values
+    B("balance, compte, dépenses")
+    D("école, cours, élégance")
+    F("ancienneté, ère, génération")
+  end
+
+  A -- > B
+  C -- > D
+  E -- > F
+
+  class A,C,E,B,D,F lightGray;
+
+  %% Remove fill from subgraphs by making them transparent
+  style Keys fill:transparent,stroke:#000,stroke-width:1px;
+  style Values fill:transparent,stroke:#000,stroke-width:1px;
+```
+
+:::
+:::
+
+::: notes
+**Dictionnaire**
+
+- **Collection non ordonnée de paires clé-valeur** :  
+  Un dictionnaire est une structure de données qui stocke des paires de clés et de valeurs. Chaque clé unique dans le dictionnaire est associée à une valeur. Contrairement à une liste, les éléments d'un dictionnaire ne sont pas ordonnés, ce qui signifie que l'ordre des paires clé-valeur peut changer à chaque fois que vous accédez au dictionnaire. Les dictionnaires sont utilisés pour des applications où vous devez associer des éléments entre eux, comme un dictionnaire de traduction ou une liste de synonymes.
+
+:::
+
+## Création et longueur
+
+::: {.columns}
+::: {.column width="50%" #vcenter}
+
+* Création avec des accolades `{}` ou la fonction `dict()` :
+<p>
+```{python}
+d1 = {"nom": "Dupont",
+  "prénom": "Jean",
+  "âge": 25
+}
+d2 = dict(nom="Dupont",
+  prénom="Jean",
+  âge=25
+)
+print(d1, d1 == d2)
+```
+</p>
+
+* Longueur du dictionnaire :
+
+```{python}
+#| output-location: column
+print(len(d1))
+```
+
+:::
+::: {.column width="50%" #vcenter}
+
+```{mermaid}
+%%| echo: false
+
+flowchart LR
+  classDef lightGray fill:#f2f2f2,stroke:#333,stroke-width:1px;
+
+  subgraph Keys
+    A("nom")
+    C("prénom")
+    E("âge")
+  end
+
+  subgraph Values
+    B("Dupont")
+    D("Jean")
+    F("25")
+  end
+
+  A -- > B
+  C -- > D
+  E -- > F
+
+  class A,C,E,B,D,F lightGray;
+
+  %% Remove fill from subgraphs by making them transparent
+  style Keys fill:transparent,stroke:#000,stroke-width:1px;
+  style Values fill:transparent,stroke:#000,stroke-width:1px;
+```
+
+:::
+:::
+
+::: notes
+
+- **Création** :  
+  Un dictionnaire peut être créé avec des accolades `{}` ou en utilisant la fonction **`dict()`**. Chaque clé dans le dictionnaire doit être unique et immuable (comme une chaîne ou un nombre), tandis que les valeurs peuvent être de tout type.
+
+  Exemple :  
+  `d1 = {"nom": "Dupont", "prénom": "Jean", "âge": 25}` crée un dictionnaire contenant trois paires clé-valeur où `"nom"`, `"prénom"`, et `"âge"` sont les clés, et `"Dupont"`, `"Jean"`, et `25` sont les valeurs associées.  
+  `d2 = dict(nom="Dupont", prénom="Jean", âge=25)` est une autre façon de créer un dictionnaire avec une syntaxe plus concise.
+
+- **Longueur du dictionnaire** :  
+  Pour connaître le nombre de paires clé-valeur dans un dictionnaire, utilisez la fonction **`len()`**. Cette fonction renvoie le nombre total de clés présentes dans le dictionnaire.
+
+  Exemple :  
+  `len(d1)` renvoie `3` car le dictionnaire `d1` contient trois paires clé-valeur.
+
+:::
+
+## Accès et modification
+
+```{python}
+d = {"nom": "Jo", "âge": 25}
+```
+
+* Accès à une valeur par clé ou avec la méthode `get()`
+```{python}
+#| output-location: column
+#| error: true
+print(d["nom"], d.get("âge"))
+print(d["abc"])
+```
+
+* Accès aux clés, valeurs, ou paires clé-valeur
+```{python}
+#| output-location: column
+print(list(d.keys()))
+print(list(d.values()))
+print(list(d.items()))
+```
+
+
+* Modification ou ajout d'une paire clé-valeur
+```{python}
+#| output-location: column
+d["âge"] = 26; print(d)
+d["sexe"] = "M"; print(d)
+```
+
+* Mis à jour avec un autre dictionnaire
+```{python}
+#| output-location: column
+d2 = {"âge": 27, "taille": 180}
+d.update(d2); print(d)
+```
+
+::: notes
+
+**Le `Dictionary`**
+
+Un **`dictionary`** en Python est une collection non ordonnée de paires clé-valeur, où chaque clé est unique et permet d'accéder à sa valeur associée.
+
+- **Accès à une valeur par clé** :  
+  Vous pouvez accéder à une valeur en utilisant la clé correspondante. Utilisez la méthode **`get()`** pour éviter une erreur si la clé n'existe pas.  
+  Exemple :  
+  `d["nom"]` renvoie la valeur associée à `"nom"`.  
+  `d.get("âge")` renvoie la valeur associée à `"âge"`, ou `None` si la clé n'existe pas.
+
+- **Accès aux clés, valeurs, ou paires clé-valeur** :  
+  - **`keys()`** renvoie une liste des clés du dictionnaire.
+  - **`values()`** renvoie une liste des valeurs.
+  - **`items()`** renvoie une liste des paires clé-valeur sous forme de tuples.
+
+- **Modification ou ajout d'une paire clé-valeur** :  
+  Vous pouvez modifier la valeur associée à une clé existante ou ajouter une nouvelle paire clé-valeur.  
+  Exemple :  
+  `d["âge"] = 26` modifie la valeur de `"âge"`.  
+  `d["sexe"] = "M"` ajoute une nouvelle paire clé-valeur au dictionnaire.
+
+- **Mise à jour avec un autre dictionnaire** :  
+  La méthode **`update()`** permet de mettre à jour un dictionnaire avec les paires clé-valeur d'un autre dictionnaire. Si une clé existe déjà, sa valeur est mise à jour, sinon la paire est ajoutée.  
+  Exemple :  
+  `d.update(d2)` met à jour le dictionnaire `d` avec les éléments de `d2`.
+
+Ces opérations permettent de manipuler efficacement les paires clé-valeur dans un dictionnaire.
+
+:::
+
+
+## Suppression, copie, recherche
+
+```{python}
+d = {"nom": "Dupont", "prénom": "Jean", "âge": 25}
+```
+
+* Suppression d'une paire clé-valeur avec `pop()` ou `popitem()` (la dernière ajoutée), ou vide le dictionnaire
+```{python}
+#| output-location: column
+d.pop("âge"); print(d)
+d.popitem(); print(d)
+d.clear(); print(d)
+```
+
+
+* Copie (note: `d1 = d` crée une référence, pas une copie!)
+```{python}
+#| output-location: column
+d = {"âge": 25}; d1 = d; print(d, d1)
+d2 = d.copy();  d3 = dict(d); print(d2, d3)
+d["âge"] = 26; print(d1, d2, d3)
+```
+
+* Recherche
+```{python}
+#| output-location: column
+print("âge" in d)
+print("sexe" in d)
+```
+
+::: notes
+**Opérations sur un `Dictionary`**
+
+Un **`dictionary`** en Python permet plusieurs opérations utiles pour manipuler les paires clé-valeur.
+
+- **Suppression d'une paire clé-valeur** :
+  - Utilisez **`pop()`** pour supprimer une clé et sa valeur associée.
+  - Utilisez **`popitem()`** pour supprimer la dernière paire ajoutée.
+  - Utilisez **`clear()`** pour vider complètement le dictionnaire.
+
+  Exemple :  
+  `d.pop("âge")` supprime la paire où la clé est `"âge"`.  
+  `d.popitem()` supprime la dernière paire ajoutée.  
+  `d.clear()` vide tout le dictionnaire.
+
+- **Copie d'un dictionnaire** :
+  - Attention : **`d1 = d`** crée une référence au même dictionnaire, et non une copie.  
+  - Utilisez **`copy()`** ou **`dict()`** pour créer une véritable copie du dictionnaire.
+
+  Exemple :  
+  `d2 = d.copy()` ou `d3 = dict(d)` créent des copies indépendantes de `d`.  
+  Si vous modifiez `d`, cela n'affectera pas `d2` ou `d3`.
+
+- **Recherche dans un dictionnaire** :
+  - Utilisez l'opérateur **`in`** pour vérifier si une clé existe dans le dictionnaire.
+
+  Exemple :  
+  `"âge" in d` renvoie `True` si la clé `"âge"` existe dans le dictionnaire.  
+  `"sexe" in d` renvoie `False` si la clé `"sexe"` n'existe pas.
+
+Ces opérations permettent de gérer efficacement les éléments d'un dictionnaire et d'interagir avec ses paires clé-valeur.
+
+:::
+
+<!--
+## `Dictionary` imbriqué
+
+* Un `Dictionary` peut contenir des `List`, `Tuple`, `Set`, ou d'autres `Dictionary`
+
+<p>
+```{python}
+#| output-location: column
+d = {
+  "nom": "Dupont",
+  "prénom": "Jean",
+  "âge": 25,
+  "enfants": ["Paul", "Marie"],
+  "adresse": {
+    "rue": "Rue de la Paix",
+    "ville": "Genève"
+  }
+}
+print(d)
+```
+</p>
+
+* Accès à un élément imbriqué
+```{python}
+#| output-location: column
+print(d["enfants"][0])
+print(d["adresse"]["ville"])
+```
+
+::: notes
+**`Dictionary` imbriqué**
+
+Un **`dictionary`** peut contenir non seulement des types primitifs, mais aussi des collections comme des **`list`**, **`tuple`**, **`set`**, ou même d'autres **`dictionary`**. Cela permet de créer des structures de données complexes et organisées.
+
+- **Exemple de `dictionary` imbriqué** :  
+  Un dictionnaire peut contenir des éléments comme des listes d'enfants ou un autre dictionnaire pour l'adresse d'une personne.
+
+  Exemple :  
+  `d = {"nom": "Dupont", "prénom": "Jean", "âge": 25, "enfants": ["Paul", "Marie"], "adresse": {"rue": "Rue de la Paix", "ville": "Genève"}}` crée un dictionnaire où `"enfants"` est une liste et `"adresse"` est un autre dictionnaire.
+
+- **Accès à un élément imbriqué** :  
+  Pour accéder à des éléments à l'intérieur d'un dictionnaire imbriqué, vous pouvez chaîner les accès par clé.
+
+  Exemple :  
+  `d["enfants"][0]` accède au premier enfant, `"Paul"`.  
+  `d["adresse"]["ville"]` accède à la ville dans le sous-dictionnaire `"adresse"`, qui renvoie `"Genève"`.
+
+Les dictionnaires imbriqués sont très utiles pour organiser et structurer des données complexes dans vos programmes.
+:::
+--
+
+## `Dictionary` résumé {.smaller}
+
+| Opération | Description |
+|---|------|
+| `d["clé"]` ou `d.get("clé")` | Accès à la valeur par clé |
+| `d.keys()` | Accès aux clés |
+| `d.values()` | Accès aux valeurs |
+| `d.items()` | Accès aux paires clé-valeur |
+| `d["clé"] = x` | Modification ou ajout d'une paire clé-valeur |
+| `d.popitem()` ou `d.pop("clé")` | Suppression d'une paire clé-valeur |
+| `d.clear()` | Vider le dictionnaire |
+| `d.copy()` ou `dict(d)` | Copie du dictionnaire |
+| `x in d` | Recherche de la clé `x` |
+
+-->
+
+
+## Résumé des collections {.smaller}
+
+* `List`: collection d'objets ordonnée et modifiable
+* `Dictionary`: collection non ordonnée de paires clé-valeur
+* `Tuple`: collection d'objets ordonnée et non modifiable
+* `Set`: collection non ordonnée d'objets uniques
+
+| | `List` | `Tuple` | `Set` | `Dictionary` |
+|---|---|---|---|---|
+| **Ordre** | Oui | Oui | Non | Non |
+| **Index** | Oui | Oui | Non | Oui |
+| **Modifiable** | Oui | Non | Oui | Oui |
+| **Doublons** | Oui | Oui | Non | Non (clé) / Oui (valeurs) |
+
+::: notes
+
+**Résumé des collections**
+
+Ce tableau récapitule les principales caractéristiques des quatre types de collections en Python : `List`, `Tuple`, `Set` et `Dictionary`.
+
+- **`List`** : 
+  - Ordonnée et modifiable.
+  - Permet l'accès par index.
+  - Peut contenir des doublons.
+  - Utilisée pour stocker des séries de données où l'ordre et la mutabilité sont importants.
+
+- **`Tuple`** : 
+  - Ordonné mais non modifiable.
+  - Permet l'accès par index.
+  - Peut contenir des doublons.
+  - Utilisé pour stocker des ensembles de données immuables.
+
+- **`Set`** : 
+  - Non ordonné et modifiable.
+  - Ne permet pas l'accès par index.
+  - Ne peut pas contenir de doublons.
+  - Utilisé pour stocker des éléments uniques et effectuer des opérations ensemblistes.
+
+- **`Dictionary`** : 
+  - Non ordonné et modifiable.
+  - Permet l'accès par clé.
+  - Les clés doivent être uniques, mais les valeurs peuvent être dupliquées.
+  - Utilisé pour stocker des paires clé-valeur, idéal pour des associations rapides et des recherches par clé.
+
+Ce résumé permet de choisir la collection la plus adaptée en fonction des besoins spécifiques de votre programme.
+
+:::

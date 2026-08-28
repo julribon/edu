@@ -1,0 +1,340 @@
+---
+title: "Nettoyage et Analyse de Données avec Pandas"
+subtitle: Introduction à la Science des Données avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    # show-notes: separate-page
+---
+
+```{python}
+#| echo: False
+import os
+import sys
+import pandas as pd
+sys.path.append(os.path.abspath('modules'))
+```
+
+<!-- ## Résumé {.smaller}
+
+| Concept         | Scalar Class | Array Class      | pandas Data Type               | Primary Creation Method                  |
+|-----------------|--------------|------------------|--------------------------------|------------------------------------------|
+| **Date times**  | `Timestamp`  | `DatetimeIndex`  | `datetime64[ns]` or `datetime64[ns, tz]` | `to_datetime` or `date_range`           |
+| **Time deltas** | `Timedelta`  | `TimedeltaIndex` | `timedelta64[ns]`              | `to_timedelta` or `timedelta_range`      |
+| **Time spans**  | `Period`     | `PeriodIndex`    | `period[freq]`                 | `Period` or `period_range`               |
+| **Date offsets**| `DateOffset` | None             | None                           | `DateOffset`                             | -->
+
+
+
+# Dates et Heures
+
+## Echauffement
+
+- Combien de jours dans une année ?
+- Combien d'heures dans une journée ?
+- Combien de secondes dans une minute ?
+
+. . .
+
+- Leur traitement doit concilier :
+  - Deux phénomènes naturels (rotation de la terre, révolution autour du soleil),
+  - Des phénomères géopolitiques (décalage horaire, changement d'heure, etc.).
+
+## Pandas et les dates
+
+- 4 concepts liés au temps :
+  - **Date et heure** : date ou instant précis, optionnellement avec prise en charge du fuseau horaire.
+  - **Plages de temps** : une période de temps définie par un point dans le temps et sa fréquence associée.
+  - **Deltas de temps** : durée/écart absolu entre deux dates ou instants.
+  - **Décalages de date** : durée/écart relatif qui respecte l'arithmétique du calendrier.
+- Aujourd'hui, nous nous concentrons sur le premier concept.
+
+## Dates et heures
+
+- Dans pandas, représentées par :
+  - `Timestamp` (scalaire),
+  - `DatetimeIndex` (série).
+
+- Création d'une date à partir d'une chaîne :
+
+::: {.columns}
+::: {.column width="47%"}
+
+```{python}
+date = pd.to_datetime('2021-09-01')
+print(date)
+```
+
+:::
+::: {.column width="53%"}
+
+```{python}
+date_idx = pd.to_datetime(['2021-09-01'])
+print(date_idx)
+```
+
+:::
+:::
+
+- Indiqué par le dtype `datetime64[ns]` dans un DataFrame.
+
+## Composants d'un `Timestamp`
+
+- Les dates et heures sont décomposées en plusieurs composants :
+  - Année, Mois, Jour, Heure, Minute, Seconde.
+
+- Pour extraire ces composants :
+
+```{python}
+#| output-location: column
+print(date.year, date.month, date.day)
+print(date.hour, date.minute, date.second)
+print(date_idx.year)
+print(date_idx.month)
+print(date_idx.day)
+print(date_idx.hour)
+print(date_idx.minute)
+print(date_idx.second)
+```
+
+
+## Autres composants {.smaller}
+
+| Propriété       | Description                                                            |
+|-----------------|------------------------------------------------------------------------|
+| **date**        | La date                                                    |
+| **dayofyear**/**weekofyear**   | Numéro du jour/semaine de l'année           |
+| **dayofweek**     | Numéro du jour de la semaine (Lundi=0, Dimanche=6)           |
+| **quarter**       | Trimestre (Jan-Mar = 1, Avr-Jun = 2, etc.)             |
+| **days_in_month** | Nombre de jours dans le mois                          |
+| **is_month_start**| Indique si c'est le premier jour du mois                             |
+| **is_month_end**  | Indique si c'est le dernier jour du mois                             |
+| **is_quarter_start** | Indique si c'est le premier jour du trimestre                     |
+| **is_quarter_end**   | Indique si c'est le dernier jour du trimestre                     |
+| **is_year_start** | Indique si c'est le premier jour de l'année                          |
+| **is_year_end**   | Indique si c'est le dernier jour de l'année                          |
+| **is_leap_year**  | Indique si la date appartient à une année bissextile                 |
+
+## Créer une séquence de dates
+
+- `date_range` : génère une séquence de dates/heures.
+- `freq` : fréquence de la séquence (`D` pour jour, `M` pour mois, `h` pour heure, etc.).
+
+```{python}
+dates = pd.date_range(start='2021-09-01', end='2021-09-08', freq='D')
+print(dates)
+```
+
+- `periods` : nombre de périodes à générer.
+
+```{python}
+dates = pd.date_range(start='2021-09-01', periods=8, freq='D')
+print(dates)
+```
+
+## Alias de fréquence {.smaller}
+
+| Alias | Description                       |
+|-------|-----------------------------------|
+| **B** | Jours ouvrés        |
+| **D** | Jours calendaires   |
+| **W** | Hebdomadaire            |
+| **M** | Mensuelle               |
+| **Q** | Trimestrielle           |
+| **Y** | Annuelle                |
+| **h** | Horaire                 |
+| **min** | Par minute            |
+| **s** | Par seconde             |
+
+[... et bien d'autres.](https://pandas.pydata.org/docs/user_guide/timeseries.html#offset-aliases)
+
+## Créer à partir de plusieurs colonnes
+
+- Parfois, les dates sont réparties sur plusieurs colonnes :
+
+  ```{python}
+  df = pd.DataFrame({
+      'year': [2021, 2021, 2021],
+      'month': [9, 9, 9],
+      'day': [1, 2, 3]
+  })
+  print(df)
+  ```
+
+- On peut les combiner pour créer une date :
+
+  ```{python}
+  df['date'] = pd.to_datetime(df[['year', 'month', 'day']])
+  print(df)
+  ```
+
+## Indices de qualité de l'air
+
+![[Source: iqair.ch](https://www.iqair.com/switzerland/geneva/geneve)](../images/df/air_quality.png){width=200%}
+
+## Pollution Atmosphérique à Lausanne
+
+```{python}
+airquality = pd.read_csv('data/airquality_lausanne.csv', sep=";")
+print(airquality.head())
+```
+
+[Source : réseau national d'observation des polluants atmosphériques](https://www.bafu.admin.ch/bafu/fr/home/themes/air/etat/donnees.html)
+
+```{python}
+t = airquality['Date/heure']
+print(t.head())
+```
+
+## Conversion de dates
+
+- Les dates sont souvent stockées en formats non standard!
+
+```{python}
+#| error: True
+#| output-location: column
+pd.to_datetime(t)
+```
+
+## Conversion de dates
+
+- Les dates sont souvent stockées en formats non standard!
+- Spécification du format :
+
+  - `%d` pour le jour,`%m` pour le mois, `%Y` pour l'année, etc.
+
+  ```{python}
+  #| output-location: column
+  t = pd.to_datetime(t, 
+    format='%d.%m.%Y %H:%M')
+  print(t.head(2))
+  ```
+
+- Attention aux séparateurs et à la casse :
+
+```{python}
+print(pd.to_datetime('2021/09/01', format='%Y/%d/%m'))
+print(pd.to_datetime('21/09/01', format='%y/%d/%m'))
+```
+
+## Abbreviations {.smaller}
+
+| Abrv | Description                                                                                                          | Exemple                                   |
+|------|----------------------------------------------------------|--------------------------------------|
+| **%w**    | Jour de la semaine en nombre.                                              | 0, 1, ..., 6                              |
+| **%A**    | Jour de la semaine complet selon locale.                                                                     | Sunday, Monday, ... (en_US) |
+| **%a**    | Jour de la semaine en abrégé selon locale.                                                                          | Sun, Mon, ... (en_US) |
+| **%d**    | Jour du mois en nombre avec zéro initial.                                                                   | 01, 02, ...                           |
+| **%m**    | Mois en nombre avec zéro initial.                                                                           | 01, 02, ...                           |
+| **%B**    | Mois complet selon locale.                                                                                   | January, February, ... (en_US) |
+| **%b**    | Mois en abrégé selon locale.                                                                                        | Jan, Feb, ... (en_US) |
+| **%y**    | Année sans siècle en nombre avec zéro initial.                                                              | 00, 01, ...                           |
+| **%Y**    | Année avec le siècle en nombre.                                                                               | 0001, 0002, ..., 2013, 2014, ... |
+| **%H**    | Heure en nombre avec zéro initial.                                                          | 00, 01, ..., 23                           |
+| **%M**    | Minute en nombre avec zéro initial.                                                                        | 00, 01, ..., 59                           |
+| **%S**    | Seconde en nombre avec zéro initial.                                                                       | 00, 01, ..., 59                           |
+
+
+## Utilisation de dates comme index
+
+- De nombreux avantages (p.ex. découpage, fusion, etc.).
+- Optimisation des performances.
+- Opérations de séries temporelles (p.ex. moyennes mobiles).
+
+  ```{python}
+  airquality['Date/heure'] = t
+  airquality = airquality.set_index('Date/heure')
+  print(airquality.head())
+  print(airquality.index[:2])
+  ```
+
+## Indexation et découpage
+
+- Extraction d'une observation précise :
+
+  ```{python}
+  print(airquality.loc['2024-01-01 00:00:00'])
+  ```
+
+- Extraction d'une plage de temps :
+
+  ```{python}
+  print(airquality.loc['2024-01-01 00:00':'2024-01-01 05:00'])
+  ```
+
+## Indexation et découpage (suite)
+
+```{python}
+#| echo: False
+pd.options.display.max_rows = 2
+```
+
+- Extraction d'une journée :
+
+  ```{python}
+  print(airquality.loc['2024-01-01'])
+  ```
+
+- Extraction d'une période :
+
+  ```{python}
+  print(airquality.loc['2024-01-01':'2024-01-02'])
+  ```
+
+## Indexation et découpage (suite)
+
+- Extraction d'un mois :
+
+  ```{python}
+  print(airquality.loc['2024-01'])
+  ```
+
+- Extraction d'une année :
+
+  ```{python}
+  print(airquality.loc['2024'])
+  ```
+
+## Indexation et découpage (suite)
+
+- Pour plus de flexibilité, utiliser les composants de l'index :
+
+  ```{python}
+  #| eval: False
+  airquality.loc[airquality.index.year == 2024]
+  airquality.loc[airquality.index.month == 1]
+  airquality.loc[airquality.index.day == 1]
+  airquality.loc[(airquality.index.month == 1) & (airquality.index.day == 1)]
+  airquality.loc[(airquality.index.month >= 1) & (airquality.index.month <= 3)]
+  airquality.loc[(airquality.index.hour >= 0) & (airquality.index.hour <= 5)]
+  ```
+
+- Généralement plus rapide que les méthodes de chaîne de caractères.
+- [Plus d'informations sur le site de pandas](https://pandas.pydata.org/docs/user_guide/timeseries.html#datetimeindex).
+
+## Exemple d'application
+
+- **Objectif** : calculer la moyenne de la pollution atmosphérique par jour de la semaine.
+
+```{python}
+airquality['day'] = airquality.index.dayofweek
+print(airquality.head())
+```
+
+## Diviser Appliquer Combiner
+
+- **Diviser** : en fonction de la variable `day`.
+
+```{python}
+grouped = airquality.groupby('day')
+print(grouped)
+```
+
+- **Appliquer** : calculer la moyenne de chaque groupe.
+
+```{python}
+print(grouped[['O3', 'NO2', 'PM2.5']].mean())
+```

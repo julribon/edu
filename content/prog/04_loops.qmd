@@ -1,0 +1,900 @@
+---
+title: "Boucles"
+subtitle: Introduction à la Programmation avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    # show-notes: true
+include-in-header:
+  - text: |
+      <style>
+      .reveal .custom7030 > div.column:first-child {
+        width: 70%;
+      }
+      .reveal .custom7030 div.column:not(:first-child) {
+        width: 30%;
+      }
+      </style>
+---
+
+## Programmation structurée
+
+::: {.columns}
+::: {.column width="30%"}
+
+* Paradigme reposant sur trois concepts fondamentaux:
+  * Séquences
+  * Conditions
+  * Boucles
+
+:::
+::: {.column width="70%"}
+
+![](../images/structured_programming.png)
+
+:::
+:::
+
+::: notes
+
+**Programmation structurée**
+
+La **programmation structurée** est un paradigme qui repose sur trois concepts fondamentaux :
+
+- **Séquences** : L'exécution d'instructions dans un ordre précis, sans sauts conditionnels ni boucles.
+- **Conditions** : L'exécution conditionnelle de blocs de code en fonction d'une expression booléenne, souvent via des structures comme `if`, `elif`, et `else`.
+- **Boucles** : La répétition d'une série d'instructions jusqu'à ce qu'une condition soit remplie, à l'aide de structures comme `for` ou `while`.
+
+Ces concepts permettent de structurer le code de manière logique et claire, facilitant ainsi la compréhension et la maintenance des programmes.
+
+:::
+
+
+## Aujourd'hui
+
+* Boucles
+  * Boucles`for` et boucles `while`
+  <!-- * `break` et `continue` -->
+  * Fonction `range()`
+  <!-- * boucles imbriquées -->
+  <!-- * `enumerate()`, `zip()` -->
+
+::: notes
+
+**Boucles**
+
+**`for` et `while`** :  
+Les boucles permettent de répéter un bloc de code un certain nombre de fois ou jusqu'à ce qu'une condition soit remplie.
+
+- **`for`** : itère sur une séquence (comme une liste, un tuple, ou une chaîne de caractères).
+- **`while`** : répète un bloc de code tant qu'une condition est vraie.
+
+<!--
+**`break` et `continue`** :  
+
+- **`break`** : interrompt immédiatement la boucle, même si la condition ou la séquence n'est pas terminée.
+- **`continue`** : saute le reste du bloc de code pour cette itération et passe directement à l'itération suivante.
+-->
+
+**`range()`** :  
+
+- **`range()`** : génère une séquence de nombres (souvent utilisé dans les boucles `for`).
+
+<!--
+**`enumerate()`, `zip()`** :  
+
+- **`enumerate()`** : renvoie un index et la valeur correspondante d'une séquence, utile pour obtenir la position d'un élément dans une boucle.
+- **`zip()`** : combine plusieurs itérables (comme des listes ou des tuples) pour les itérer simultanément.
+
+**Boucles imbriquées** :  
+Il est possible d'imbriquer des boucles à l'intérieur d'autres boucles pour parcourir des structures de données plus complexes (par exemple, une liste de listes).
+
+Ces concepts sont essentiels pour contrôler le flux d'exécution et pour parcourir des données de manière efficace dans les programmes.
+-->
+:::
+
+
+
+## Introduction aux Boucles 
+
+**Qu'est-ce qu'une boucle ?**
+
+- Structure pour **répéter des instructions** plusieurs fois.
+- Utilisée pour traiter des données et automatiser des tâches.
+
+**Types de boucles :**
+
+- **`for`** : Répète un bloc de code un nombre déterminé de fois.
+- **`while`** : Répète un bloc tant qu'une condition est vraie.
+
+::: notes
+
+**Introduction aux Boucles**
+
+**Qu'est-ce qu'une boucle ?**  
+Une boucle est une structure utilisée pour **répéter des instructions** plusieurs fois. Elle est souvent utilisée pour automatiser des tâches répétitives ou pour traiter des données en bloc.
+
+**Types de boucles :**
+
+- **`for`** : Cette boucle répète un bloc de code un nombre prédéterminé de fois. Elle est particulièrement utile lorsque vous savez à l'avance combien de fois vous devez itérer.
+- **`while`** : Cette boucle répète un bloc de code tant qu'une condition donnée est vraie. Elle est idéale lorsque vous ne savez pas à l'avance combien de fois la boucle doit s'exécuter, mais vous voulez qu'elle continue jusqu'à ce qu'une certaine condition ne soit plus vraie.
+
+**Applications concrètes des boucles :**
+
+Les boucles sont omniprésentes en programmation, voici quelques exemples concrets :
+
+  - **Traitement de données** : Parcourir des fichiers CSV et analyser des colonnes de données.
+  - **Automatisation de tâches** : Refaire des tâches répétitives comme renommer des fichiers ou envoyer des emails.
+  - **Création de graphiques** : Parcourir des ensembles de données pour générer des visualisations.
+
+
+
+:::
+
+## `for`
+
+* La boucle **`for`** permet de :
+  * répéter un bloc de code un nombre déterminé de fois,
+  * parcourir une séquence (liste, tuple, dictionnaire, etc.).
+
+* Syntaxe: `for` suivi d'une variable, du mot clé `in` et d'une séquence.
+```{python}
+#| output-location: column
+animaux = ["loup", "chat", "ours"]
+for animal in animaux:
+  print(animal)
+```
+
+* Ici, `animal` est une variable qui prend la valeur de chaque élément de la liste `animaux` à chaque itération.
+
+::: notes
+
+**`for`**
+
+La boucle **`for`** permet de :
+  - Répéter un bloc de code un nombre déterminé de fois.
+  - Parcourir une séquence (comme une liste, un tuple, un dictionnaire, etc.).
+
+**Syntaxe** :  
+  La syntaxe de la boucle `for` comprend une variable, le mot clé **`in`**, et une séquence. À chaque itération, la variable prend la valeur de l'élément suivant de la séquence.
+
+**Exemple :** 
+
+Dans l'exemple donné, la variable `animal` prend successivement la valeur de chaque élément de la liste `animaux` (c'est-à-dire `"loup"`, `"chat"`, puis `"ours"`) et exécute le bloc de code qui suit.
+
+:::
+
+
+
+
+
+
+## Fonction `range()`
+
+Permet de générer une séquence de nombres.
+
+```{python}
+#| output-location: column
+for i in range(3):
+  print(i)
+```
+
+Peut prendre jusqu'à 3 arguments: `start`, `stop` et `step`.
+
+* Exemple avec `start` et `stop`:
+
+```{python}
+#| output-location: column
+for i in range(3, 7):
+  print(i)
+```
+
+* Exemple avec `start`,  `stop` et un pas `step`:
+
+```{python}
+#| output-location: column
+for i in range(3, 7, 3):
+  print(i)
+```
+
+::: notes
+
+**Fonction `range()`**
+
+La fonction **`range()`** permet de générer une séquence de nombres, utile dans les boucles **`for`**.
+
+Par défaut, **`range()`** commence à 0 et s'arrête avant la valeur spécifiée dans l'argument **`stop`**.
+
+**`range()`** peut prendre jusqu'à trois arguments :
+
+  - **`start`** : le début de la séquence (inclus).
+  - **`stop`** : la fin de la séquence (exclus).
+  - **`step`** : l'incrément entre chaque nombre de la séquence.
+
+**Exemple :**  
+
+- Dans le premier exemple, **`range(3)`** génère les nombres de 0 à 2 (3 étant exclu).
+- Dans le second exemple, **`range(3, 7)`** génère les nombres de 3 à 6 (7 étant exclu), en incrémentant de 1 à chaque étape.
+- Dans le troisièmre exemple, **`range(3, 7, 3)`** génère les nombres 3 et 6 (7 étant exclu), en incrémentant de 3 à chaque étape.
+
+:::
+
+
+## `range()` avec un pas négatif
+
+* `range()` peut être utilisé pour parcourir une séquence de nombres en **ordre décroissant**.
+* Le troisième argument de `range()` détermine le **pas**, qui est ici négatif.
+* Exemple: compte à rebours de 3 à 0
+  * Le `range(3, -1, -1)` démarre à 10 et s'arrête à 0.
+  * Le pas `-1` permet de **décroître** à chaque itération.
+
+```{python}
+#| output-location: column
+for i in range(3, -1, -1):
+    print(i)
+```
+
+::: notes
+
+**`range()` avec un pas négatif**
+
+- **`range()`** peut être utilisé pour parcourir une séquence de nombres en **ordre décroissant**.
+- Le troisième argument de **`range()`** définit le **pas**, qui peut être négatif pour générer une séquence décroissante.
+
+- **Exemple : Compter à rebours de 3 à 0**
+  La boucle `for i in range(3, -1, -1)` démarre à 3 et s'arrête à -1 (exclus), ce qui permet d'afficher un compte à rebours de 3 à 0.
+
+- Le pas de **`-1`** permet à la séquence de **décroître** à chaque itération.
+
+Cela permet de traiter des séquences inversées ou de créer des boucles qui itèrent en sens inverse.
+
+:::
+
+
+<!--
+
+## `for` avec les dictinonnaires
+
+```{python}
+person = {"nom": "Dupont", "prénom": "Jean", "âge": 30}
+```
+
+* Par défaut, `for` parcourt les clés d'un dictionnaire.
+
+```{python}
+#| output-location: column
+for cle in person:
+  print(cle)
+```
+
+* Pour parcourir les valeurs, utiliser la méthode `values()`.
+
+```{python}
+#| output-location: column
+for valeur in person.values():
+  print(valeur)
+```
+
+* Pour parcourir clés et valeurs, utiliser la méthode `items()`.
+```{python}
+#| output-location: column
+for cle, valeur in person.items():
+  print(cle, ":", valeur)
+```
+
+::: notes
+
+**`for` avec les dictionnaires**
+
+- Lorsque vous utilisez une boucle **`for`** sur un dictionnaire, par défaut, elle parcourt uniquement les **clés**.
+
+- Pour parcourir uniquement les **valeurs**, utilisez la méthode **`values()`**.
+
+- Pour parcourir à la fois les **clés et les valeurs**, utilisez la méthode **`items()`**, qui renvoie des paires clé-valeur que vous pouvez traiter dans la boucle.
+
+**Exemple :**  
+Dans l'exemple donné :
+- La première boucle parcourt les clés du dictionnaire `person`.
+- La deuxième boucle parcourt les valeurs.
+- La troisième boucle parcourt les paires clé-valeur, permettant d'afficher à la fois la clé et la valeur associée.
+
+:::
+-->
+
+
+<!--
+## Compréhensions de listes {.smaller}
+
+Syntaxe : 
+`[expression for item in iterable]`
+
+Les compréhensions de listes utilisent les boucles `for`:
+
+- Permet d'écrire des boucles sur une seule ligne.
+- Rend le code plus concis et facile à lire.
+- Souvent plus performant que les boucles traditionnelles.
+- Permet de générer rapidement des listes.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Boucle classique :**
+```{python}
+squares = []
+for i in range(10):
+  squares.append(i**2)
+print(squares)
+```
+
+:::
+::: {.column width="50%"}
+
+**Compréhension de liste :**
+```{python}
+squares = [i**2 for i in range(10)]
+
+
+print(squares)
+```
+
+:::
+:::
+
+
+
+
+::: notes
+
+**Compréhensions de listes**
+
+Les compréhensions de listes permettent d'écrire des boucles **`for`** de manière concise et lisible, en une seule ligne.
+
+- Simplifie les boucles for : Permet d'écrire des boucles en une seule ligne.
+- Lisibilité améliorée : Rend le code plus concis et facile à lire.
+- Syntaxe : `[expression for item in iterable]`
+- Performances : Souvent plus rapide que les boucles traditionnelles.
+- Cas d'usage : Utilisé pour créer des listes basées sur des itérations ou des conditions.
+
+
+Elles sont utilisées pour générer des listes à partir d'une séquence ou d'une autre itération, tout en appliquant une opération à chaque élément.
+
+  Exemple :
+
+  - Boucle classique : on utilise une boucle **`for`** pour itérer et remplir une liste manuellement.
+  - Compréhension de liste : la même opération est effectuée en une seule ligne avec une syntaxe plus concise.
+
+La compréhension de liste est utile pour simplifier le code tout en rendant son intention plus claire.
+
+:::
+
+
+
+
+## Exemples: nombres pairs
+
+* Voici plusieurs variantes pour créer une liste des nombres pairs de 0 à 10.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Avec une condition :**
+```{python}
+pairs = []
+for i in range(11):
+    if i % 2 == 0:
+        pairs.append(i)
+print(pairs)
+```
+
+:::
+::: {.column width="50%"}
+
+**Avec un pas dans range :**
+```{python}
+pairs = []
+for i in range(0, 11, 2):
+    pairs.append(i)
+
+print(pairs)
+```
+:::
+
+::: {.column width="50%"}
+
+**Avec une compréhension :**
+```{python}
+pairs = [i for i in range(11) 
+  if i % 2 == 0]
+print(pairs)
+```
+:::
+
+
+::: {.column width="50%"}
+**Avec range() et list() :**
+```{python}
+pairs = list(range(0, 11, 2))
+
+print(pairs)
+```
+
+:::
+:::
+
+::: notes
+
+**Exemples : nombres pairs**
+
+Voici plusieurs manières de créer une liste des nombres pairs de 0 à 10, illustrant différentes approches en Python :
+
+- **Avec une condition dans une boucle** :  
+  Utilisez une boucle **`for`** et une condition **`if`** pour ajouter uniquement les nombres pairs à la liste.
+
+- **Avec un pas dans `range()`** :  
+  Utilisez l'option du pas dans **`range(0, 11, 2)`** pour ne générer que les nombres pairs directement dans la boucle.
+
+- **Avec une compréhension de liste** :  
+  Utilisez une compréhension de liste pour filtrer et ajouter les nombres pairs en une seule ligne concise.
+
+- **Avec `range()` et `list()`** :  
+  Créez directement la liste de nombres pairs en convertissant l'objet **`range()`** en liste avec **`list()`**.
+
+Ces variantes montrent différentes façons d'obtenir le même résultat en utilisant des techniques adaptées à des contextes spécifiques.
+
+:::
+-->
+
+
+## Boucle `while`
+
+* Pour répéter un bloc de code tant qu'une condition est vraie.
+* Utile si le nombre total d'itérations n'est pas connu.
+
+* Syntaxe: ` while <condition> :`
+
+* Exemple: l'utilisateur doit saisir son mot de passe...
+
+```python
+password = "secret"
+essai = ""
+
+while essai != password:
+  essai = input("Entrez le mot de passe : ")
+
+print("Accès autorisé.")
+```
+
+* ⚠️ **Attention à ne pas créer de boucle infinie** : la condition doit devenir fausse à un moment donné!
+
+
+::: notes
+
+**Boucle `while`**
+
+- La boucle **`while`** permet de répéter un bloc de code tant qu'une **condition** est vraie. 
+Une fois la condition devenue fausse, la boucle s'arrête.
+
+- Cette boucle est utile lorsque le nombre d'itérations n'est pas déterminé à l'avance.
+
+- **Syntaxe** : la boucle commence par le mot-clé **`while`**, suivi d'une condition à évaluer. Si la condition est vraie, le bloc de code s'exécute.
+
+- **Attention aux boucles infinies** : une boucle infinie se produit si la condition reste toujours vraie. Il est donc important de s'assurer que la condition évolue vers la fausseté, comme ici où `i` est incrémenté à chaque itération.
+
+
+- **Utilisation** : ce type de boucle est courant pour forcer une **entrée utilisateur correcte** avant de poursuivre le programme.
+
+
+**Exemple de boucle `while` : saisie d’un mot de passe**
+
+- Dans ce code, on initialise la variable `essai` avec une chaîne vide.
+- La boucle `while` vérifie si `essai` est différent de `"secret"`.
+- Si c’est le cas, elle continue de demander une saisie à l’utilisateur avec `input()`.
+- L’instruction `essai = input(...)` met à jour la variable à chaque tour.
+- **Sortie de la boucle** : Lorsque l'utilisateur entre le bon mot de passe, c'est-à-dire lorsque l’utilisateur entre `"secret"`, la condition devient fausse (`essai != password` devient `False`), la boucle s’arrête et le message `"Accès autorisé."` est affiché.
+- **Remarque** : en pratique il faudrait éviter d’afficher les saisies de mot de passe à l’écran (en utilisant des fonctions spécialisées).
+
+
+:::
+
+
+## Boucle `while` : Exemple
+
+L'utilisateur doit trouver un numéro secret.
+
+```python
+numero_secret = 7
+essai = -1
+
+while essai != numero_secret:
+  print("Vous n'avez pas encore entrer de nombre correcte.")
+  essai = int(input("Entrez un nombre :"))
+
+print("Félicitations, vous avez deviné le bon nombre !")
+```
+
+La boucle continue du temps que l'utilisateur n'a pas trouvé le bon nombre.
+
+::: notes
+
+**Boucle `while` : Exemple**
+
+Cet exemple montre l'utilisation d'une boucle **`while`** pour un jeu simple où l'utilisateur doit deviner un numéro secret.
+
+**Fonctionnement de la boucle** :
+
+- La boucle continue tant que la condition **`guess != secret`** est vraie, c'est-à-dire tant que l'utilisateur n'a pas encore deviné le bon nombre.
+- À chaque itération, l'utilisateur est invité à entrer un nombre via **`input()`**. Ce nombre est ensuite comparé au numéro secret.
+
+**Sortie de la boucle** :
+
+- La boucle se termine lorsque l'utilisateur devine correctement le numéro secret, déclenchant l'affichage du message de félicitations.
+
+Ce type de boucle **`while`** est utile lorsque vous ne savez pas combien de fois la boucle doit s'exécuter, mais qu'elle doit se répéter jusqu'à ce qu'une certaine condition soit remplie.
+
+:::
+
+
+
+## Boucle `while` bornée
+
+* Il est possible de créer une boucle bornée avec `while`, pour avoir un comportement similaire à la boucle `for`.
+
+* Exemple : afficher les nombres de 0 à 4
+```{python}
+#| output-location: column
+i = 0
+while i < 5:
+  print(i)
+  i = i + 1
+```
+
+* La variable `i` est initialisé à `0` <u>avant</u> la boucle.
+* Puis, `i` est incrémentée à chaque itération :  `i = i + 1`.
+
+
+::: notes
+
+**Boucle `while` bornée**
+
+- Bien que la boucle `while` soit conçue pour des répétitions à condition indéterminée, elle peut aussi simuler une boucle `for` en contrôlant **explicitement** une variable de compteur.
+- Ainsi, la boucle **`while`** peut également être utilisée pour créer une boucle bornée, similaire à la boucle **`for`**.
+
+- **Exemple :**  
+  - On initialise une variable (ex. : `i = 0`) **avant** d’entrer dans la boucle.
+  - La condition (ex. : `i < 5`) définit une **borne supérieure**.
+  - La condition de la boucle est vérifiée avant chaque itération, et si elle est vraie, le bloc de code s'exécute.
+  - À l’intérieur de la boucle, on **modifie la variable** (ex. : `i = i + 1`) pour progresser vers la fin.
+  - La boucle s'arrête lorsque `i` atteint 5, ce qui signifie que la condition devient fausse.
+
+- **Avantage** :
+  - Permet un contrôle plus flexible que `for`, notamment si la progression dépend de conditions complexes ou de l’état du programme.
+  - Ce type de boucle est utile lorsque la logique d’arrêt ne dépend pas uniquement d’une séquence fixe, mais que l’on souhaite néanmoins borner l’exécution.
+
+- **Inconvénient** :
+  - Moins lisible que la boucle `for` pour des itérations simples.
+  - Plus de risques d'erreurs, notamment si la condition n'est pas correctement gérée.
+  - Il ne faut pas oublier d’incrémenter la variable, sinon cela crée une boucle infinie.
+
+:::
+
+
+<!--
+## `break`
+
+`break` permet d'arrêter et de sortir de la boucle.
+Cela peut être utile pour des cas exceptionnels.
+
+* Avec `break`:
+```{python}
+#| output-location: column
+i = 0
+while True:
+  print(i)
+  if i == 3:
+    break
+  i += 1
+```
+
+* Equivalent sans `break`:
+```{python}
+#| output-location: column
+i = 0
+while i <= 3:
+    print(i)
+    i += 1
+```
+
+
+::: notes
+
+**`break`**
+
+Le mot-clé **`break`** permet d'interrompre une boucle de manière prématurée, même si la condition de la boucle est encore vraie. Cela permet de sortir immédiatement de la boucle lorsque certaines conditions sont remplies.
+
+**Exemple avec `while`** :  
+Dans cet exemple, la boucle `while` continue indéfiniment avec `while True`. Cependant, lorsque `i` atteint 3, l'instruction **`break`** est exécutée, ce qui interrompt la boucle.
+
+:::
+
+
+## `break`
+
+`break` peut aussi être utilisé avec les boucles `for`.
+
+* Avec `break`:
+```{python}
+#| output-location: column
+for i in range(5):
+  print(i)
+  if i == 3:
+    break
+```
+
+* Equivalent sans `break`:
+```{python}
+#| output-location: column
+for i in range(4):
+    print(i)
+```
+
+::: notes
+
+**`break`**
+
+**Utilisation avec `for`** :  
+Le mot-clé **`break`** peut également être utilisé dans une boucle **`for`** pour interrompre la boucle lorsque certaines conditions sont satisfaites.
+
+**Exemple :**  
+Dans les deux exemples, la boucle s'arrête dès que `i` atteint 3, grâce à l'utilisation de **`break`**.
+
+:::
+
+
+
+## `continue`
+
+`continue` permet de passer à l'itération suivante.
+Cela permet de gérer les cas exceptionels, mais sans arrêter l'execution de la boucle.
+
+* Avec `continue`:
+
+```{python}
+#| output-location: column
+i = -1
+while i < 4:
+  i += 1
+  if i == 3:
+    continue
+  print(i)
+```
+
+* Equivalent sans `continue`:
+
+```{python}
+#| output-location: column
+i = -1
+while i < 4:
+    i += 1
+    if i != 3:
+        print(i)
+```
+
+::: notes
+
+**`continue`**
+
+Le mot-clé **`continue`** permet de passer immédiatement à l'itération suivante de la boucle, en sautant le reste du code pour l'itération en cours. Il n'interrompt pas la boucle, mais ignore une partie du code dans certaines conditions.
+
+**Exemple avec `while`** :  
+Dans la boucle `while`, lorsque `i` atteint 3, l'instruction **`continue`** est également exécutée, ce qui saute l'impression de la valeur 3 et continue la boucle.
+
+:::
+
+## `continue`
+
+`continue` peut aussi être utilisé dans une boucle `for` :
+
+* Avec `continue`:
+
+```{python}
+#| output-location: column
+for i in range(5):
+  if i == 3:
+    continue
+  print(i)
+```
+
+* Equivalent sans `continue`:
+
+```{python}
+#| output-location: column
+for i in range(5):
+    if i != 3:
+        print(i)
+```
+
+
+
+::: notes
+
+**`continue`**
+
+
+**Exemple avec `for`** :  
+Dans cet exemple, lorsque `i` est égal à 3, l'instruction **`continue`** est exécutée, ce qui fait que la valeur 3 n'est pas imprimée, et la boucle passe directement à l'itération suivante.
+
+**Exemples :**  
+Dans les deux exemples, la valeur 3 est ignorée grâce à **`continue`**.
+
+:::
+
+-->
+
+
+<!--
+## Boucles imbriquées
+
+* Il est possible d'imbriquer des boucles:
+  - Les boucles imbriquées permettent d'exécuter des boucles à l'intérieur d'autres boucles.
+  - La boucle interne est exécutée entièrement pour chaque itération de la boucle externe.
+* Utile pour parcourir des structures complexes (matrices, tableaux, etc.).
+
+
+::: {.columns}
+::: {.column width="45%"}
+
+```{python}
+#| classes: custom7030
+#| output-location: column
+for i in range(3):
+  for j in range(2):
+    print(i, j)
+```
+
+:::
+::: {.column width="55%"}
+
+```{python}
+#| output-location: column
+for i in range(3):
+  j = 0
+  while j < 2:
+    print(i, j)
+    j += 1
+```
+
+:::
+:::
+
+::: notes
+
+**Boucles imbriquées**
+
+- Il est possible d'imbriquer des boucles, c'est-à-dire d'exécuter une boucle à l'intérieur d'une autre.
+- La boucle la plus **interne** est exécutée **entièrement** pour chaque itération de la boucle la plus **externe**.
+
+**Exemple :**  
+- Dans le premier exemple, la boucle `for` interne itère sur `j` deux fois pour chaque valeur de `i`.
+- Dans le second exemple, la boucle `while` interne fait de même pour chaque itération de la boucle `for` externe.
+
+Cela permet de parcourir des structures de données complexes comme des tableaux à plusieurs dimensions.
+
+:::
+
+
+## Exemple de boucles imbriquées 
+
+Cet exemple affiche un tableau de multiplication avec `i` en ligne et `j` en colonne.
+
+```{python}
+#| output-location: column
+# Affiche l'entête des colonnes
+print("   |  ", end="")
+for j in range(1, 4):
+  print(f"{j}   ", end="")
+
+print("\n-----------------")
+
+for i in range(1, 4):
+    # Affiche l'entête des ligne
+    print(f" {i} |", end="")
+
+    # Affiche les multiples
+    for j in range(1, 4):
+      print(f" {i * j:2} ", end="")
+    print()
+```
+
+:::notes
+
+**Exemple de boucles imbriquées**
+
+Cet exemple montre comment utiliser des boucles imbriquées pour afficher un tableau de multiplication avec `i` représentant les lignes et `j` représentant les colonnes.
+
+- **Boucle externe** :  
+  La boucle externe itère sur les lignes, où `i` représente le multiplicateur de la ligne.
+  
+- **Boucle interne** :  
+  La boucle interne itère sur les colonnes, où `j` représente le multiplicateur de la colonne.
+
+- **Affichage formaté** :  
+  Les valeurs sont affichées dans un format aligné pour ressembler à un tableau, et une entête est ajoutée pour les colonnes et les lignes.
+
+Ce type de boucles imbriquées est souvent utilisé pour parcourir des matrices ou générer des tableaux.
+
+Note: le paramètre `end=""`permet d'afficher plusieurs informations sur la même ligne. 
+
+:::
+
+
+
+## Fonction `enumerate()`
+
+* `enumerate()` permet d'obtenir à la fois l'**index** et la **valeur** lors du parcours d'une séquence (liste, tuple, etc.).
+* Cela simplifie l'accès aux indices dans les boucles `for`.
+
+```{python}
+#| classes: custom7030
+#| output-location: column
+animaux = ["loup", "chat", "ours"]
+for i, animal in enumerate(animaux):
+  print(i, animal)
+```
+
+* Note: similaire à `.items()` pour les dictionnaires.
+
+```{python}
+print(list(enumerate(animaux)))
+```
+
+
+::: notes
+
+**Fonction `enumerate()`**
+
+**`enumerate()`** :  
+
+La fonction **`enumerate()`** permet de parcourir une séquence (comme une liste, un tuple, ou une chaîne) tout en obtenant à la fois l'index de chaque élément et l'élément lui-même. Elle renvoie un itérateur qui produit des paires sous la forme `(index, élément)`.
+
+`enumerate()` est utile lorsque vous avez besoin à la fois de l'élément et de sa position dans la séquence. Cela simplifie le code, car vous n'avez pas besoin de maintenir un compteur manuellement. Cela permet d'accéder simultanément à l'index et à l'élément pour chaque itération de la boucle.
+
+Dans le premier exemple, **`enumerate()`** est utilisé pour obtenir l'index et l'élément dans la liste `animaux`.
+
+:::
+
+
+
+
+## Fonction `zip()` {.smaller}
+
+* La fonction `zip()` permet de **regrouper** plusieurs **séquences** (p.ex. listes ou autres itérables).
+* `zip()` combine les éléments des itérables en tuples, élément par élément.
+* Cela permet de parcourir plusieurs séquences simultanément, en parallèle.
+
+```{python}
+#| output-location: column
+noms = ["Alice", "Bob", "Charlie"]
+ages = [25, 30, 35]
+for nom, age in zip(noms, ages):
+    print(f"{nom} a {age} ans.")
+```
+
+* Note: si une des collections contient plus d'éléments que l'autre, les éléments en trop sont ignorés.
+
+::: notes
+
+**Fonction `zip()`**
+
+**`zip()`** :  
+
+La fonction **`zip()`** prend plusieurs séquences (comme des listes, tuples, ou autres itérables) et les "zippe" ensemble, c'est-à-dire qu'elle regroupe les éléments qui ont la même position dans chaque séquence. Le résultat est un itérateur de tuples, où chaque tuple contient un élément de chacune des séquences d'entrée.
+
+`zip()` est particulièrement utile lorsque vous devez parcourir plusieurs séquences en parallèle, par exemple pour associer des éléments de différentes listes entre eux. Cela permet d'itérer sur les deux listes simultanément, en traitant chaque paire d'éléments correspondants.
+
+Dans le second exemple, **`zip()`** combine la liste `animaux` avec la liste `nombres` pour itérer sur les deux simultanément.
+
+:::
+-->

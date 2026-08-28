@@ -1,0 +1,1290 @@
+---
+title: Introduction & Variables
+subtitle: Introduction à la Programmation avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    #show-notes: true
+---
+
+# Introduction
+
+## Pourquoi apprendre à programmer?
+
+> Everybody should learn to program a computer,
+> because it teaches you how to think. (Steve Jobs)
+
+OK, mais en pratique ?
+
+::: {.columns}
+::: {.column width="57%"}
+
+* **Opportunités** professionnelles
+* **Compétences** numériques
+* **Automatisation** de tâches répétitives
+
+:::
+::: {.column width="43%"}
+
+* **Analyse** de données
+* **Créativité** et **innovation**
+* **Résolution** de problèmes
+
+:::
+:::
+
+* **Changer le monde** ... ou juste **gagner de l'argent** 😅
+
+## Point commun pour ces compagnies ?
+
+![](../images/intro/python_companies.jpeg)
+
+::: notes
+
+* ... Python !
+
+:::
+
+## 
+
+::: {layout="[[-1], [1], [-1]]"}
+
+![](../images/intro/python_logo.png){fig-align="center"}
+
+:::
+
+## Populaire ?
+
+![](../images/intro/tiobe_2024.png)
+
+::: footer
+Plus d'informations sur le site du [TIOBE index](https://www.tiobe.com/tiobe-index/)
+:::
+
+::: notes
+
+* Python est le langage de programmation le plus populaire en 2024 selon le TIOBE index.
+
+:::
+
+## IA ?
+
+![](../images/intro/openai_pytorch.png)
+
+::: footer
+Plus d'informations sur le blog d'[OpenAI](https://openai.com/blog/openai-pytorch)
+:::
+
+## Que peut-on faire avec Python ? {.smaller}
+
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+* **Science des données**
+  * Nettoyage, transformation, visualisation, modèles prédictifs
+  * Examples: [Pandas](https://pandas.pydata.org/), [Numpy](https://numpy.org/), [SciPy](https://scipy.org/), [scikit-learn](https://scikit-learn.org/)
+* **Intelligence artificielle**
+  * Réseaux de neurones, ChatGPT, [OpenAI](https://openai.com/)
+  * Examples: [PyTorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/)
+
+:::
+
+::: {.column width="60%"}
+
+* **Développement web**
+  * Sites web, API, applications, [Instagram](https://www.instagram.com/)
+  * Examples: [Django](https://www.djangoproject.com/), [Flask](https://flask.palletsprojects.com/en/3.0.x/)
+* **IoT**
+  * Objets connectés
+  * Examples: [Raspberry Pi](https://www.raspberrypi.org/), [MicroPython](https://micropython.org/) 
+* **Big Data**
+  * Traitement de données massives et orchestration de workflows
+  * Examples: [PySpark](https://spark.apache.org/docs/latest/api/python/index.html), [Dask](https://www.dask.org/), [Airflow](https://airflow.apache.org/)
+* **... et bien plus !**
+
+:::
+
+::::
+
+## Un language de programation
+
+:::: {.columns}
+::: {.column width="45%"}
+
+  * Inventé par Guido van Rossum en 1991
+  * Polyvalent (web, science des données, IA, etc.)
+  * Populaire (communauté active, bien documenté)
+  * Open-source (gratuit et modifiable)
+  
+  <!-- * Multi-paradigme (impératif, orienté objet, fonctionnel). -->
+:::
+
+::: {.column width="55%"}
+
+  * Simple à apprendre
+  * Lisible (syntaxe claire/similaire à l'anglais)
+  * Interprété (exécution immédiate ligne par ligne)
+  * Multi-plateforme (Windows, Mac, Linux, etc.)
+
+:::
+::::
+
+::: notes
+
+* Language de programmation : 
+  * Language de communication entre l'homme et la machine
+  * Langage formel conçu pour communiquer des instructions à une machine, particulièrement un ordinateur.
+
+:::
+
+## Excel ?
+
+![](../images/intro/excel.png)
+
+## Avantages de Python
+
+:::: {.columns}
+::: {.column #vcenter width="52%"}
+
+* Prise en charge de plus grands ensembles de données
+* Capacités de manipulation de données plus puissantes
+* Plus performant
+* Gratuit et open source
+* Automatisation plus facile
+* Meilleure reproductibilité
+
+:::
+
+::: {.column #vcenter width="48%"}
+
+![](../images/intro/geeks-vs-nongeeks.png)
+
+:::
+::::
+
+
+## Plan de cours {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+| #  | Thème |
+|-------|-------|
+| 1 | Introduction et motivation |
+| 2 | Variables |
+| 3 | Collections |
+| 4 | Fonctions |
+| 5 | Sélections et conditions |
+| 6 | Itérations et boucles |
+:::
+
+::: {.column width="50%"}
+
+:::
+
+::::
+
+# Ed
+
+## Qu'est-ce qu'Ed ?
+
+* Une plateforme de Q&A interactive et sociale. 
+
+* Un outil de présentation de contenu
+  * offrant une expérience d’apprentissage interactive,
+  * permettant d’expérimenter et résoudre des problèmes de programmation avec des défis gamifiés. 
+
+* Un environnement de développement collaboratif vous donnant l’occasion de coder ensemble en temps réel. 
+
+
+## Comment se connecter
+
+* Accès à la page Moodle du cours:
+* Ensuite, cliquer sur le lien Ed.
+
+<!-- ![](../images/intro/cyberlearn_isdp.png) -->
+
+## Ed Discussion
+
+![](../images/intro/ed_discussion_main.png)
+
+## Poser une question
+
+::: {.columns}
+::: {.column #vcenter width="50%"}
+
+![](../images/intro/ed_discussion_post.png)
+
+:::
+::: {.column #vcenter width="50%"}
+
+![](../images/intro/ed_discussion_post2.png)
+
+:::
+:::
+
+# Variables
+
+## Syntaxe
+
+* **Définition :** règles définissant les combinaisons de symboles considérées comme des déclarations/expressions valides.
+* Important dans tout langage (de programmation).
+* Pour commencer :
+  * Possibilité d'exécuter des instructions ligne par ligne.
+  * Les commentaires (`# ...`) sont ignorés par l'interpréteur.
+
+```{python}
+# Ceci est un commentaire
+2 + 2 # Ceci est un autre commentaire
+```
+
+::: notes
+
+**Syntaxe :**  
+La syntaxe définit les règles qui régissent l'organisation des symboles dans un langage de programmation. Une syntaxe correcte est cruciale pour garantir que le code soit compris et exécuté correctement par l'interpréteur.
+
+**Exécution ligne par ligne :**  
+Dans des langages comme Python, les instructions peuvent être exécutées individuellement, facilitant l'apprentissage et le débogage.
+
+**Commentaires :**  
+Les commentaires (`#`) sont ignorés par l’interpréteur. Ils servent à rendre le code plus compréhensible sans affecter l'exécution.  
+- Exemple : `# Ceci est un commentaire`  
+- Ils peuvent apparaître seuls ou à la fin d’une ligne de code : `2 + 2 # Addition simple`.
+
+**Exemple de code :**  
+Le code montre une addition simple et l’usage de commentaires pour expliquer les instructions.
+
+:::
+
+## La fonction `print()`
+
+<!-- La fonction **`print()`** affiche du texte ou des valeurs à l'écran. -->
+
+::: {.columns}
+::: {.column width="50%"}
+
+* Afficher des informations à l'écran.  
+```{python}
+print("Hello, World!")
+```
+
+:::
+::: {.column width="50%"}
+
+* Afficher plusieurs éléments, séparés par des virgules.
+
+```{python}
+print("Bonjour", "le", "monde!")
+```
+
+:::
+:::
+
+* **Options importantes** :  
+  - **`sep`** : personnalise le séparateur entre les éléments.  
+  - **`end`** : modifie ce qui est ajouté après l'affichage.
+
+
+```{python}
+print("Alice", "Bob", sep=", ", end="!")
+```
+
+::: notes
+La fonction **`print()`** permet d'afficher du texte ou des valeurs à l'écran.
+
+- Elle peut afficher plusieurs éléments en les séparant par un espace (par défaut), ou par un autre séparateur personnalisé avec l'option **`sep`**.
+  
+- Par défaut, un saut de ligne est ajouté après chaque affichage. Cela peut être modifié avec l'option **`end`**, qui permet de définir ce qui sera ajouté après l'affichage.
+
+Cela permettent notamment une plus grande flexibilité dans la présentation des informations.
+:::
+
+
+
+## Les variables
+
+* **Définition :** espace de mémoire qui associe un **nom** symbolique à une **valeur** d'un **type** donné.
+* Simplement: des conteneurs pour stocker des données.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+x = 5 # x est de type int
+print(x)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+y = "Hello!" # y est de type str
+print(y)
+```
+
+:::
+:::
+
+* Pas besoin d'être déclarées avec un type spécifique.
+* Peuvent changer de type après avoir été déclarées.
+
+```{python}
+x = y # x est maintenant de type str
+print(x)
+```
+
+::: notes
+
+**Variables :**  
+Les variables sont des espaces de mémoire qui associent un nom symbolique à une valeur d'un type donné. Elles permettent de stocker et manipuler des données dans un programme.
+
+**Exemples :**
+- Dans `x = 5`, `x` est une variable de type entier (`int`).
+- Dans `y = "Hello!"`, `y` est une variable de type chaîne de caractères (`str`).
+
+**Déclaration dynamique :**  
+Contrairement à certains langages, Python ne nécessite pas de déclarer explicitement le type d'une variable. Le type est déterminé en fonction de la valeur assignée à la variable.  
+Exemple :
+- `x = 5` donne à `x` un type entier (`int`).
+- Après l'instruction `x = y`, la variable `x` change de type et devient une chaîne de caractères (`str`).
+
+**Changement de type :**  
+Les variables peuvent changer de type après leur déclaration initiale, ce qui rend Python flexible et dynamique.
+
+:::
+
+
+
+## Nommer les variables
+
+* Un nom de variable:
+  * doit commencer par une lettre ou un souligné
+  * ne peut contenir que des lettres, des chiffres et des soulignés, sans espaces,
+  * est sensible à la casse (i.e., majuscules et minuscules sont différentes, "x" et "X" sont deux variables différentes).
+* Les noms de variables doivent être descriptifs et significatifs.
+* Évitez les noms de variables comme "x" ou "y", sauf comme variables temporaires dans une boucle ou une fonction.
+
+## Exercice
+
+* Parmi les noms de variables suivants, lesquels sont **in**valides? Pourquoi?
+
+```bash
+myvar = "John"
+my_var = "John"
+_my_var = "John"
+myVar = "John"
+MYVAR = "John"
+myvar2 = "John"
+2myvar = "John"
+my-var = "John"
+my var = "John"
+```
+
+::: notes
+Parmi les noms de variables proposés, voici ceux qui sont **in**valides et les raisons :
+
+- `2myvar` : Invalide, car un nom de variable ne peut pas commencer par un chiffre.
+- `my-var` : Invalide, car le tiret (`-`) n'est pas autorisé dans les noms de variables. Seuls les soulignés (`_`) peuvent être utilisés.
+- `my var` : Invalide, car les espaces ne sont pas autorisés dans les noms de variables.
+
+Les autres noms de variables sont valides puisqu'ils respectent les règles de syntaxe : ils commencent par une lettre ou un souligné et utilisent uniquement des lettres, des chiffres, ou des soulignés.
+:::
+
+
+## Attribution de plusieurs variables
+
+* Attribuer des valeurs à plusieurs variables en une ligne:
+
+```{python}
+x, y, z = "Orange", "Banana", "Cherry"
+print(x, y, z)
+```
+
+* Une alternative est d'utiliser les ";":
+  * Le `;` sépare les instructions sur une même ligne.
+
+```python
+x = "Orange"; y = "Banana"; z = "Cherry"
+```
+
+* Attribuer la même valeur à plusieurs variables en une ligne:
+
+```{python}
+x = y = z = "Orange"
+print(x, y, z)
+```
+
+::: notes
+
+Il est possible d'attribuer des valeurs à plusieurs variables en une seule ligne. Cela permet de rendre le code plus concis et lisible.
+
+- L'affectation multiple : permet d'assigner des valeurs distinctes à plusieurs variables en une seule instruction.  
+  Par exemple : `x, y, z = "Orange", "Banana", "Cherry"`.
+  
+- Utilisation du point-virgule (`;`) : permet de séparer plusieurs instructions sur une même ligne, évitant d'avoir plusieurs lignes pour chaque assignation.  
+  Par exemple : `x = "Orange"; y = "Banana"; z = "Cherry"`.
+
+- Affectation de la même valeur à plusieurs variables : toutes les variables reçoivent la même valeur en une seule ligne.  
+  Par exemple : `x = y = z = "Orange"`.
+
+Ces techniques sont pratiques pour écrire un code plus compact, tout en restant facile à lire.
+
+:::
+
+
+
+## La fonction `input()`
+
+* Permet de capturer des données saisies par l'utilisateur via le clavier.
+
+* **Demander une entrée utilisateur** :  
+  * Attend que l'utilisateur saisisse des informations, 
+  * Puis les renvoie sous forme de chaîne de caractères.
+
+```python
+name = input("Entrez votre nom : ")
+```
+
+* Les données saisies sont toujours traitées comme des chaînes de caractères (`str`).
+* Si un autre type est attendu, il faudra les convertir.
+
+::: notes
+
+La fonction **`input()`** permet de capturer des données saisies par l'utilisateur via le clavier.
+
+- Elle affiche un message (optionnel) pour inviter l'utilisateur à entrer des informations.
+
+- Les données saisies sont toujours traitées comme une chaîne de caractères, quel que soit le type de données entré.
+
+- Pour convertir la valeur saisie en un autre type (entier, flottant, etc.), il est nécessaire d'utiliser des fonctions comme **`int()`** ou **`float()`** après avoir capturé l'entrée.
+
+Cette fonction est couramment utilisée pour interagir avec l'utilisateur et obtenir des informations dynamiques.
+
+:::
+
+
+
+## Type de données d'une variable
+
+* **Définition :** le type de valeur qu'elle contient.
+* Détermine son comportement et les opérations que l'on peut effectuer dessus.
+* Les plus courants:
+  * `int` - nombre entier, p.ex. 5
+  * `float` - nombre à virgule flottante, p.ex. 3.14
+  * `str` - chaîne de caractères, p.ex. "Hello, World!"
+  * `bool` - booléen, p.ex. True ou False
+  * les collections (`list`, `tuple`, `dict`, `set`, etc.)
+
+::: notes
+
+**Type de données d'une variable :**  
+Le type de données d'une variable correspond à la nature de la valeur qu'elle contient. Il détermine comment cette valeur est stockée en mémoire et quelles opérations sont possibles sur cette variable.
+
+**Types de données courants :**
+- **`int` (entier) :** Représente des nombres entiers, comme `5`. Utilisé pour les opérations arithmétiques classiques.
+- **`float` (nombre à virgule flottante) :** Représente des nombres avec une partie décimale, comme `3.14`. Utilisé pour des calculs nécessitant des fractions ou des nombres irrationnels.
+- **`str` (chaîne de caractères) :** Représente une séquence de caractères, comme `"Hello, World!"`. Utilisé pour le traitement de texte.
+- **`bool` (booléen) :** Représente des valeurs logiques, soit `True` ou `False`. Utilisé pour les décisions conditionnelles et les comparaisons.
+  
+**Les collections :**  
+Python propose plusieurs types de structures de données pour stocker des collections d'éléments :
+- **`list` (liste) :** Une collection ordonnée et modifiable d'éléments.
+- **`tuple` (tuple) :** Une collection ordonnée mais immuable.
+- **`dict` (dictionnaire) :** Une collection de paires clé-valeur.
+- **`set` (ensemble) :** Une collection non ordonnée et sans doublons.
+
+Chaque type de données a ses propres propriétés et est adapté à des usages spécifiques, comme la manipulation de texte, de nombres ou de groupes d'éléments.
+
+:::
+
+
+## La fonction `type()`
+
+* Permet de connaître le type de données d'une variable.
+
+:::: {.columns}
+::: {.column width="37%"}
+
+* `bool` - booléen
+
+```{python}
+a = True
+print(type(a))
+```
+
+* `int` - nombre entier
+
+```{python}
+b = 5
+print(type(b))
+```
+
+:::
+::: {.column width="63%"}
+
+* `float` - nombre à virgule flottante
+
+```{python}
+c = 3.14
+print(type(c))
+```
+
+* `str` - chaîne de caractères
+
+```{python}
+d = "Hello, World!"
+print(type(d))
+```
+
+:::
+::::
+
+::: notes
+
+**Fonction `type()` :**  
+La fonction `type()` permet de connaître le type de données d'une variable. Cela est utile pour vérifier comment une variable est stockée et les opérations possibles sur celle-ci.
+
+**Types de données et usage :**
+- **`bool`** (booléen) : utilisé pour les valeurs logiques `True` ou `False`.
+- **`int`** (entier) : utilisé pour les nombres entiers, souvent utilisés dans les opérations arithmétiques.
+- **`float`** (nombre à virgule flottante) : utilisé pour représenter des nombres avec des parties décimales.
+- **`str`** (chaîne de caractères) : utilisé pour stocker du texte.
+
+**Utilité de `type()` :**  
+La fonction est particulièrement utile lorsqu'on souhaite valider le type d'une variable après l'affectation ou lors de la gestion de conversions de types. Cela aide à éviter des erreurs liées à l'incompatibilité de types dans les opérations.
+
+:::
+
+
+
+## Les booléens
+
+* Les **`bool`** n'ont que deux valeur possibles: 
+
+    * **`True`** (vrai), ou
+    * **`False`** (faux).
+
+```{python}
+x = True
+y = 2 > 3
+print(x, type(x))
+print(y, type(y))
+```
+
+* Utilisés dans les conditions et opérations logiques :
+
+```{python}
+#| output-location: column
+print(1==2, 1!=2)
+print(1>2, 1>=2)
+print(1<2, 1<=2)
+```
+
+<!--
+```{python}
+#| output-location: column
+print(x == x, x == y, x != y, x != y)
+print(x and x, x and y, x or x, x or y)
+```
+-->
+
+::: notes
+
+Les booléens, de type **`bool`**, ne peuvent prendre que deux valeurs : **`True`** (vrai) ou **`False`** (faux). Ils sont principalement utilisés dans les expressions conditionnelles et les opérations logiques.
+
+- **Valeurs booléennes :**  
+  Une variable booléenne peut être affectée directement avec `True` ou `False`, ou être le résultat d'une comparaison comme `2 > 3`, qui renvoie `False`.
+
+- **Expressions conditionnelles :**  
+  Les booléens jouent un rôle clé dans les conditions. Par exemple, les opérateurs de comparaison (`==`, `!=`) permettent de vérifier l'égalité ou la différence entre deux valeurs.
+
+- **Opérations logiques :**  
+  Les booléens sont utilisés dans des opérations logiques comme `and`, `or`, et `not`.  
+  - `and` : renvoie `True` si les deux opérandes sont vrais.
+  - `or` : renvoie `True` si au moins un des opérandes est vrai.
+  - `not` : inverse la valeur booléenne.
+
+Ces concepts sont fondamentaux pour la création de structures conditionnelles dans les programmes.
+
+:::
+
+## Les données numériques
+
+* Les plus courants sont:
+
+  * **`int`** - entiers (p.ex. 5)
+  * **`float`** - nombres à virgule flottante (p.ex. 3.14)
+  
+```{python}
+x = 5    # int
+y = 3.14  # float
+
+print(x, type(x))
+print(y, type(y))
+```
+
+  <!--
+  x`** - nombres complexes, p.ex. 1+2j (pas abordé dans ce cours)
+
+```{python}
+x = 1    # int
+y = 2.8  # float
+z = 1j   # complex
+print(x, y, z)
+print(type(x), type(y), type(z))
+```
+-->
+
+::: notes
+Les données numériques en Python se divisent principalement en trois types :
+
+- **`int`** (entier) : représente des nombres entiers comme `5`. Utilisé pour des opérations arithmétiques sans partie décimale.
+  
+- **`float`** (nombre à virgule flottante) : représente des nombres avec des décimales, comme `3.14`. Utilisé pour les calculs nécessitant des fractions ou des valeurs irrationnelles.
+
+<!--
+- **`complex`** (nombre complexe) : représente des nombres sous forme de `a + bj`, où `a` est la partie réelle et `b` la partie imaginaire. Bien que Python supporte les nombres complexes, ce type ne sera pas abordé en détail dans ce cours.
+
+L'utilisation des types numériques dépend du besoin, mais les `int` et `float` sont les plus courants dans les calculs quotidiens.
+-->
+:::
+
+## Nombres entiers
+
+* Les **`int`** ou "integer" sont des nombres
+
+  * positifs ou négatifs,
+  * sans décimales,
+  * de longueur illimitée.
+
+```{python}
+x = 35656254871
+y = -3255522
+
+print(x, type(x))
+print(y, type(y))
+```
+
+<!--
+```{python}
+x = 1
+y = 35656222554887711
+z = -3255522
+print(x, y, z)
+print(type(x), type(y), type(z))
+```
+-->
+
+::: notes
+Les **`int`** (entiers) sont des nombres utilisés pour représenter des quantités entières, sans décimales. Ils peuvent être :
+
+- **Positifs** ou **négatifs** : un entier peut avoir un signe positif (comme `1`) ou négatif (comme `-3255522`).
+  
+- **Sans décimales** : un nombre entier ne comporte jamais de partie décimale. S'il y a une partie décimale, le type change en `float`.
+
+- **De longueur illimitée** : en Python, un entier peut être aussi grand ou aussi petit que la mémoire disponible le permet, contrairement à d'autres langages où la taille des entiers est limitée.
+
+Les entiers sont principalement utilisés pour les opérations mathématiques qui ne nécessitent pas de fractions ou de valeurs décimales.
+:::
+
+## Nombres à virgule flottante
+
+* Les **`float`** ou "floating point number" sont des nombres 
+
+  * positifs ou négatifs,
+  * contenant une ou plusieurs décimales.
+
+* Notation scientifique : un **`e`** ou **`E`** indique la puissance de 10.
+
+::: {.columns}
+::: {.column width="50%"}
+
+
+
+```{python}
+x = 10.0
+y = -5.5
+
+print(x, type(x))
+print(y, type(y))
+```
+
+:::
+::: {.column width="50%"}
+
+
+
+```{python}
+x = 21e6
+y = -12E5
+
+print(x, type(x))
+print(y, type(y))
+```
+
+:::
+:::
+
+::: notes
+Les **`float`** (nombres à virgule flottante) représentent des nombres qui peuvent inclure une partie décimale. Ils peuvent être :
+
+- **Positifs** ou **négatifs** : tout comme les entiers, les floats peuvent être soit positifs (`1.10`) soit négatifs (`-35.59`).
+  
+- **Avec décimales** : les floats contiennent une ou plusieurs décimales, comme `1.0` ou `-35.59`. Ils sont utilisés pour des calculs nécessitant une précision avec des fractions ou des nombres irrationnels.
+
+- **Notation scientifique** : en Python, les floats peuvent être exprimés en notation scientifique en utilisant un **`e`** ou **`E`** pour représenter une puissance de 10. Par exemple, `35e3` représente `35 * 10^3` ou `35000`.
+
+La notation scientifique est utile lorsque vous travaillez avec des nombres très grands ou très petits.
+:::
+
+## Opérations numériques de base
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+* **`+`** addition
+* **`-`** soustraction
+* **`*`** multiplication
+* **`/`** division
+
+:::
+
+::: {.column width="60%"}
+
+* **`**`** exponentiation (puissance)
+* **`%`** modulo (reste de la division)
+* **`//`** division entière (quotient entier)
+
+:::
+
+::::
+
+:::: {.columns}
+::: {.column width="70%"}
+
+* Soit **`x = 5`** et **`y = 2`**, alors:
+
+:::
+::::
+
+```{python}
+#| echo: false
+x = 5
+y = 2
+```
+
+:::: {.columns}
+::: {.column width="40%"}
+
+```{python}
+print(x + y, x - y)
+print(x * y, x / y)
+```
+
+:::
+::: {.column width="60%"}
+
+```{python}
+print(x ** y, x ** -y)
+print(x % y, x // y)
+```
+
+:::
+::::
+
+::: notes
+
+Les opérations numériques de base en Python comprennent :
+
+- **Addition (`+`)** : permet d'ajouter deux nombres.
+- **Soustraction (`-`)** : permet de soustraire un nombre d'un autre.
+- **Multiplication (`*`)** : permet de multiplier deux nombres.
+- **Division (`/`)** : renvoie le quotient en division flottante, même si le résultat est un entier.
+
+En plus de ces opérations de base, Python offre d'autres opérateurs utiles :
+
+- **Exponentiation (`**`)** : permet de calculer la puissance d'un nombre. Par exemple, `x ** y` signifie `x` élevé à la puissance `y`.
+- **Modulo (`%`)** : renvoie le reste de la division entière entre deux nombres. Par exemple, `x % y` renvoie le reste de `x` divisé par `y`.
+- **Division entière (`//`)** : renvoie le quotient entier de la division. Par exemple, `x // y` renvoie le quotient de `x` divisé par `y` sans la partie décimale.
+
+Ces opérations sont essentielles dans la plupart des calculs numériques.
+
+:::
+
+## Conversion de types
+
+* Convertir d'un type à l'autre en utilisant les fonctions **`bool()`**, **`int()`** et **`float()`**:
+```{python}
+#| output-location: column
+print(int(2.8), int(False))
+print(float(1), float(True))
+print(bool(2.8), bool(0))
+```
+
+* Convertir un **`float`** en **`int`** supprime les décimales!
+
+* Conversions automatiques:
+
+```{python}
+#| output-location: column
+print(1 + True)
+print(1 + 2.8)
+print(2.8 + False)
+```
+
+
+::: notes
+
+La conversion de types permet de changer la représentation d'une variable d'un type à un autre. Voici les conversions les plus courantes en Python :
+
+- **`int()`** : convertit une valeur en entier.
+- **`float()`** : convertit une valeur en nombre à virgule flottante.
+- **`bool()`** : convertit une valeur en booléen.
+
+**Exemples de conversion :**
+- Un entier peut être converti en flottant avec `float(x)`, et un flottant en entier avec `int(y)` (ce qui supprime la partie décimale).
+- Les booléens `True` et `False` sont équivalents à `1` et `0` respectivement lors des conversions numériques. Ainsi, `float(True)` renverra `1.0`, et `int(False)` renverra `0`.
+
+**Conversions automatiques :**
+Python effectue certaines conversions de manière automatique lors d'opérations entre types différents :
+- Un entier multiplié par un flottant produit automatiquement un flottant.
+- Les booléens `True` et `False` se comportent comme `1` et `0` dans les opérations arithmétiques.
+
+Cela permet de manipuler facilement des données de différents types sans nécessiter de conversions explicites dans certains cas.
+
+
+:::
+
+
+## Conversion de types
+
+**`int()`** - construit un nombre en entier à partir d'un booléen, d'un flottant ou d'un entier, ou d'une chaîne de caractères.
+
+```{python}
+#| output-location: column
+#| error: true
+print(int(True))
+print(int(2.8))
+print(int("3"))
+print(int("3.5"))
+```
+
+
+**`float()`** - construit un nombre flottant à partir d'un booléen, d'un entier ou d'un flottant, ou d'une chaîne de caractères.
+
+<p style="padding-top:10px;">
+```{python}
+#| output-location: column
+#| error: true
+print(float(True))
+print(float(3))
+print(float("3.5"))
+print(float("abc"))
+```
+</p>
+
+
+## Conversion de types
+
+**`bool()`** - construit un booléen à partir d'un entier, flottant, ou chaîne de caractères.
+
+```{python}
+#| output-location: column
+#| error: true
+print(bool(0)) 
+print(bool(1.0))
+print(bool(2.0)) 
+print(bool("a"))
+print(bool("0")) 
+print(bool("False"))
+print(bool(""))
+```
+
+Toutes les chaînes de caractères sont considérées comme **`True`** sauf la chaîne vide **`""`**.
+
+
+
+
+## Les chaînes de caractères
+
+* Les **`str`** ou "string" sont entourées de guillemets simples (apostrophes) ou doubles:
+
+```{python}
+#| output-location: column
+a = "Hello, World!"
+b = 'Hello, World!'
+print(a)
+print(b)
+print(a==b)
+```
+
+* Chaînes de caractères multi-lignes avec des guillemets triples (simples ou doubles):
+
+```{python}
+#| output-location: column
+c = """
+Bonjour tout le monde,
+comment allez-vous aujourd'hui ?
+"""
+print(c)
+```
+
+::: notes
+Les **`str`** (chaînes de caractères) en Python sont des séquences de caractères entourées de guillemets simples (`'`) ou doubles (`"`). Les deux types de guillemets sont interchangeables et permettent de créer des chaînes de caractères.
+
+- **Guillemets simples ou doubles** : Il n'y a pas de différence fonctionnelle entre l'utilisation de guillemets simples et doubles pour définir une chaîne de caractères. Par exemple, `"Hello, World!"` et `'Hello, World!'` sont équivalents, et une comparaison entre ces deux chaînes renverra `True`.
+
+- **Chaînes de caractères multilignes** : Les chaînes de caractères peuvent être étendues sur plusieurs lignes en utilisant des guillemets triples (`"""` ou `'''`). Cela permet d'écrire des blocs de texte formatés avec des sauts de ligne.
+
+Les chaînes de caractères sont couramment utilisées pour manipuler du texte et afficher des informations dans les programmes Python.
+
+:::
+
+## Indexation des chaînes de caractères
+
+::: {.columns}
+::: {.column width="50%" #vcenter}
+
+* Les chaînes de caractères sont des "tableaux" de caractères :
+  * Chaque caractère a une position ("index").
+  * L'index commence à 0.
+  * Un index négatif commence la tranche depuis la fin.
+
+:::
+::: {.column width="50%" #vcenter}
+
+```{dot}
+//| echo: false
+//| fig-width: 5
+
+digraph G {
+    graph [margin=0];
+    rankdir=LR;
+    
+    // Define the style for list elements and index numbers
+    node [shape=box, style=filled, fillcolor=lightblue];
+
+    // List elements
+    a[label="H"];
+    b[label="e"];
+    c[label="l"];
+    d[label="l"];
+    e[label="o"];
+
+    // Horizontal connections for list elements
+    a -> b -> c -> d -> e;
+
+    // Positive index numbers (above the elements)
+    node [shape=plaintext];
+    idx0[label="0"];
+    idx1[label="1"];
+    idx2[label="2"];
+    idx3[label="3"];
+    idx4[label="4"];
+
+
+    // Negative index numbers (below the elements)
+    neg_idx5[label="-5"];
+    neg_idx4[label="-4"];
+    neg_idx3[label="-3"];
+    neg_idx2[label="-2"];
+    neg_idx1[label="-1"];
+
+    // Connect positive indexes above the list elements
+    idx0 -> a [dir=none];
+    idx1 -> b [dir=none];
+    idx2 -> c [dir=none];
+    idx3 -> d [dir=none];
+    idx4 -> e [dir=none];
+
+    // Connect negative indexes below the list elements
+    a -> neg_idx5 [style=dashed, dir=none];
+    b -> neg_idx4 [style=dashed, dir=none];
+    c -> neg_idx3 [style=dashed, dir=none];
+    d -> neg_idx2 [style=dashed, dir=none];
+    e -> neg_idx1 [style=dashed, dir=none];
+
+    // Alignment of nodes to create the correct vertical order
+    { rank=same; idx0; idx1; idx2; idx3; idx4; }
+    { rank=same; a; b; c; d; e; }
+    { rank=same; neg_idx5; neg_idx4; neg_idx3; neg_idx2; neg_idx1; }
+
+    // Set the ranks to vertically align elements with their indexes
+    {rank=min; idx0; idx1; idx2; idx3; idx4;}  // Positive indexes above
+    {rank=max; neg_idx5; neg_idx4; neg_idx3; neg_idx2; neg_idx1;} // Negative indexes below
+}
+```
+
+:::
+:::
+
+::: notes
+
+Les chaînes de caractères en Python sont des séquences de caractères, et chaque caractère peut être accédé par son index. Voici quelques points clés à retenir sur l'indexation des chaînes de caractères :
+
+- **Indexation des chaînes de caractères :**  
+  Chaque caractère dans une chaîne de caractères a une position numérique appelée index. L'indexation commence à 0, ce qui signifie que le premier caractère a l'index 0, le deuxième a l'index 1, et ainsi de suite.
+
+- **Index négatif :**
+  Python permet d'accéder aux caractères d'une chaîne en utilisant des indices négatifs. Un index négatif commence la tranche depuis la fin de la chaîne. Par exemple, `-1` représente le dernier caractère, `-2` l'avant-dernier, et ainsi de suite.
+
+:::
+
+## Indexation et découpage
+
+```{python}
+a = "Hello, World!"
+```
+
+* **`[]`** permet d'accéder à des parties de la chaîne :
+  * Chaque caractère a une position ("index").
+  * L'index commence à 0.
+  * Un index négatif commence la tranche depuis la fin.
+  * **`:`** permet de découper la chaîne (index de début inclu : index de fin exclu).
+
+```{python}
+#| output-location: column
+print(a[1])
+print(a[-1])
+print(a[2:5])
+print(a[-5:-2])
+```
+
+::: notes
+
+Le découpage est une opération courante en Python. Cela permet d'accéder à des parties spécifiques d'une chaîne de caractères.
+
+- **Indexation** :  
+  Chaque élément d'une chaîne est accessible par son index, qui commence à 0. Cela signifie que le premier élément a l'index 0, le deuxième l'index 1, et ainsi de suite.
+
+  Exemple :  
+  Pour accéder au deuxième élément de la chaîne `"Hello, World!"`, on utilise `a[1]`, car l'indexation commence à 0.
+
+- **Index négatif** :  
+  Python permet d'accéder aux éléments d'une chaîne en utilisant des indices négatifs, où `-1` représente le dernier caractère, `-2` l'avant-dernier, et ainsi de suite. Cela simplifie l'accès aux caractère en partant de la fin de la liste sans avoir besoin de connaître sa longueur.
+
+  Exemple :  
+  `a[-1]` accède au dernier caractère de la chaîne `"Hello, World!"`, qui est `"!"`.
+
+- **Découpage** :
+  L'opération de découpage permet d'extraire une sous-chaîne en spécifiant une plage d'indices. Par exemple, `a[2:5]` renvoie les caractères de l'index 2 à l'index 4 (le dernier index est exclus).
+
+  L'index négatif peut également être utilisé pour découper une chaîne. Par exemple, `a[-5:-2]` renvoie les caractères de l'index `-5` à l'index `-3`.
+
+:::
+
+
+
+## Opérations de chaînes de caractères
+
+```{python}
+a = "Hello"
+b = "World"
+```
+
+::: {.columns}
+::: {.column width="50%"}
+
+* Concaténation avec l'opérateur **`+`**:
+
+```{python}
+print(a+b)
+```
+
+
+* Multiplication avec l'opérateur **`*`**:
+
+```{python}
+print(a*3)
+```
+
+:::
+::: {.column width="50%"}
+
+* Longueur de la chaîne avec la fonction **`len()`**:
+
+```{python}
+print(len(a))
+```
+
+
+* Conversions avec la fonction **`str()`**:
+
+```{python}
+print(a + str(3))
+```
+
+:::
+:::
+
+::: notes
+Les chaînes de caractères en Python permettent plusieurs opérations utiles :
+
+- **Concaténation (`+`)** : L'opérateur `+` permet de joindre deux chaînes de caractères. Par exemple, la concaténation de `"Hello"` et `"World"` donne `"HelloWorld"`. Cela permet de créer de nouvelles chaînes en combinant du texte.
+
+- **Longueur de la chaîne (`len()`)** : La fonction `len()` renvoie le nombre de caractères dans une chaîne, y compris les espaces. C'est utile pour vérifier la taille d'une chaîne.
+
+- **Multiplication (`*`)** : L'opérateur `*` permet de répéter une chaîne plusieurs fois. Par exemple, `"Hello" * 3` renverra `"HelloHelloHello"`. Cela peut être utilisé pour générer des motifs répétés.
+
+- **Conversion en chaîne (`str()`)** : La fonction `str()` permet de convertir d'autres types de données en chaînes de caractères. Cela est utile lorsqu'on souhaite concaténer des données non textuelles, comme des nombres, avec une chaîne.
+
+Ces opérations permettent une manipulation flexible des chaînes dans les programmes Python.
+
+:::
+
+## Opérations de chaînes de caractères
+
+<p>
+```{python}
+#| output-location: column
+a = "     Hello, World   "
+print(a)
+```
+</p>
+
+* **`strip()`** - supprime les espaces en début et fin de chaîne.
+
+```{python}
+#| output-location: column
+print(a.strip())
+```
+
+* **`replace()`** - remplace une chaîne par une autre.
+
+```{python}
+#| output-location: column
+print(a.replace("He", "Ja"))
+```
+
+
+* **`lower()`** - convertit la chaîne en minuscules.
+
+```{python}
+#| output-location: column
+print(a.lower())
+```
+
+* **`upper()`** - convertit la chaîne en majuscules.
+
+```{python}
+#| output-location: column
+print(a.upper())
+```
+
+<!--
+
+* **`strip()`** - supprime les espaces en début et fin de chaîne.
+
+```{python}
+#| output-location: column
+print(a.strip(), len(a), len(a.strip()))
+```
+
+
+* **`split()`** - divise la chaîne de en sous-chaînes.
+
+```{python}
+#| output-location: column
+print(a.split(","))
+```
+
+::: {.columns}
+::: {.column width="50%"}
+
+* **`lower()`** - convertit la chaîne en minuscules.
+
+```{python}
+print(a.lower())
+```
+
+:::
+::: {.column width="50%"}
+
+* **`upper()`** - convertit la chaîne en majuscules.
+
+```{python}
+print(a.upper())
+```
+
+:::
+:::
+-->
+
+::: notes 
+
+Les chaînes de caractères en Python offrent plusieurs méthodes pour les manipuler efficacement :
+
+- **`strip()`** : Supprime les espaces en début et en fin de chaîne. Cela est utile pour nettoyer les chaînes de caractères contenant des espaces indésirables avant ou après le texte.
+
+- **`replace()`** : Remplace une sous-chaîne par une autre dans la chaîne. Cette méthode est utile pour modifier le contenu d'une chaîne de manière ciblée, par exemple remplacer un mot par un autre.
+
+<!--
+- **`split()`** : Divise une chaîne en une liste de sous-chaînes, selon un délimiteur (par défaut l'espace, mais cela peut être un autre caractère comme `,`). Cela permet de découper facilement une chaîne en plusieurs parties.
+-->
+- **`lower()`** : Convertit tous les caractères de la chaîne en minuscules, ce qui est utile pour les comparaisons de chaînes qui ne tiennent pas compte de la casse.
+
+- **`upper()`** : Convertit tous les caractères de la chaîne en majuscules, utile lorsque l'on souhaite normaliser le texte ou mettre en avant certaines parties.
+
+Ces méthodes rendent les chaînes de caractères très flexibles et permettent de les manipuler facilement pour diverses tâches dans les programmes Python.
+
+:::
+
+<!--
+
+## Les f-strings (formatted string literals)
+
+* Pour formater des chaînes de manière concise et lisible:
+
+  * Préfixer par un **`f`** la chaîne,
+  * Utiliser des accolades **`{}`** pour insérer des expressions.
+
+```{python}
+name = "John"
+print(f"Je m'appelle {name}.")
+```
+
+::: {.columns}
+::: {.column width="50%"}
+
+* Les expressions peuvent aussi inclure des opérations :
+
+```{python}
+x = 5
+y = 10
+print(f"{x} + {y} égal {x + y} !")
+```
+
+:::
+::: {.column width="50%"}
+
+* Mise en forme avancée pour les nombres :
+
+```{python}
+pi = 3.14159
+print(f"La valeur de pi : {pi:.2f}.")  # Limite à 2 décimales
+```
+
+:::
+:::
+
+::: notes
+Les **f-strings** (formatted string literals) sont apparues avec Python 3.6 et permettent de formater des chaînes de manière concise et lisible.
+
+- Elles se définissent en plaçant un **`f`** devant la chaîne de caractères.
+  
+- Les variables et expressions sont insérées dans la chaîne en utilisant des accolades **`{}`**. Cela permet d'inclure facilement des valeurs dynamiques dans les chaînes de caractères.
+
+- Les f-strings peuvent aussi contenir des opérations ou des expressions, ce qui permet de calculer et afficher des résultats directement dans la chaîne.
+
+- Elles prennent en charge la mise en forme avancée, comme la gestion des décimales ou d'autres formats pour les nombres, ce qui les rend très flexibles.
+
+Les f-strings sont une méthode simple et puissante pour combiner des valeurs et des textes dans des chaînes de manière claire et efficace.
+
+:::
+
+-->

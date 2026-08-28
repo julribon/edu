@@ -1,0 +1,1257 @@
+---
+title: "Pandas Library and Dataframes"
+subtitle: Introduction à la Science des Données avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    #show-notes: separate-page
+---
+
+```{python}
+#| echo: False
+import os
+import sys
+sys.path.append(os.path.abspath('modules'))
+```
+
+# Les bibliothèques Python et introduction à Pandas
+
+## Les bibliothèques (librairies) Python
+
+- **Définition** : ensemble de fonctions et méthodes qui permettent d'effectuer des tâches spécifiques.
+- **Objectif** : étendre le language de base en fournissant des fonctionnalités prêtes à l'emploi.
+- Les "classiques" utilisées dans ce cours:
+  - **Pandas** : analyse de données, notamment pour les données tabulaires
+  - **Matplotlib** et **Seaborn** : visualisations sous forme de graphiques.
+
+
+::: notes
+
+**Les bibliothèques (librairies) Python**
+
+- **Définition** :  
+  Une bibliothèque est un ensemble de fonctions, méthodes, et classes préécrites, qui permettent d'effectuer des tâches spécifiques sans avoir à les coder soi-même. Ces bibliothèques fournissent des solutions prêtes à l'emploi pour des besoins variés, ce qui aide à gagner du temps et réduit les erreurs.
+
+- **Objectif** :  
+  Les bibliothèques étendent les fonctionnalités de base de Python en apportant des outils pour des domaines spécialisés, facilitant et accélérant le développement de projets. Elles sont particulièrement utiles pour des opérations complexes (analyse de données, visualisation, calculs scientifiques, etc.), qui seraient fastidieuses à implémenter depuis zéro.
+
+- **Bibliothèques classiques utilisées dans ce cours** :
+  - **Pandas** :  
+    - Utilisée pour l'analyse et la manipulation de données, **Pandas** facilite le traitement de grandes quantités de données tabulaires.
+    - Elle propose des structures de données flexibles comme les **DataFrames** (tableaux de données 2D) qui permettent des opérations complexes (tri, filtrage, agrégation) de manière intuitive et rapide.
+    - Exemple d'usage : chargement de données depuis des fichiers CSV, nettoyage de données, calculs statistiques.
+
+  - **Matplotlib** :  
+    - **Matplotlib** est une bibliothèque de visualisation de données qui permet de créer des graphiques 2D statiques, interactifs, et animés en Python.
+    - Elle offre un large éventail de types de graphiques (lignes, barres, histogrammes, etc.) et de personnalisation, ce qui en fait un outil puissant pour illustrer les tendances et les distributions dans les données.
+    - Exemple d'usage : visualisation de la progression d'une variable dans le temps, comparaison entre différentes catégories.
+
+  - **Seaborn** :  
+    - Construit sur **Matplotlib**, **Seaborn** simplifie la création de visualisations statistiques plus complexes et est particulièrement adapté aux analyses de données exploratoires.
+    - Il intègre des styles de graphiques plus esthétiques par défaut et fournit des fonctions de visualisation avancées comme les **heatmaps**, **plots de répartition** et **plots de régression**.
+    - Exemple d'usage : visualisation des relations entre différentes variables dans un dataset, distribution des données.
+
+Ces bibliothèques sont incontournables pour l'analyse et la visualisation de données en Python et permettent de travailler de manière plus efficace et lisible sur des projets complexes.
+
+:::
+
+
+## Importation de bibliothèques
+
+- Considérons la bibliothèque suivante :
+
+```{python}
+#| filename: ma_bibliotheque.py
+def hello():
+    print("Hello, World!")
+```
+
+- Syntaxe :
+  - `import nom_de_la_bibliothèque as alias`
+  - L'alias permet d'éviter répéter le nom complet de la bibliothèque.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+import ma_bibliotheque
+ma_bibliotheque.hello()
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+import ma_bibliotheque as biblio
+biblio.hello()
+```
+
+:::
+:::
+
+::: notes
+
+**Importation de bibliothèques**
+
+- **Concept** :  
+  L'importation de bibliothèques permet d'accéder aux fonctions, classes, et méthodes définies dans des fichiers externes ou des modules Python.
+
+- **Syntaxe d'importation** :  
+  Utilisez la syntaxe `import nom_de_la_bibliothèque` pour importer la bibliothèque entière, ou `import nom_de_la_bibliothèque as alias` pour lui attribuer un alias. L'alias est souvent utilisé pour simplifier l'écriture du code, surtout si le nom de la bibliothèque est long.
+
+- **Exécution d'une fonction importée** :  
+  Après importation, vous pouvez appeler une fonction de la bibliothèque en utilisant le nom ou l'alias de la bibliothèque suivi de la fonction : `ma_bibliotheque.hello()` ou, si un alias est défini, `biblio.hello()`.
+
+- **Exemple** :  
+  Considérons une bibliothèque `ma_bibliotheque` contenant une fonction `hello()`. En l'important, vous pouvez appeler cette fonction pour afficher `"Hello, World!"`.
+
+L'importation de bibliothèques améliore la modularité du code et facilite la réutilisation de fonctionnalités sans devoir tout redéfinir.
+
+:::
+
+
+## Importation de fonctions spécifiques
+
+- Syntaxe :
+  - `from nom_de_la_bibliothèque import nom_de_la_fonction`
+
+```{python}
+from ma_bibliotheque import hello
+hello()
+```
+
+- Ou avec un alias :
+
+```{python}
+from ma_bibliotheque import hello as bonjour
+bonjour()
+```
+
+::: notes
+
+**Importation de fonctions spécifiques**
+
+- **Syntaxe** :  
+  Utilisez `from nom_de_la_bibliothèque import nom_de_la_fonction` pour importer directement une fonction spécifique depuis une bibliothèque. Cela permet de ne pas importer la bibliothèque entière, mais uniquement les éléments nécessaires, ce qui peut rendre le code plus lisible et réduire son empreinte.
+
+- **Exécution directe** :  
+  En important une fonction spécifique, vous pouvez l'appeler directement sans avoir à utiliser le nom de la bibliothèque ou un alias.
+
+- **Alias pour la fonction** :  
+  Il est possible de renommer la fonction importée en utilisant `as`, ce qui peut être utile pour adapter le nom de la fonction au contexte du programme ou pour éviter des conflits de noms.
+
+- **Exemple** :  
+  En important `hello` de `ma_bibliotheque` avec `from ma_bibliotheque import hello`, vous pouvez appeler `hello()` directement. Si vous utilisez un alias, comme `from ma_bibliotheque import hello as bonjour`, vous pouvez l'appeler en utilisant le nom `bonjour()`.
+
+Ce type d'importation rend le code plus clair et adapté à des besoins spécifiques en n'incluant que les éléments nécessaires.
+
+:::
+
+## La bibliothèque Pandas
+
+```{python}
+import pandas as pd
+```
+
+::: {.columns}
+
+::: {.column width="40%"}
+  
+* Permet l'exploration, le nettoyage, la transformation, la visualisation, et plus généralement **l'analyse de données**.
+* Le nom vient de **Panel Data** et **Python Data Analysis**.
+
+:::
+::: {.column width="60%"}
+
+![](../images/df/df-intro.png){width=200%}
+
+:::
+:::
+
+::: notes
+
+**La bibliothèque Pandas**
+
+- **Introduction** :  
+  **Pandas** est une bibliothèque Python incontournable pour **l'analyse de données**. Elle offre des outils pour explorer, nettoyer, transformer, et visualiser les données, facilitant le travail des data scientists et des analystes.
+
+- **Origine du nom** :  
+  Le nom "Pandas" vient de **Panel Data** et **Python Data Analysis**, soulignant son orientation vers la manipulation et l'analyse de données.
+
+- **Fonctionnalités** :
+  - Pandas fournit des structures de données puissantes comme les **DataFrames** (tableaux de données 2D) et les **Series** (tableaux de données 1D) pour manipuler et traiter efficacement des données tabulaires.
+  - Avec Pandas, il est possible de charger des données de divers formats (CSV, Excel, SQL, etc.), de les filtrer, de les trier, de faire des agrégations, et même de créer des visualisations simples.
+
+- **Exemple d'importation** :  
+  La bibliothèque est souvent importée avec l'alias `pd`, comme dans `import pandas as pd`, pour simplifier l'accès aux fonctions et méthodes.
+
+Pandas est essentiel pour quiconque travaille avec des données structurées en Python.
+
+:::
+
+
+## Les Structures de Données
+
+- **Series** : 
+    - Structure unidimensionnelle, généralement d'un seul type de données.
+    - Similaire à une liste ou à une colonne dans une table. 
+- **Dataframe** : 
+    - Structure de données bidimensionnelle, chaque colonne peut contenir un type de données différent.
+    - Similaire à une table dans une base de données ou une feuille de calcul Excel. 
+
+::: notes
+
+**Les Structures de Données dans Pandas**
+
+- **Series** :  
+  - Une **Series** est une structure de données unidimensionnelle dans Pandas, qui contient généralement des données d'un seul type.
+  - Elle est similaire à une liste ou une colonne dans une table de base de données, et chaque élément de la Series a un index associé pour un accès facile.
+  - Les Series sont utiles pour représenter des variables uniques ou des colonnes isolées.
+
+- **DataFrame** :  
+  - Un **DataFrame** est une structure de données bidimensionnelle, où chaque colonne peut contenir un type de données différent (entier, flottant, chaîne de caractères, etc.).
+  - Similaire à une table dans une base de données ou à une feuille de calcul Excel, le DataFrame est l'élément central de Pandas pour manipuler les données tabulaires.
+  - Les DataFrames permettent de manipuler, transformer, et analyser des ensembles de données complexes avec des opérations comme le tri, le filtrage, et l'agrégation.
+
+Ces structures de données sont fondamentales pour utiliser efficacement la bibliothèque Pandas et permettent de manipuler les données de manière flexible et puissante.
+
+
+:::
+
+## Ressources
+
+- [http://pandas.pydata.org/](http://pandas.pydata.org/pandas-docs/stable/)
+- [https://www.w3schools.com/python/pandas](https://www.w3schools.com/python/pandas)
+- *Python for Data Analysis* par Wes McKinney  
+- *Python Data Science Handbook* par Jake VanderPlas
+
+
+# La Series
+
+## La Series
+
+- **Définition** : une structure de données unidimensionnelle qui contient une séquence de valeurs et un index.
+- **Création** : à partir d'une liste, de deux listes, d'un dictionnaire, etc.
+
+::: {.columns}
+::: {.column width="40%"}
+
+```{python}
+l_notes = [10.0, 12.0, 15.0]
+s_notes = pd.Series(l_notes)
+print(s_notes)
+```
+
+:::
+
+::: {.column width="60%"}
+
+```{python}
+d_benefs = {'Q1': 10,'Q2': 12,'Q3': 15}
+s_benefs = pd.Series(d_benefs)
+print(s_benefs)
+```
+
+:::
+:::
+
+
+::: notes
+
+**La Series**
+
+- **Définition** :  
+  Une **Series** est une structure de données unidimensionnelle dans Pandas qui contient une séquence de valeurs associées à un index. Elle est comparable à une colonne dans un tableau, où chaque valeur est associée à une étiquette d'index.
+
+- **Création** :  
+  Une Series peut être créée à partir de plusieurs types de sources :
+  - **Liste** : Par exemple, `pd.Series([10.0, 12.0, 15.0])` crée une Series avec des notes.
+  - **Dictionnaire** : Avec un dictionnaire, les clés deviennent les index, et les valeurs deviennent les données.
+  - **Deux listes** : Une liste pour les valeurs et une autre pour l'index permet de créer une Series avec un index personnalisé.
+
+- **Caractéristiques** :
+  - Les valeurs dans une Series peuvent être de tout type (entiers, flottants, chaînes, etc.).
+  - Par défaut, l'index est une séquence de nombres entiers commençant à 0, mais il peut être personnalisé (par exemple, des noms, des dates).
+  - Une Series avec un index fonctionne comme un dictionnaire ordonné, ce qui permet d'accéder aux données par l'index.
+  - Une série peut aussi être créée à partir de deux listes (une pour les valeurs et une pour l'index) :
+```{python}
+k_benefs = ['Q1', 'Q2', 'Q3']
+v_benefs = [10, 12, 15]
+s_benefs = pd.Series(v_benefs, index=k_benefs)
+print(s_benefs)
+```
+
+
+:::
+
+## Indexation, modification, filtrage
+
+- Au moyen de l'opérateur `[]` !
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+- Par index :
+
+```{python}
+print(s_benefs[0])
+s_benefs[0] = 20
+print(s_benefs[0])
+```
+
+:::
+
+::: {.column width="50%"}
+
+- Par label :
+
+```{python}
+print(s_benefs['Q1'])
+s_benefs['Q1'] = 30
+print(s_benefs['Q1'])
+```
+
+:::
+:::
+
+- **Filtrage** :
+
+```{python}
+s_benefs[s_benefs > 12]
+```
+
+::: notes
+
+**Indexation, modification, filtrage**
+
+ - **Accès aux éléments** :
+  - Les éléments d'une Series peuvent être accédés de deux façons :
+    - **Par index** : En utilisant un entier pour accéder à la position, similaire à une liste (par exemple, `s_benefs[0]`).
+    - **Par label** : En utilisant une clé de type chaîne, similaire à un dictionnaire (par exemple, `s_benefs['Q1']`).
+  - Cette flexibilité permet d'utiliser des méthodes similaires aux listes et aux dictionnaires pour manipuler les Series.
+
+ - **Modification des éléments** :
+  - Les valeurs d'une Series peuvent être modifiées en utilisant l'index ou le label, en réassignant une nouvelle valeur (par exemple, `s_benefs[0] = 20` ou `s_benefs['Q1'] = 30`).
+
+ - **Filtrage** :
+  - Les Series permettent d'appliquer des filtres en utilisant des opérateurs de comparaison pour extraire les données correspondant à certaines conditions.
+  - Par exemple, `s_benefs[s_benefs > 12]` renvoie les éléments avec une valeur supérieure à 12.
+
+:::
+
+
+## Opérations courantes
+
+- **Opérations arithmétiques (`+`, `-`, `*`, `/`, `**`, `%`, `//`)** :
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+print(s_benefs + 5)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+print(s_benefs * 2)
+```
+
+:::
+:::
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+
+- **Description des données** :
+
+  ```{python}
+  s_benefs.describe()
+  ```
+
+
+:::
+::: {.column width="50%"}
+
+- **Statistiques** :
+  ```{python}
+  print(
+    s_benefs.sum(),
+    s_benefs.mean(),
+    s_benefs.std(),
+    s_benefs.max(),
+    s_benefs.min()
+  )
+  ```
+
+:::
+:::
+
+
+::: notes
+
+**Opérations courantes sur une Series**
+
+- **Opérations arithmétiques (`+`, `-`, `*`, `/`, `**`, `%`, `//`)** :
+  - Les Series supportent des opérations arithmétiques élémentaires appliquées à chaque élément de la structure.
+  - Exemple : `s_benefs + 5` ajoute 5 à chaque élément de la Series, et `s_benefs * 2` multiplie chaque élément par 2.
+
+- **Description des données** :
+  - La méthode `describe()` fournit des statistiques descriptives pour la Series, comme la moyenne, l'écart type, les valeurs minimum et maximum, et les quartiles. C'est une fonction utile pour obtenir un résumé rapide des caractéristiques de la Series.
+
+- **Statistiques** :
+  - Pandas offre plusieurs méthodes pour calculer des statistiques directement sur une Series, telles que :
+    - `sum()` : somme des éléments.
+    - `mean()` : moyenne des éléments.
+    - `std()` : écart type.
+    - `max()` et `min()` : valeurs maximale et minimale.
+  - Ces méthodes permettent d'explorer les données et de comprendre leur distribution sans effectuer de calculs manuels.
+
+Ces opérations facilitent l'analyse et la manipulation des données dans les Series.
+
+:::
+
+
+## Alignement automatique des données
+
+- Lorsque vous effectuez des opérations entre deux Series, les données sont automatiquement alignées par index.
+
+  ```{python}
+  s1 = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+  s2 = pd.Series([1, 2, 3], index=['b', 'c', 'd'])
+  s1 + s2
+  ```
+
+  - Les éléments avec des index correspondants sont additionnés.
+  - Les autres sont remplis avec des valeurs `NaN`.
+
+
+::: notes
+
+**Alignement automatique des données**
+
+- **Alignement par index** :
+  - Lorsqu'on effectue des opérations entre deux Series dans Pandas, les données sont automatiquement alignées en fonction de leurs index respectifs. Cela signifie que les valeurs sont combinées uniquement lorsque les index correspondent dans les deux Series.
+  - Par exemple, si `s1` a un index `"b"` et `s2` a également un index `"b"`, les valeurs de cet index seront additionnées (ou soumises à l'opération en cours).
+
+- **Valeurs `NaN` pour les index non correspondants** :
+  - Lorsque des index ne correspondent pas entre les deux Series, Pandas insère des valeurs **`NaN`** (Not a Number) pour indiquer l'absence de données.
+  - Cela se produit dans des situations où les index sont partiellement ou totalement différents, signalant ainsi des valeurs manquantes ou indéfinies.
+
+- **À propos de `NaN`** :
+  - **`NaN`** est un symbole représentant une donnée manquante ou une valeur indéfinie dans un ensemble de données. Il est couramment utilisé lors d'opérations mathématiques où certaines valeurs ne peuvent pas être calculées, lors d'un alignement de Series avec des index non correspondants, ou lors de l'importation de données contenant des champs vides.
+
+Ce mécanisme d'alignement et de remplissage avec **`NaN`** rend les opérations entre Series flexibles et permet de traiter efficacement les données hétérogènes.
+
+:::
+
+
+
+## Manipulation des index
+
+- **Accéder à l'index** :
+
+  ```{python}
+  print(s_benefs.index)
+  ```
+
+- **Renommer l'index** :
+
+  ```{python}
+  s_benefs.index = ['2000', '2001', '2002']
+  print(s_benefs.index)
+  ```
+
+- **Supprimer l'index** :
+
+  ```{python}
+  s_benefs = s_benefs.reset_index(drop=True)
+  print(s_benefs.index, s_notes.index)
+  ```
+
+
+::: notes
+
+**Manipulation des index**
+
+- **Accéder à l'index** :
+  - L'index d'une Series est une propriété qui peut être consultée pour obtenir les étiquettes associées à chaque élément de la structure de données.
+  - Par exemple, `s_benefs.index` renvoie l'ensemble des index de la Series `s_benefs`.
+
+- **Renommer l'index** :
+  - L'index d'une Series peut être modifié en réaffectant une nouvelle liste de valeurs à `s_benefs.index`.
+  - Par exemple, `s_benefs.index = ['2000', '2001', '2002']` change les index actuels en les remplaçant par les nouvelles étiquettes fournies.
+
+- **Supprimer l'index** :
+  - Pour réinitialiser l'index d'une Series et utiliser des index numériques par défaut, utilisez `reset_index(drop=True)`.
+  - Le paramètre `drop=True` garantit que l'ancien index est supprimé et ne devient pas une colonne.
+  - Par exemple, `s_benefs = s_benefs.reset_index(drop=True)` réinitialise l'index de la Series `s_benefs`.
+
+Ces opérations permettent de manipuler facilement les index pour répondre aux besoins d'analyse et de structuration des données.
+
+:::
+
+
+## Résumé des caractéristiques
+
+- **Indexation** : Chaque élément a un index.
+- **Homogénéité** : Contient des données de même type.
+- **Flexibilité** : peut être créée à partir de diverses sources de données (listes, dictionnaires, etc.)
+- **Alignement automatique des données** : Lors d'opérations entre Series, les données sont automatiquement alignées par l'index.
+- **Fonctions intégrées** : nombreuses fonctions pour manipuler et analyser les données (p.ex. `sum()`, `mean()`, `max()`, `min()`, etc.)
+
+
+::: notes
+
+**Résumé des caractéristiques des Series**
+
+- **Indexation** :  
+  Chaque élément d'une Series est associé à un index, facilitant l'accès et la manipulation des données. L'index peut être numérique ou personnalisé.
+
+- **Homogénéité** :  
+  Bien que les Series puissent contenir divers types de données, chaque Series individuelle est généralement homogène, c'est-à-dire qu'elle contient des données du même type (par exemple, tous des entiers ou tous des chaînes).
+
+- **Flexibilité** :  
+  Les Series peuvent être créées à partir de nombreuses sources de données, y compris des listes, des dictionnaires, et d'autres objets. Cela les rend très adaptables aux différents formats de données.
+
+- **Alignement automatique des données** :  
+  Lors d'opérations entre deux Series, Pandas aligne automatiquement les données par leur index. Cela signifie que seules les données avec des index correspondants seront combinées, et les index sans correspondance seront remplis avec des valeurs `NaN`.
+
+- **Fonctions intégrées** :  
+  Pandas propose de nombreuses fonctions intégrées pour manipuler et analyser les données dans une Series, comme `sum()`, `mean()`, `max()`, et `min()`. Ces fonctions permettent d'effectuer des analyses rapides et efficaces sans nécessiter de boucles explicites.
+
+Ces caractéristiques font des Series un outil puissant pour la manipulation et l'analyse de données unidimensionnelles dans Pandas.
+
+:::
+
+
+
+# Le DataFrame
+
+## Le DataFrame
+
+- **Définition** : une structure de données bidimensionnelle qui contient des données tabulaires.
+- **Création** : à partir d'une Series, d'un dictionnaire, d'une liste, d'un fichier CSV, etc.
+
+::: {.columns}
+::: {.column width=50%"}
+
+```{python}
+d_data = {
+    'Nom': ['Alice', 'Bob'],
+    'Age': [25, 30],
+    'Ville': ['Paris', 'Lyon']
+}
+df = pd.DataFrame(d_data)
+print(df)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+l_data = [
+  ['Alice', 25, 'Paris'],
+  ['Bob', 30, 'Lyon'],
+]
+df = pd.DataFrame(l_data, 
+  columns=['Nom', 'Age', 'Ville'])
+print(df)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Le DataFrame**
+
+- **Définition** :  
+  Un **DataFrame** est une structure de données bidimensionnelle dans Pandas, utilisée pour représenter des données sous forme de tableau. Chaque colonne peut contenir un type de données différent, et le DataFrame combine les fonctionnalités des tableaux et des bases de données, ce qui le rend idéal pour manipuler des ensembles de données complexes.
+
+- **Création** :  
+  Un DataFrame peut être créé à partir de diverses sources :
+  - **Dictionnaire** : Lorsque vous créez un DataFrame avec un dictionnaire, les clés deviennent les noms des colonnes, et les valeurs sont les données de chaque colonne.
+  - **Liste de listes** : Une liste de listes peut être convertie en DataFrame en spécifiant les noms des colonnes. Cela est utile lorsque les données sont structurées en lignes, mais que chaque ligne a un ensemble d'attributs identiques.
+  - **Fichier CSV** : Un DataFrame peut être importé directement à partir de fichiers externes (comme des fichiers CSV) pour faciliter l'analyse et la manipulation de données externes.
+
+Les DataFrames sont très flexibles et adaptés pour traiter des données tabulaires en Python, permettant un large éventail d'opérations, comme le filtrage, la sélection, et l'analyse statistique.
+
+:::
+
+
+
+## Importation fichiers CSV
+
+::: {.columns}
+::: {.column width="70%"}
+
+- Comma-Separated Values :
+  - Fichier texte contenant des valeurs séparées par des virgules.
+  - Couramment utilisé pour stocker des données tabulaires.
+
+:::
+::: {.column width="30%"}
+
+- Exemple :
+
+```{python}
+#| eval: False
+#| filename: data/people.csv
+nom,age,ville
+Alice,25,Paris
+Bob,30,Lyon
+Charlie,35,Nice
+```
+
+:::
+:::
+
+```{python}
+df_new = pd.read_csv('data/people.csv')
+print(df_new)
+```
+
+::: notes
+
+**Importation de fichiers CSV**
+
+- **Comma-Separated Values (CSV)** :
+  - Un fichier **CSV** est un fichier texte contenant des valeurs séparées par des virgules, chaque ligne représentant une ligne de données.
+  - Il est couramment utilisé pour stocker des données tabulaires de manière simple et facilement lisible, tant par des humains que par des programmes.
+
+- **Exemple de format CSV** :
+  - Le format CSV utilise une première ligne d'en-tête pour définir les noms de colonnes, suivie des lignes de données.
+  - Par exemple, un fichier `people.csv` contenant des informations comme le nom, l'âge, et la ville d'individus pourrait être structuré ainsi :
+    ```
+    nom,age,ville
+    Alice,25,Paris
+    Bob,30,Lyon
+    Charlie,35,Nice
+    ```
+
+- **Importation avec Pandas** :
+  - Pandas propose la fonction **`pd.read_csv()`** pour lire et importer un fichier CSV en tant que DataFrame.
+  - Par exemple, `pd.read_csv('data/people.csv')` crée un DataFrame `df_new` à partir du fichier `people.csv`, permettant ainsi de manipuler et analyser les données importées.
+
+L'importation de fichiers CSV avec Pandas est une méthode simple et efficace pour charger des données externes dans Python.
+
+:::
+
+
+## Importation de fichiers JSON
+
+::: {.columns}
+::: {.column width="50%"}
+
+- JavaScript Object Notation :
+  - Format structuré de manière similaire à un dictionnaire.
+  - Couramment utilisé pour stocker des données semi-structurées.
+
+:::
+::: {.column width="50%"}
+
+- Exemple :
+
+```{python}
+#| eval: False
+#| filename: data/people.json
+{
+  "nom": ["Alice", "Bob", "Charlie"],
+  "age": [25, 30, 35],
+  "ville": ["Paris", "Lyon", "Nice"]
+}
+```
+
+:::
+:::
+
+```{python}
+df_new = pd.read_json('data/people.json')
+print(df_new)
+```
+
+::: notes
+
+**Importation de fichiers JSON**
+
+- **JavaScript Object Notation (JSON)** :
+  - **JSON** est un format de données structuré, similaire aux dictionnaires Python, avec des paires clé-valeur. Il est très utilisé pour stocker et échanger des données semi-structurées, en particulier dans les applications web.
+  - JSON est lisible par les humains et facilement analysable par des programmes, ce qui en fait un choix courant pour les API et le stockage de configurations.
+
+- **Exemple de format JSON** :
+  - Un fichier JSON contient des paires clé-valeur, où les clés représentent des champs (par exemple, "nom", "âge", "ville") et les valeurs sont des listes ou des sous-objets JSON.
+  - Par exemple, un fichier `people.json` pourrait ressembler à ceci :
+    ```json
+    {
+      "nom": ["Alice", "Bob", "Charlie"],
+      "age": [25, 30, 35],
+      "ville": ["Paris", "Lyon", "Nice"]
+    }
+    ```
+
+- **Importation avec Pandas** :
+  - Pandas propose la fonction **`pd.read_json()`** pour lire et importer un fichier JSON en tant que DataFrame.
+  - Par exemple, `pd.read_json('data/people.json')` crée un DataFrame `df_new` à partir du fichier JSON `people.json`, permettant de manipuler et analyser les données de manière structurée.
+
+L'importation de fichiers JSON avec Pandas simplifie l'intégration de données semi-structurées dans les analyses Python.
+
+:::
+
+
+
+## Indexation
+
+
+- Chaque ligne et chaque colonne a un index :
+
+```{python}
+print(df.index)
+print(df.columns)
+```
+
+
+- **Renommer les colonnes** :
+
+```{python}
+df.columns = ['nom', 'age', 'ville']; print(df.columns)
+```
+
+- **Renommer les lignes** :
+
+```{python}
+df.index = ['p1', 'p2']; print(df.index)
+```
+
+::: notes
+
+**Indexation dans les DataFrames**
+
+- **Index des lignes et des colonnes** :
+  - Dans un DataFrame, chaque ligne a un index (numéroté par défaut) et chaque colonne a un nom ou une étiquette.
+  - Ces index facilitent l'accès et la manipulation des données. Les index de lignes sont accessibles via `df.index` et les noms de colonnes via `df.columns`.
+
+- **Renommer les colonnes** :
+  - Vous pouvez modifier les noms des colonnes en réaffectant une liste de nouveaux noms à `df.columns`.
+  - Par exemple, `df.columns = ['nom', 'age', 'ville']` modifie les noms des colonnes pour un DataFrame avec trois colonnes.
+
+- **Renommer les lignes** :
+  - De même, il est possible de renommer les lignes en réaffectant une liste d'index personnalisés à `df.index`.
+  - Par exemple, `df.index = ['p1', 'p2']` attribue de nouveaux index aux lignes, ce qui peut être utile pour donner plus de contexte ou pour organiser les données selon des identifiants personnalisés.
+
+Ces techniques d'indexation améliorent l'organisation et l'accessibilité des données dans un DataFrame, en permettant des personnalisations sur les noms des colonnes et des lignes.
+
+:::
+
+
+
+## Accès aux données 
+
+::: {.columns}
+::: {.column width="48%"}
+   
+- Accéder à une colonne :
+   
+```{python}
+print(df['nom']) # ou df.nom
+```
+
+- Accéder à une ligne :
+
+```{python}
+print(df.loc['p1'])
+print(df.iloc[0])
+```
+
+:::
+::: {.column width="52%"}
+
+- Accéder à plusieurs colonnes :
+
+```{python}
+print(df[['nom', 'age']])
+```
+
+- Accéder à plusieurs lignes :
+
+```{python}
+print(df.loc[['p1', 'p2']])
+print(df.iloc[[0, 1]])
+```
+
+:::
+:::
+
+
+::: notes
+
+**Accès aux données dans un DataFrame**
+
+- **Accéder à une colonne** :
+  - Utilisez `df['nom']` pour accéder à une colonne spécifique dans un DataFrame. Vous pouvez également utiliser la notation `df.nom` si le nom de la colonne ne contient pas d'espaces.
+  - Cette opération renvoie une Series correspondant aux données de la colonne sélectionnée.
+
+- **Accéder à une ligne** :
+  - Pour accéder à une ligne par son index personnalisé, utilisez `df.loc['p1']`, où `'p1'` est l'étiquette d'index.
+  - Pour accéder à une ligne par sa position (index numérique), utilisez `df.iloc[0]`, qui renvoie la première ligne.
+
+- **Accéder à plusieurs colonnes** :
+  - Utilisez une liste de noms de colonnes pour accéder à plusieurs colonnes simultanément, comme dans `df[['nom', 'age']]`.
+  - Cette opération renvoie un DataFrame avec les colonnes sélectionnées.
+
+- **Accéder à plusieurs lignes** :
+  - Pour accéder à plusieurs lignes par leurs index, utilisez `df.loc[['p1', 'p2']]`.
+  - Pour accéder à plusieurs lignes par leurs positions, utilisez `df.iloc[[0, 1]]`.
+
+Ces méthodes d'accès permettent une manipulation ciblée des données, facilitant les extractions et les analyses spécifiques.
+
+:::
+
+
+
+## Accès aux données (suite)
+
+- **Accès à une cellule** :
+
+```{python}
+print(df['nom'][0], df.loc['p1', 'age'], df.iloc[0, 2])
+```
+
+- **Accès aux premières lignes** :
+
+```{python}
+print(df.head(1))
+```
+
+- **Accès aux dernières lignes** :
+
+```{python}
+print(df.tail(1))
+```
+
+::: notes
+
+**Accès aux données dans un DataFrame (suite)**
+
+- **Accès à une cellule** :
+  - Pour accéder à une cellule spécifique, vous pouvez combiner la sélection de la colonne avec un index de ligne, par exemple `df['nom'][0]`.
+  - Alternativement, utilisez `df.loc['p1', 'age']` pour accéder à une cellule en spécifiant l'index et la colonne.
+  - `df.iloc[0, 2]` permet également d'accéder à une cellule en utilisant des indices numériques pour la ligne et la colonne.
+
+- **Accès aux premières lignes** :
+  - La méthode `df.head(n)` renvoie les `n` premières lignes du DataFrame. Par défaut, `df.head()` renvoie les 5 premières lignes, mais vous pouvez ajuster le nombre en spécifiant un argument.
+
+- **Accès aux dernières lignes** :
+  - De manière similaire, `df.tail(n)` renvoie les `n` dernières lignes du DataFrame. Par défaut, `df.tail()` renvoie les 5 dernières lignes.
+
+Ces méthodes permettent un accès rapide aux parties spécifiques du DataFrame, qu'il s'agisse de valeurs individuelles ou d'ensembles de lignes, facilitant l'exploration des données.
+
+:::
+
+
+
+## Copies
+
+::: {.columns}
+::: {.column width="50%"}
+
+- **Par référence** :
+
+```{python}
+df2 = df
+df2['age'] = 40
+print(df, df2)
+```
+
+:::
+::: {.column width="50%"}
+
+- **Par valeur** :
+
+```{python}
+df2 = df.copy()
+df2['age'] = 50
+print(df, df2)
+```
+
+:::
+:::
+
+- Comme pour les listes et les dictionnaires :
+  - L'opérateur `=` crée une copie par référence.
+  - La méthode `copy()` crée une copie par valeur.
+
+
+::: notes
+
+**Copies dans les DataFrames**
+
+- **Par référence** :
+  - En affectant un DataFrame à une nouvelle variable avec `=`, comme dans `df2 = df`, vous créez une **copie par référence**. Cela signifie que `df` et `df2` pointent vers le même objet en mémoire.
+  - Toute modification faite dans `df2` sera également reflétée dans `df` et vice-versa.
+
+- **Par valeur** :
+  - Utilisez la méthode `copy()` pour créer une **copie indépendante** du DataFrame, comme dans `df2 = df.copy()`.
+  - Avec une copie par valeur, les modifications dans `df2` n'affecteront pas `df`, et inversement, car les deux DataFrames occupent des espaces mémoire distincts.
+
+- **Comme pour les listes et les dictionnaires** :
+  - En Python, l'opérateur `=` crée une référence au même objet, tandis que `copy()` crée une duplication indépendante de l'objet original.
+  
+Ces distinctions sont essentielles pour éviter des modifications accidentelles des données originales lors de manipulations dans un DataFrame.
+
+:::
+
+
+
+## Informations sur le DataFrame
+
+```{python}
+print(df.info())
+```
+
+- **Type de données** : chaque colonne a un type de données.
+- **Nombre de valeurs non nulles** : utile pour identifier les valeurs manquantes.
+- **Taille de l'objet** : mémoire utilisée.
+
+
+::: notes
+
+**Informations sur le DataFrame**
+
+- **`df.info()`** :
+  - La méthode `info()` fournit un résumé complet du DataFrame, comprenant des informations précieuses pour l'analyse des données.
+
+- **Type de données** :
+  - Chaque colonne du DataFrame possède un type de données (int, float, object, etc.), qui est affiché dans le résumé. Connaître le type de données est crucial pour effectuer des manipulations appropriées et détecter d'éventuels problèmes de typage.
+
+- **Nombre de valeurs non nulles** :
+  - Le résumé inclut le nombre de valeurs non nulles pour chaque colonne, ce qui est utile pour identifier les colonnes contenant des valeurs manquantes. Les données manquantes peuvent influencer les analyses et nécessiter un traitement spécifique.
+
+- **Taille de l'objet** :
+  - `info()` affiche également la mémoire totale utilisée par le DataFrame, ce qui est important pour gérer des ensembles de données volumineux et optimiser les performances.
+
+La méthode `info()` est un outil de diagnostic rapide et efficace pour explorer la structure et la qualité des données dans un DataFrame.
+
+:::
+
+
+## Description des données
+
+::: {.columns}
+::: {.column width="50%"}
+
+- **Données quantitatives** :
+
+```{python}
+print(df.describe())
+```
+
+:::
+::: {.column width="50%"}
+
+- **Données qualitatives** :
+
+```{python}
+print(df.describe(include='object'))
+```
+
+:::
+:::
+
+
+::: notes
+
+**Description des données dans un DataFrame**
+
+- **Données quantitatives** :
+  - La méthode `describe()` génère des statistiques descriptives pour les colonnes numériques (quantitatives) d'un DataFrame. Elle affiche des mesures comme la moyenne, l'écart-type, les valeurs minimum et maximum, ainsi que les quartiles (25%, 50%, et 75%).
+  - Ce résumé est essentiel pour comprendre la distribution et la dispersion des données numériques.
+
+- **Données qualitatives** :
+  - En utilisant `describe(include='object')`, on peut obtenir des statistiques pour les colonnes qualitatives (c.-à-d. de type `object` ou chaîne de caractères).
+  - Pour les données qualitatives, `describe()` fournit le nombre d'éléments uniques, la fréquence de la valeur la plus courante, et d'autres informations utiles pour analyser des catégories ou des valeurs textuelles.
+
+Ces outils permettent une analyse rapide et informative des caractéristiques des données quantitatives et qualitatives dans un DataFrame.
+
+:::
+
+
+
+
+# Manipulation des données
+
+## Ajout et suppression de données
+
+::: {.columns}
+::: {.column width="52%"}
+
+- **Ajout de lignes** :
+
+```{python}
+df.loc['p3'] = ['Charlie', 35, 'Nice']
+print(df)
+```
+
+- **Suppression de lignes** :
+
+```{python}
+print(df.drop('p3', axis=0))
+```
+
+:::
+::: {.column width="48%"}
+
+
+- **Ajout de colonnes** :
+
+```{python}
+df['pays'] = 'France'
+print(df)
+```
+
+- **Suppression de colonnes** :
+
+```{python}
+print(df.drop('ville', axis=1))
+```
+
+:::
+:::
+
+
+::: notes
+
+**Ajout et suppression de données dans un DataFrame**
+
+- **Ajout de lignes** :
+  - Utilisez `df.loc['p3'] = [...]` pour ajouter une nouvelle ligne avec un index spécifique (ici `'p3'`). Vous pouvez spécifier les valeurs pour chaque colonne dans une liste correspondant à l'ordre des colonnes.
+  - Cette méthode permet d'ajouter des observations au DataFrame de manière personnalisée.
+
+- **Suppression de lignes** :
+  - La méthode `drop()` permet de supprimer une ligne en utilisant son index, par exemple `df.drop('p3', axis=0)`. L'argument `axis=0` indique que l'on souhaite supprimer une ligne (par opposition à une colonne).
+  - Le résultat est un DataFrame sans la ligne spécifiée, mais cette opération n'est pas en place par défaut (sauf si `inplace=True` est ajouté).
+
+- **Ajout de colonnes** :
+  - Vous pouvez ajouter une nouvelle colonne en lui attribuant une valeur par défaut, comme dans `df['pays'] = 'France'`, ou en utilisant une liste ou une Series pour spécifier des valeurs différentes pour chaque ligne.
+  - Cette opération est utile pour ajouter des informations supplémentaires sans modifier la structure des lignes existantes.
+
+- **Suppression de colonnes** :
+  - Pour supprimer une colonne, utilisez `df.drop('ville', axis=1)`, où `axis=1` spécifie que l'on souhaite supprimer une colonne.
+  - Par défaut, `drop()` renvoie une copie du DataFrame sans la colonne supprimée, mais n'affecte pas le DataFrame original (sauf si `inplace=True` est ajouté).
+
+Ces opérations permettent de manipuler les données dans un DataFrame de manière flexible, en ajoutant ou retirant des informations selon les besoins de l'analyse.
+
+:::
+
+
+
+## Modifications in-place
+
+- Par défaut, les méthodes ne modifient pas l'objet d'origine, mais renvoient une copie avec les modifications appliquées :
+
+```{python}
+df2 = df.drop('pays', axis=1); print(df)
+```
+
+- Pour modifier l'objet d'origine, utiliser `inplace=True` :
+
+```{python}
+df.drop('pays', axis=1, inplace=True); print(df)
+```
+
+
+::: notes
+
+**Modifications in-place dans un DataFrame**
+
+- **Comportement par défaut** :
+  - Dans Pandas, la plupart des méthodes qui modifient un DataFrame ne modifient pas l'objet d'origine par défaut. Au lieu de cela, elles renvoient une **copie** du DataFrame avec les modifications appliquées.
+  - Exemple : `df2 = df.drop('pays', axis=1)` crée une nouvelle variable `df2` sans la colonne `'pays'`, mais le DataFrame `df` reste inchangé.
+
+- **Utilisation de `inplace=True`** :
+  - Pour appliquer les modifications directement sur l'objet d'origine, il est possible d'ajouter le paramètre `inplace=True` à la méthode. Cela évite de créer une copie et modifie le DataFrame en place.
+  - Exemple : `df.drop('pays', axis=1, inplace=True)` supprime la colonne `'pays'` directement dans `df`.
+
+L'option `inplace=True` permet d'optimiser la mémoire et d'éviter de créer des copies inutiles, mais elle doit être utilisée avec précaution car elle modifie le DataFrame d'origine.
+
+:::
+
+
+
+## Filtrage
+
+```{python}
+df = pd.DataFrame({'nom': ['Alice', 'Bob', 'Charlie'],
+                   'age': [25, 30, 35],
+                   'ville': ['Paris', 'Lyon', 'Nice']})
+```
+
+- En utilisant des conditions "vectorisées" :
+  - Le filtre ("masque") est effectué sur chaque ligne.
+  - Sa définition préalable est parfois utile.
+
+::: {.columns}
+::: {.column width="35%"}
+
+```{python}
+print(df['age'] > 25)
+print(df[df['age'] > 25])
+```
+
+:::
+::: {.column width="65%"}
+
+```{python}
+mask = (df['age'] > 25) & (df['ville'] == 'Nice')
+print(mask)
+print(df[mask])
+```
+
+:::
+:::
+
+
+::: notes
+
+**Filtrage des données dans un DataFrame**
+
+- **Conditions vectorisées** :
+  - Pandas permet d'utiliser des conditions "vectorisées" pour filtrer les lignes d'un DataFrame. Une condition vectorisée applique une opération logique sur chaque ligne du DataFrame, renvoyant un masque booléen.
+  - Par exemple, `df['age'] > 25` renvoie une Series de valeurs `True` ou `False` indiquant si chaque ligne satisfait la condition.
+
+- **Filtrage avec un masque** :
+  - Une fois le masque défini, vous pouvez l'utiliser pour extraire uniquement les lignes répondant à la condition. Par exemple, `df[df['age'] > 25]` affiche uniquement les lignes où l'âge est supérieur à 25.
+  - Définir un masque complexe à l'avance peut être utile pour appliquer plusieurs conditions. Par exemple, `(df['age'] > 25) & (df['ville'] == 'Nice')` sélectionne les lignes où l'âge est supérieur à 25 et la ville est Nice.
+
+Ces techniques permettent un filtrage rapide et efficace des données dans un DataFrame, facilitant les analyses conditionnelles et l'exploration ciblée.
+
+:::
+
+
+
+## Tri
+
+::: {.columns}
+::: {.column width="50%"}
+
+- **Par colonne** :
+
+
+```{python}
+print(df.sort_values('age',ascending=False))
+```
+
+:::
+::: {.column width="50%"}
+
+- **Par plusieurs colonnes** :
+
+```{python}
+print(df.sort_values(['nom', 'age']))
+```
+
+:::
+:::
+
+
+- **Par index** :
+
+```{python}
+print(df.sort_index(ascending=False))
+```
+
+
+::: notes
+
+**Tri des données dans un DataFrame**
+
+- **Tri par colonne** :
+  - La méthode `sort_values()` permet de trier un DataFrame en fonction d'une ou plusieurs colonnes.
+  - L'argument `ascending=False` permet d'effectuer un tri en ordre décroissant. Par exemple, `df.sort_values('age', ascending=False)` trie le DataFrame par âge en ordre décroissant.
+
+- **Tri par plusieurs colonnes** :
+  - Vous pouvez trier un DataFrame par plusieurs colonnes en fournissant une liste de colonnes à `sort_values()`.
+  - Par exemple, `df.sort_values(['nom', 'age'])` trie d'abord par nom, puis par âge en cas d'égalité sur le nom, facilitant ainsi les tris hiérarchiques.
+
+- **Tri par index** :
+  - La méthode `sort_index()` permet de trier un DataFrame selon l'ordre des index. En ajoutant `ascending=False`, vous pouvez inverser l'ordre des index.
+  - Par exemple, `df.sort_index(ascending=False)` trie le DataFrame en ordre décroissant des index.
+
+Ces options de tri offrent une flexibilité pour organiser les données dans l'ordre souhaité, que ce soit par valeur ou par index.
+
+:::
+
+
+
+
+## Appliquer des fonctions par colonne
+
+- Pour des opérations simples :
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+print(df['age'] * 2)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+print(df['age'] + df['age'])
+```
+
+:::
+:::
+
+- Pour des opérations complexes, utiliser `for` ou `apply` :
+
+::: {.columns}
+::: {.column width="50%"}
+
+
+```{python}
+for i in range(len(df)):
+  x = df.iloc[i]['nom'].upper()
+  df.iloc[i]['nom'] = x
+print(df['ville'])
+```
+
+:::
+::: {.column width="50%"}
+
+
+```{python}
+def majuscule(x):
+    return x.upper()
+print(df['ville'].apply(majuscule))
+```
+
+:::
+:::
+
+
+::: notes
+
+**Appliquer des fonctions par colonne**
+
+- **Opérations simples** :
+  - Pour appliquer des opérations mathématiques simples sur une colonne, utilisez des opérateurs arithmétiques directement. Par exemple, `df['age'] * 2` multiplie chaque valeur de la colonne `age` par 2, et `df['age'] + df['age']` additionne chaque valeur avec elle-même.
+
+- **Opérations complexes** :
+  - Pour des manipulations plus complexes, vous pouvez utiliser une boucle `for` ou la méthode `apply()` pour appliquer une fonction à chaque élément d'une colonne.
+  - **Avec une boucle `for`** : Utilisez `iloc` pour parcourir chaque ligne et appliquer une transformation. Par exemple, transformer chaque nom en majuscules avec `upper()`.
+  - **Avec `apply()`** : Définissez une fonction (comme `majuscule` pour mettre les chaînes en majuscules) et appliquez-la à la colonne avec `df['ville'].apply(majuscule)`. Cela permet de transformer chaque élément de la colonne en fonction de la logique définie dans la fonction.
+
+Ces techniques offrent une grande flexibilité pour manipuler les données en appliquant des transformations simples ou complexes par colonne.
+
+:::

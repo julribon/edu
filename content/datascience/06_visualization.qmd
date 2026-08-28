@@ -1,0 +1,1894 @@
+---
+title: Visualisation de données (2/2)
+subtitle: Introduction à la Science des Données avec Python
+author: Julien Ribon
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    show-notes: separate-page
+---
+
+```{python}
+#| echo: False
+import os
+import sys
+sys.path.append(os.path.abspath('modules'))
+```
+
+
+## Les trois types de visualisations
+
+<!-- - Seaborn en propose trois principaux :
+
+  - relationnelles (`relplot`),
+  - de distribution (`displot`),
+  - catégorielles (`catplot`). -->
+
+
+| Type | Fonction | Permet d'explorer |
+|--------|----------|-------------------------------------|
+| Relationel | [`relplot`](https://seaborn.pydata.org/generated/seaborn.relplot.html)   | la relation entre variables |
+| Catégoriel | [`catplot`](https://seaborn.pydata.org/generated/seaborn.catplot.html)  | la relation entre une variable numérique et une ou plusieurs variables catégorielles |
+| Distribution | [`displot`](https://seaborn.pydata.org/generated/seaborn.displot.html)  | la distribution d'un ensemble de données univariées ou bivariées |
+
+- **Aujourd'hui**: visualisations catégorielles (**`catplot`**) et de distribution (**`displot`**).
+
+::: notes
+
+**Trois Familles de Visualisations pour Données Catégorielles**
+
+**1. Nuage de Points Catégoriels**
+
+  - **Objectif** : Afficher chaque observation individuellement, groupée par catégorie.
+  - **Options Principales** :
+    - Par défaut : **`kind="strip"`** (les points peuvent se chevaucher).
+    - Pour éviter le chevauchement : **`kind="swarm"`** (ajuste la position des points).
+
+**2. Distribution Catégorielle**
+
+  - **Objectif** : Résumer la distribution d'une variable numérique au sein de chaque catégorie.
+  - **Options Principales** :
+    - **Boîtes à moustaches (`kind="box"`)** : Représentent les médianes, quartiles et valeurs aberrantes.
+    - (Autres non mentionnées ici : Violons et boîtes étendues).
+
+**3. Estimation Catégorielle**
+
+  - **Objectif** : Montrer des statistiques agrégées (comme des moyennes ou des sommes) par catégorie.
+  - **Options Principales** :
+    - **Barres (`kind="bar"`)** : Affichent les moyennes avec des barres d'erreur.
+    - **Comptage d'occurrences (`kind="count"`)** : Comptent le nombre d'observations par catégorie.
+    - (Autres non mentionnées ici : Points connectés).
+
+**Pourquoi Ces Visualisations ?**
+
+  - Ces familles permettent d'explorer les **relations entre une variable numérique et une ou plusieurs variables catégorielles**.
+  - Elles sont adaptées pour répondre à différentes questions :
+    - **Nuages de points** : Comprendre la dispersion et détecter des valeurs aberrantes.
+    - **Distributions** : Résumer et comparer des tendances globales.
+    - **Estimations** : Identifier des différences entre catégories et mettre en évidence des tendances.
+
+:::
+
+
+# Visualiser les données catégorielles
+
+## Visualiser les données catégorielles
+
+- La semaine passée : 
+
+  - Combiner **représentations bidimensionelles** et **sémantiques (de teinte, style, etc.)** pour explorer les relations entre plusieurs variables.
+
+  - Focus sur les cas où la relation **principale** implique deux variables numériques.
+
+- Si l'une des variables principales est **catégorielle** ? 
+
+  ```{python}
+  import seaborn as sns
+  tips = sns.load_dataset("tips")
+  print(tips.head(2))
+  ```
+
+<!-- On transforme en chaînes de caractères car on a pas encore vu les variables catégorielles. -->
+
+```{python}
+#| echo: false
+for col in tips.select_dtypes(['category']).columns:
+    tips[col] = tips[col].astype(str)
+```
+
+
+
+::: notes
+
+**Visualiser les données catégorielles**
+
+- **Concepts récapitulatifs** :
+  - Les relations entre deux variables numériques peuvent être explorées en utilisant des représentations bidimensionnelles, combinées à des **sémantiques visuelles** (comme la teinte ou le style) pour ajouter une dimension supplémentaire d'information.
+  - Cependant, lorsque l'une des variables principales est **catégorielle**, une approche différente est nécessaire.
+
+- **Données catégorielles** :
+  - Une variable catégorielle contient un ensemble limité de valeurs uniques représentant des groupes ou des catégories (par exemple, "Jour de la semaine", "Genre", ou "Type de paiement").
+  - Ces variables nécessitent des représentations adaptées pour capturer les relations avec des variables numériques ou d'autres catégories.
+
+- **Exemple avec Seaborn** :
+  - Le jeu de données `tips` (chargé via `sns.load_dataset("tips")`) est un exemple typique de données où certaines colonnes sont catégorielles, comme `"day"` ou `"sex"`.
+  - Ces variables catégorielles peuvent être transformées en chaînes de caractères avec `astype(str)` pour simplifier leur manipulation dans des visualisations.
+
+- **Préparation des données** :
+  - Si le type de données catégorielles n'est pas encore formellement traité, convertir les colonnes catégorielles en chaînes de caractères permet de les utiliser directement dans les visualisations, sans erreurs liées aux types de données.
+
+La visualisation des relations impliquant des variables catégorielles nécessite des outils adaptés, comme ceux fournis par Seaborn, pour explorer efficacement les données.
+
+:::
+
+
+## Trois familles de visualisations
+
+::: {.columns}
+::: {.column width="60%"}
+
+1. **Nuage de points catégoriels**
+
+    - Par défaut : `kind="strip"`
+    - Sans chevauchement : `kind="swarm"`
+
+2. **Distribution catégorielle**
+
+    - Boîtes à moustaches : `kind="box"`
+    <!-- - Violons : `kind="violin"` -->
+    <!-- - Grandes données (boîtes étendues) : `kind="boxen"` -->
+
+:::
+::: {.column width="40%"}
+
+
+3. **Estimation catégorielle**
+
+    - Barres : `kind="bar"`
+    - Comptage d'occurrences : `kind="count"`
+    <!-- - Points connectés : `kind="point"` -->
+
+
+:::
+:::
+
+
+::: notes
+
+**Trois familles de visualisations**
+
+1. **Nuage de points catégoriels** :
+   - Utilisé pour visualiser la distribution d'une variable numérique par rapport à une variable catégorielle.
+   - **`kind="strip"`** : Affiche un nuage de points pour chaque catégorie.
+   - **`kind="swarm"`** : Évite le chevauchement des points pour mieux distinguer les valeurs dans chaque catégorie.
+
+2. **Distribution catégorielle** :
+   - Ces graphiques illustrent la répartition des données numériques au sein de chaque catégorie.
+   - **`kind="box"`** : Boîtes à moustaches, utilisées pour montrer les quartiles, la médiane, et les valeurs extrêmes (outliers).
+   - D'autres options comme les graphiques de violons ou de boîtes étendues (`kind="violin"`, `kind="boxen"`) sont adaptées pour les ensembles de données plus complexes ou volumineux.
+
+3. **Estimation catégorielle** :
+   - Ces visualisations calculent et affichent des statistiques agrégées pour chaque catégorie.
+   - **`kind="bar"`** : Barres représentant une moyenne ou une somme par catégorie.
+   - **`kind="count"`** : Barres montrant le comptage d'occurrences pour chaque catégorie.
+   - Ces types de graphiques sont utiles pour explorer des relations quantitatives et la fréquence des occurrences.
+
+Ces trois familles permettent de capturer efficacement les relations entre des variables catégorielles et numériques ou entre plusieurs catégories.
+
+:::
+
+
+
+## Nuage de points catégoriels (1/3)
+
+* Principal défi : les points d'une catégorie se superposent sur l'axe correspondant à la variable catégorielle.
+* L'approche `kind="strip"` : ajouter un léger "jitter" aléatoire pour ajuster la position des points.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Nuage de points catégoriels (1/3)**
+
+- **Problème principal** :  
+  Lorsque des points sont tracés pour une variable numérique en fonction d'une variable catégorielle, les points peuvent se superposer sur l'axe de la variable catégorielle, rendant les données difficiles à interpréter.
+
+- **Approche avec `kind="strip"`** :  
+  - Par défaut, Seaborn ajoute un léger "jitter" (décalage aléatoire) pour séparer visuellement les points et réduire la superposition.
+  - Cela permet de mieux visualiser la densité des points pour chaque catégorie tout en conservant la simplicité du graphique.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="day", y="total_bill")`, un nuage de points catégoriels est tracé pour la variable numérique `total_bill` en fonction des jours (`day`).
+  - Ce graphique aide à explorer la répartition des valeurs numériques pour chaque catégorie de jours.
+
+Le nuage de points catégoriels est idéal pour visualiser les distributions et les variations des valeurs numériques au sein de différentes catégories.
+
+:::
+
+
+## Nuage de points catégoriels (2/3)
+
+* Principal défi : les points d'une catégorie se superposent sur l'axe correspondant à la variable catégorielle.
+* L'approche `kind="strip"` : ajouter un léger "jitter" aléatoire pour ajuster la position des points.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  jitter=False
+)
+```
+
+- `jitter=False` : pas de "jitter" aléatoire.
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  jitter=False,
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Nuage de points catégoriels (2/3)**
+
+- **Problème principal** :  
+  Les points représentant les valeurs numériques peuvent se superposer sur l'axe catégoriel, rendant difficile la visualisation des données.
+
+- **Approche avec `jitter=False`** :  
+  - Lorsque `jitter=False` est utilisé, aucun décalage aléatoire n'est appliqué aux points. Ils restent parfaitement alignés sur l'axe catégoriel, ce qui peut accentuer la superposition des points dans des ensembles de données denses.
+  - Cette configuration est utile lorsque vous souhaitez conserver un alignement strict sans introduire de bruit visuel.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips, x="day", y="total_bill", jitter=False)`, les points restent alignés verticalement pour chaque catégorie de l'axe `day`, sans dispersion latérale.
+  - Bien que cela puisse réduire la lisibilité dans certains cas, c'est une option adaptée pour des ensembles de données clairsemés.
+
+L'absence de jitter convient lorsque la densité des points est faible ou lorsque la précision visuelle du placement des points est une priorité.
+
+:::
+
+
+## Nuage de points catégoriels (3/3)
+
+- L'approche `kind="swarm"` : ajuster la position des points avec un algorithme empêchant leur chevauchement.
+
+  - Permet une meilleure représentation de la distribution.
+
+  - Fonctionne bien pour des "petits" ensembles de données.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  kind="swarm"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  kind="swarm",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Nuage de points catégoriels (3/3)**
+
+- **Problème du chevauchement des points** :  
+  Les points représentant les données peuvent se chevaucher, rendant difficile l'interprétation des distributions.
+
+- **Approche avec `kind="swarm"`** :  
+  - Cette méthode utilise un algorithme pour ajuster automatiquement la position des points afin qu'ils ne se chevauchent pas.
+  - Cela permet une meilleure visualisation de la distribution des données au sein de chaque catégorie, tout en maintenant l'alignement sur l'axe catégoriel.
+
+- **Avantages** :  
+  - Idéal pour des ensembles de données de taille modérée où la précision visuelle est importante.
+  - Fournit une représentation claire de la densité des valeurs dans chaque catégorie.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="day", y="total_bill", kind="swarm")`, les points sont répartis de manière optimale autour de chaque catégorie (`day`) sur l'axe catégoriel.
+  - Cela permet de visualiser la répartition sans chevauchement excessif.
+
+Cette méthode est particulièrement efficace pour des petits ensembles de données ou lorsque la lisibilité des valeurs est cruciale.
+
+:::
+
+
+## Utilisation des couleurs
+
+- La sématique de teinte permet d'ajouter une dimension supplémentaire.
+- Similaire aux visualisations relationnelles.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  kind="swarm",
+  hue="sex"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  kind="swarm",
+  hue="sex",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Utilisation des couleurs**
+
+- **Sémantique de teinte (`hue`)** :  
+  - Ajouter une variable catégorielle supplémentaire via la sémantique de teinte permet de distinguer visuellement des sous-groupes au sein de chaque catégorie.
+  - Cela ajoute une dimension supplémentaire à la visualisation tout en maintenant la clarté du graphique.
+
+- **Avantages** :  
+  - Cette technique est particulièrement utile pour comparer des distributions ou des tendances entre des groupes distincts au sein de la même catégorie principale.
+  - Elle est similaire à l'utilisation des couleurs dans les visualisations relationnelles, mais adaptée aux graphiques catégoriels.
+
+- **Exemple d'utilisation** :  
+  - En utilisant `sns.catplot(data=tips, x="day", y="total_bill", kind="swarm", hue="sex")`, les points sont colorés en fonction de la variable `sex`, permettant de visualiser la répartition des données pour chaque jour en fonction du sexe des clients.
+
+Cette approche améliore considérablement la compréhension des relations complexes dans les données catégorielles.
+
+:::
+
+
+## Ordre des catégories (1/4)
+
+- Contrairement aux données numériques, l'ordre des catégories n'est pas toujours évident.
+
+- Les niveaux de variables ressemblant à des nombres sont triés et dessinés à des positions ordinales (0, 1, …).
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Ordre des catégories (1/4)**
+
+- **Problématique de l'ordre des catégories** :
+  - Contrairement aux données numériques, les catégories n'ont pas toujours un ordre clair ou naturel.
+  - Lorsque les catégories ressemblent à des nombres, Pandas ou Seaborn les traite généralement comme des niveaux ordonnés, en les plaçant à des positions ordinales (0, 1, 2, …).
+
+- **Conséquence dans les visualisations** :
+  - Les catégories numériques sont triées et affichées dans cet ordre naturel, sauf si un ordre spécifique est défini.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips.query("size != 3"), x="size", y="total_bill")`, les tailles (`size`) différentes de 3 sont affichées sur l'axe des catégories (`x`), et les dépenses (`total_bill`) correspondantes sur l'axe numérique (`y`).
+  - Cela produit un graphique où les tailles sont représentées dans l'ordre croissant par défaut.
+
+Cette approche automatique fonctionne bien pour des catégories numériques simples, mais des ajustements peuvent être nécessaires pour des catégories non ordinales.
+
+:::
+
+
+## Ordre des catégories (2/4)
+
+
+- Contrairement aux données numériques, l'ordre des catégories n'est pas toujours évident.
+
+- Les niveaux de variables ressemblant à des nombres sont triés et dessinés à des positions ordinales (0, 1, …).
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill",
+  native_scale=True
+)
+```
+
+* `native_scale=True` pour respecter les propriétés originales des données.
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill",
+  native_scale=True,
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Ordre des catégories (2/4)**
+
+- **Problématique de l'ordre des catégories** :
+  - Contrairement aux données numériques, les catégories ne suivent pas nécessairement un ordre évident ou naturel.
+  - Par défaut, les niveaux ressemblant à des nombres sont triés et affichés à des positions ordinales (0, 1, 2, …).
+
+- **Respect des propriétés originales des données** :
+  - L'option `native_scale=True` dans Seaborn permet de respecter l'échelle et l'ordre original des données catégorielles.
+  - Cela est particulièrement utile lorsque les données ont un ordre ou une signification spécifique qui ne correspond pas à un tri numérique ou alphabétique.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips.query("size != 3"), x="size", y="total_bill", native_scale=True)`, l'ordre des catégories dans la variable `size` est respecté tel qu'il apparaît dans les données d'origine.
+  - Cela garantit que les tailles (`size`) sont affichées dans leur ordre natif, même si cet ordre diffère d'un tri classique.
+
+Cette option est utile pour des visualisations où l'ordre des catégories porte une signification importante ou doit refléter les données d'origine.
+
+:::
+
+
+## Ordre des catégories (3/4)
+
+- Il est possible de spécifier manuellement l'ordre des catégories.
+- Plus important pour les variables catégorielles nominales.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill",
+  order=[1, 4, 6, 2, 5]
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips.query("size != 3"),
+  x="size",
+  y="total_bill",
+  order=[1, 4, 6, 2, 5],
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Ordre des catégories (3/4)**
+
+- **Spécification manuelle de l'ordre** :
+  - Pour les variables catégorielles, il est souvent nécessaire de définir un ordre spécifique, surtout lorsque les catégories sont nominales (sans ordre intrinsèque).
+  - Seaborn permet de spécifier manuellement l'ordre des catégories à l'aide du paramètre `order`.
+
+- **Avantages de cette méthode** :
+  - Elle garantit que les catégories apparaissent dans un ordre logique ou significatif pour l'analyse ou la communication.
+  - Utile pour mettre en avant certaines catégories ou organiser les données de manière cohérente avec le contexte.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips.query("size != 3"), x="size", y="total_bill", order=[1, 4, 6, 2, 5])`, les tailles (`size`) sont affichées dans l'ordre spécifié par la liste `[1, 4, 6, 2, 5]`.
+  - Cela peut refléter une logique métier ou une préférence analytique.
+
+Cette approche est essentielle pour garantir que les visualisations sont interprétées correctement et de manière intuitive.
+
+:::
+
+
+## Ordre des catégories (4/4)
+
+- Les niveaux de variables de type chaînes de caractères sont affichés dans l'ordre d'apparition dans les données.
+
+::: {.columns}
+::: {.column width="48%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill"
+)
+```
+
+
+<!-- print(tips.loc[0, "smoker"]) -->
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  height=3,
+)
+```
+
+:::
+::: {.column width="52%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  order=["Thur", "Fri", "Sat", "Sun"]
+)
+```
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="day",
+  y="total_bill",
+  order=["Thur", "Fri", "Sat", "Sun"],
+  height=3,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Ordre des catégories (4/4)**
+
+- **Ordre par défaut pour les chaînes de caractères** :
+  - Les catégories de type chaîne de caractères dans les données sont, par défaut, affichées dans l'ordre d'apparition dans le jeu de données. Cet ordre peut être arbitraire si aucune règle explicite n'est définie.
+
+- **Spécification manuelle de l'ordre des chaînes** :
+  - Vous pouvez définir un ordre personnalisé pour les catégories de type chaîne à l'aide du paramètre `order`. Cela garantit que les catégories apparaissent dans un ordre logique ou attendu pour votre analyse.
+
+- **Exemple d'utilisation** :
+  - Sans spécification d'ordre :  
+    En utilisant `sns.catplot(data=tips, x="day", y="total_bill")`, les jours (`day`) sont affichés dans l'ordre par défaut, qui correspond à l'ordre d'apparition dans les données.
+  - Avec spécification d'ordre :  
+    En ajoutant `order=["Thur", "Fri", "Sat", "Sun"]`, les jours sont affichés dans l'ordre exact fourni par la liste, assurant une logique ou une préférence analytique.
+
+Cette flexibilité permet d'adapter les visualisations aux besoins spécifiques et de rendre les graphiques plus intuitifs et compréhensibles.
+
+:::
+
+
+## Les boîtes à moustaches (1/2)
+
+- Lorsque la taille des données grandit, les nuages de points deviennent moins informatifs sur la distribution des valeurs.
+
+- Solution : les **boîtes à moustaches (boxplots)** affichant les trois quartiles de la distribution et les valeurs extrêmes.
+    <!-- - Les observations en dehors de cette plage sont affichées individuellement. -->
+
+::: {.columns}
+::: {.column width="52%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  kind="box"
+)
+```
+
+:::
+::: {.column width="48%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  kind="box",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Les boîtes à moustaches (1/2)**
+
+- **Problème avec les nuages de points** :
+  - Lorsque la taille des données augmente, les nuages de points deviennent trop denses, ce qui rend difficile l'interprétation de la distribution des valeurs.
+
+- **Solution : les boîtes à moustaches (boxplots)** :
+  - Les **boîtes à moustaches** sont des graphiques statistiques qui résument la distribution des données numériques en affichant :
+    - Les trois quartiles de la distribution (Q1, médiane, Q3).
+    - Une plage interquartile (IQR) pour représenter la majorité des données.
+    - Les "moustaches" qui s'étendent jusqu'aux points situés à 1,5 fois l'IQR au-dessus et en dessous des quartiles.
+    - Les valeurs extrêmes, qui sont des points individuels en dehors de cette plage.
+
+- **Avantages** :
+  - Les boîtes à moustaches offrent une représentation concise et visuelle de la dispersion, de la symétrie, et des valeurs aberrantes des données.
+  - Elles sont particulièrement utiles pour comparer des distributions entre différentes catégories.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="size", y="total_bill", kind="box")`, un graphique de boîtes à moustaches est généré pour afficher la distribution de `total_bill` en fonction de `size`.
+
+Les boîtes à moustaches sont un outil puissant pour résumer et comparer les distributions dans des ensembles de données volumineux ou complexes.
+
+:::
+
+
+
+## Les boîtes à moustaches (2/2)
+
+- Ajout d'une sémantique de teinte :
+  - Les niveaux de la variable `hue` sont représentés par des boîtes plus étroites, décalées le long de l'axe catégoriel.
+
+::: {.columns}
+::: {.column width="52%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  kind="box"
+)
+```
+
+:::
+::: {.column width="48%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  kind="box",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Les boîtes à moustaches (2/2)**
+
+- **Ajout d'une sémantique de teinte (`hue`)** :
+  - En introduisant une variable supplémentaire via `hue`, les boîtes sont subdivisées pour chaque niveau de cette variable.
+  - Chaque niveau est représenté par une boîte plus étroite et légèrement décalée le long de l'axe catégoriel, permettant de comparer la distribution au sein de chaque catégorie principale.
+
+- **Avantages de cette approche** :
+  - Cela ajoute une dimension supplémentaire à l'analyse des données, rendant possible l'exploration des relations entre plusieurs variables simultanément.
+  - Les différences entre les sous-groupes au sein de chaque catégorie deviennent immédiatement visibles.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="size", y="total_bill", hue="smoker", kind="box")`, la variable `smoker` est ajoutée pour différencier les distributions selon qu'un client fume ou non, tout en comparant les tailles (`size`).
+
+Cette méthode est particulièrement utile pour analyser les variations au sein des sous-groupes d'une variable catégorielle.
+
+:::
+
+
+
+## Diagrammes en barres (1/2)
+
+- Plutôt que de visualiser la distribution, il parfois utile de montrer la tendance centrale et la dispersion.
+
+- Solution : les **diagrammes en barres (barplots)** affichant la moyenne et un intervalle de confiance.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  kind="bar"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  kind="bar",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Diagrammes en barres (1/2)**
+
+- **Utilisation** :
+  - Les diagrammes en barres sont utilisés lorsque l'objectif est de visualiser la tendance centrale (par exemple, la moyenne) et la dispersion (par exemple, l'intervalle de confiance) plutôt que la distribution complète des données.
+
+- **Fonctionnement des barplots** :
+  - Chaque barre représente la moyenne des données numériques pour une catégorie donnée.
+  - Un intervalle de confiance est affiché sous forme de lignes verticales (barres d'erreur) autour de chaque barre, indiquant l'incertitude statistique ou la variation des données.
+
+- **Avantages** :
+  - Ils offrent une vue d'ensemble rapide et claire des différences moyennes entre les catégories.
+  - Idéal pour comparer les moyennes tout en tenant compte de la variabilité.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips, x="size", y="total_bill", kind="bar")`, la moyenne de `total_bill` est affichée pour chaque taille de groupe (`size`), avec des barres d'erreur représentant l'intervalle de confiance.
+
+Les diagrammes en barres sont une option efficace pour résumer les données et comparer les tendances centrales entre différentes catégories.
+
+:::
+
+
+
+## Diagrammes en barres (2/2)
+
+- L'ajout d'une sémantique de teinte fonctionne comme avec le diagramme à moustaches.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  kind="bar"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  kind="bar",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Diagrammes en barres (2/2)**
+
+- **Ajout d'une sémantique de teinte (`hue`)** :
+  - Comme pour les boîtes à moustaches, une variable supplémentaire peut être introduite via `hue` pour subdiviser les données et comparer les moyennes au sein de chaque catégorie principale.
+  - Chaque sous-groupe de la variable `hue` est représenté par une barre distincte, décalée sur l'axe catégoriel.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="size", y="total_bill", hue="smoker", kind="bar")`, les moyennes de `total_bill` sont affichées pour chaque taille (`size`), subdivisées par le statut de fumeur (`smoker`), avec des barres d'erreur indiquant les intervalles de confiance.
+
+---
+
+**Diagrammes de comptage (countplots)**
+
+- **Utilisation** :
+  - Les diagrammes de comptage affichent le nombre d'occurrences dans chaque catégorie, faisant d'eux un cas particulier des diagrammes en barres.
+  - Ils agissent comme des histogrammes, mais pour des variables catégorielles.
+
+- **Avantages** :
+  - Ils permettent de visualiser rapidement la fréquence des catégories dans un ensemble de données.
+  - Idéal pour analyser des distributions de fréquences pour des variables qualitatives.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="size", kind="count")`, le nombre de groupes pour chaque taille (`size`) est représenté, fournissant une vue claire de la distribution des tailles de groupe dans les données.
+
+Les diagrammes de comptage complètent les diagrammes en barres en offrant une perspective basée sur les fréquences des catégories.
+
+:::
+
+
+## Diagrammes de comptage
+
+- Les **diagrammes de comptage (countplots)** affichent le nombre d'occurrences dans chaque catégorie:
+  - un **cas particulier** des diagrammes en barres,
+  - histogrammes pour variables catégorielles.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  kind="count"
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  kind="count",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Diagrammes de comptage**
+
+- **Définition** :  
+  Les diagrammes de comptage (**countplots**) affichent le nombre d'occurrences pour chaque catégorie d'une variable. Ce sont des histogrammes adaptés aux variables catégorielles.
+
+- **Caractéristiques** :
+  - Les countplots sont un **cas particulier** des diagrammes en barres, où la hauteur de chaque barre représente la fréquence d'une catégorie dans les données.
+  - Ils permettent de visualiser rapidement la répartition des occurrences parmi les différentes catégories.
+
+- **Utilisation** :
+  - Les countplots sont utiles pour explorer les distributions de variables qualitatives (par exemple, le nombre de groupes pour chaque taille, ou la répartition des genres dans un échantillon).
+  - Ils offrent une vue claire des fréquences et des déséquilibres éventuels entre les catégories.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="size", kind="count")`, un countplot est généré pour la variable `size`, affichant le nombre de groupes de chaque taille.
+
+Les diagrammes de comptage sont simples et efficaces pour analyser la distribution des catégories dans des données qualitatives.
+
+:::
+
+
+
+## Axe catégoriel (1/2)
+
+- L'axe catégoriel peut être orienté horizontalement.
+- Utile pour les catégories avec des noms longs.
+
+::: {.columns}
+::: {.column width="52%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="total_bill",
+  y="day",
+  order=["Thur", "Fri", "Sat", "Sun"],
+)
+```
+
+:::
+::: {.column width="48%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="total_bill",
+  y="day",
+  order=["Thur", "Fri", "Sat", "Sun"],
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Axe catégoriel (1/2)**
+
+- **Orientation de l'axe catégoriel** :
+  - L'axe catégoriel peut être orienté horizontalement, en plaçant les catégories sur l'axe vertical (`y`) au lieu de l'axe horizontal (`x`).
+  - Cela est particulièrement utile lorsque les catégories ont des noms longs ou lorsque l'espace horizontal est limité.
+
+- **Avantages** :
+  - Facilite la lisibilité des graphiques pour des catégories textuelles complexes.
+  - Optimise l'utilisation de l'espace, en particulier dans des visualisations où l'axe numérique est plus intuitif sur l'axe horizontal.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="total_bill", y="day", order=["Thur", "Fri", "Sat", "Sun"])`, les jours de la semaine (`day`) sont placés sur l'axe vertical dans l'ordre spécifié, tandis que les factures totales (`total_bill`) sont tracées sur l'axe horizontal.
+
+Cette orientation est idéale pour améliorer la clarté des visualisations lorsque les noms des catégories sont longs ou nombreux.
+
+:::
+
+
+
+## Axe catégoriel (2/2)
+
+- `orient="h"` permet de spécifier manuellement l'orientation de l'axe catégoriel.
+- Utile lorsque les deux variables ressemblent à des nombres.
+
+::: {.columns}
+::: {.column width="52%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="total_bill",
+  y="size",
+  orient="h",
+)
+```
+
+:::
+::: {.column width="48%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="total_bill",
+  y="size",
+  orient="h",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Axe catégoriel (2/2)**
+
+- **Orientation avec `orient="h"`** :
+  - Le paramètre `orient="h"` permet de spécifier explicitement que l'axe catégoriel doit être horizontal (les catégories sur l'axe vertical).
+  - Cela est utile dans les cas où les deux variables ressemblent à des nombres et où Pandas ou Seaborn ne peut pas déterminer automatiquement l'axe catégoriel.
+
+- **Avantages** :
+  - Clarifie l'interprétation des graphiques lorsque les variables catégorielles et numériques ne sont pas clairement distinguées.
+  - Offre une flexibilité pour ajuster l'orientation selon les besoins esthétiques ou analytiques.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.catplot(data=tips, x="total_bill", y="size", orient="h")`, la taille des groupes (`size`) est traitée comme une variable catégorielle et tracée sur l'axe vertical, tandis que les factures totales (`total_bill`) sont tracées sur l'axe horizontal.
+
+Cette approche garantit que les graphiques sont correctement orientés, même dans des scénarios ambigus ou complexes.
+
+:::
+
+
+
+## Les facettes
+
+- Comme pour les visualisations relationnelles, les facettes permettent de diviser les données en sous-ensembles.
+
+::: {.columns}
+::: {.column width="40%"}
+
+```{python}
+#| eval: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  col="time"
+)
+```
+
+:::
+::: {.column width="60%"}
+
+```{python}
+#| echo: false
+sns.catplot(
+  data=tips,
+  x="size",
+  y="total_bill",
+  hue="smoker",
+  col="time",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Les facettes**
+
+- **Définition** :
+  - Les facettes divisent les données en sous-ensembles basés sur une ou plusieurs variables, créant des graphiques distincts pour chaque sous-ensemble.
+  - Cela permet d'explorer les relations entre les variables au sein de différents groupes.
+
+- **Utilisation dans les visualisations catégorielles** :
+  - Comme dans les visualisations relationnelles, les facettes sont créées en utilisant des paramètres tels que `col` ou `row` pour diviser les données sur un ou deux axes.
+  - L'ajout de `hue` permet de différencier encore plus les sous-groupes à l'intérieur de chaque facette.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.catplot(data=tips, x="size", y="total_bill", hue="smoker", col="time")`, les données sont divisées en deux facettes selon la variable `time` (par exemple, "Lunch" et "Dinner").
+  - Dans chaque facette, la taille des groupes (`size`) est tracée contre le montant total des factures (`total_bill`), avec les sous-groupes différenciés par la variable `smoker`.
+
+- **Avantages** :
+  - Permet de comparer des relations complexes au sein de sous-groupes.
+  - Améliore la lisibilité et l'interprétation des données lorsque des groupes distincts doivent être analysés séparément.
+
+Les facettes sont un outil puissant pour explorer et comprendre les variations entre sous-groupes dans des ensembles de données complexes.
+
+:::
+
+
+# Visualiser les distributions de données
+
+## Visualiser les distributions de données
+
+- Étape essentielle pour analyser ou modéliser des données.
+- Fournit des réponses rapides à des questions clés :
+    - Quelle est la tendance centrale ou l'étendue des observations ?
+    - Y a-t-il un fort biais dans une direction, des valeurs aberrantes, ou plusieurs modes ?
+    - Ces réponses varient-elles selon des sous-ensembles définis par d'autres variables ?
+
+::: notes
+
+**Visualiser les distributions de données**
+
+- **Importance des visualisations de distributions** :
+  - Visualiser les distributions est une étape critique pour comprendre les caractéristiques fondamentales des données avant toute analyse ou modélisation.
+  - Cela permet de détecter des schémas, des anomalies, et des particularités qui peuvent influencer l'interprétation des résultats.
+
+- **Questions clés adressées** :
+  1. **Tendance centrale** : Où se situent les valeurs typiques ou moyennes des données ?
+  2. **Étendue des observations** : Quelle est la plage des valeurs (minimum et maximum) ?
+  3. **Biais ou asymétrie** : La distribution est-elle symétrique ou penche-t-elle dans une direction particulière ?
+  4. **Valeurs aberrantes** : Y a-t-il des observations qui se démarquent fortement ?
+  5. **Modes multiples** : La distribution est-elle unimodale, bimodale, ou multimodale ?
+  6. **Variations selon les sous-groupes** : Comment les caractéristiques de la distribution changent-elles en fonction de sous-ensembles définis par d'autres variables ?
+
+- **Applications** :
+  - Fournit une compréhension intuitive des données et des indices pour orienter les analyses suivantes.
+  - Aide à identifier des sous-groupes ou des patterns spécifiques nécessitant une attention particulière.
+
+Visualiser les distributions est une étape indispensable pour s'assurer que les données sont bien comprises et préparées pour une analyse approfondie.
+
+:::
+
+
+## Histogrammes
+
+- Diagramme en barres représentant la fréquence des observations dans des **intervalles de valeurs (bins)**.
+- La hauteur de chaque barre correspond au nombre d'observations dans chaque bin.
+
+::: {.columns}
+::: {.column width="54%"}
+
+```{python}
+#| eval: false
+penguins = sns.load_dataset("penguins")
+sns.displot(
+  penguins,
+  x="flipper_length_mm"
+)
+```
+
+:::
+::: {.column width="46%"}
+
+```{python}
+#| echo: false
+penguins = sns.load_dataset("penguins")
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Histogrammes**
+
+- **Définition** :
+  - Un histogramme est un diagramme en barres représentant la fréquence des observations regroupées dans des **intervalles de valeurs (bins)**.
+  - La hauteur de chaque barre correspond au nombre d'observations dans l'intervalle associé.
+
+- **Utilité** :
+  - Permet de visualiser la répartition des données numériques sur une plage de valeurs.
+  - Met en évidence les tendances générales, les modes (unimodale, bimodale, etc.), et les éventuelles asymétries ou valeurs aberrantes.
+
+- **Exemple d'application** :
+  - En utilisant `sns.displot(penguins, x="flipper_length_mm")`, la distribution des longueurs des nageoires (en mm) des manchots est affichée.
+  - Cela offre des informations immédiates, comme :
+    - La valeur la plus fréquente (environ 195 mm).
+    - La distribution semble **bimodale**, ce qui suggère deux groupes distincts dans les données.
+
+- **Analyse** :
+  - Un histogramme est idéal pour identifier rapidement les caractéristiques clés d'une variable numérique et pour comprendre comment les données sont réparties.
+
+Les histogrammes constituent une base essentielle pour analyser la distribution de variables numériques.
+
+:::
+
+
+## Spécifier les intervalles (`binwidth`)
+
+- Une mauvaise taille d'intervalle peut induire en erreur en 
+    - masquant des caractéristiques importantes,
+    - créant des caractéristiques artificielles dues à la variabilité aléatoire.
+
+::: {.columns}
+::: {.column width="54%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  binwidth=3
+)
+```
+
+- Il est recommandé de vérifier la cohérence de l'interprétation avec différentes tailles.
+
+:::
+::: {.column width="46%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  binwidth=3,
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Spécifier les intervalles (`binwidth`)**
+
+- **Problématique** :
+  - Une taille d'intervalle (bin) mal choisie peut :
+    - Masquer des caractéristiques importantes des données.
+    - Créer des motifs artificiels dus à la variabilité aléatoire.
+
+- **Comportement par défaut** :
+  - Par défaut, Seaborn détermine automatiquement la taille des bins en fonction de la variance et du nombre d'observations.
+  - Cependant, ces choix automatiques reposent sur des hypothèses qui ne sont pas toujours adaptées à la structure des données.
+
+- **Personnalisation avec `binwidth`** :
+  - Le paramètre `binwidth` permet de spécifier directement la largeur des bins, offrant un contrôle précis sur la granularité de l'histogramme.
+  - Exemple : `sns.displot(penguins, x="flipper_length_mm", binwidth=3)` utilise des intervalles de 3 mm pour afficher la distribution des longueurs des nageoires.
+
+- **Recommandation** :
+  - Il est essentiel de vérifier la cohérence des résultats avec différentes tailles de bins pour éviter des interprétations biaisées.
+
+- **Avantages de la personnalisation** :
+  - Facilite l'identification des motifs réels dans les données.
+  - Permet d'adapter la visualisation aux besoins spécifiques de l'analyse.
+
+Un choix judicieux de la taille des bins améliore considérablement la clarté et l'utilité de l'histogramme.
+
+:::
+
+
+## Spécifier les intervalles (`bins`)
+
+- Il est parfois préférable de spécifier le **nombre d'intervales**.
+- Souvent plus facile à utiliser que `binwidth`.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  bins=20
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  bins=20,
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Spécifier les intervalles (`bins`)**
+
+- **Utilisation de `bins`** :
+  - Au lieu de définir directement la largeur des intervalles avec `binwidth`, vous pouvez spécifier le **nombre total d'intervalles** souhaités avec le paramètre `bins`.
+  - Cette approche est souvent plus intuitive, car elle permet de contrôler la granularité de l'histogramme en fonction du nombre d'intervalles.
+
+- **Comportement** :
+  - Seaborn ajuste automatiquement la largeur des bins pour diviser la plage des données en le nombre spécifié d'intervalles.
+  - Cela est utile lorsque vous souhaitez tester différentes granularités sans calculer manuellement la largeur des bins.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", bins=20)`, les données sont divisées en 20 intervalles égaux, rendant l'analyse plus flexible et rapide.
+
+- **Avantages** :
+  - Simplifie la personnalisation de l'histogramme, en particulier pour des ensembles de données variés.
+  - Permet de tester plusieurs niveaux de détail pour ajuster l'analyse visuelle aux besoins.
+
+Spécifier le nombre de bins avec `bins` est une alternative pratique à `binwidth`, adaptée aux analyses exploratoires rapides.
+
+:::
+
+
+## Intervalles manuels (1/2)
+
+- Exemple où la méthode par défaut ne fonctionne pas bien : la variable prend un nombre restreint de valeurs.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  tips,
+  x="size",
+)
+```
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  tips,
+  x="size",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Intervalles manuels (1/2)**
+
+- **Problème** :
+  - Lorsque la variable prend un nombre limité de valeurs discrètes (par exemple, la taille des groupes dans `tips`), la méthode par défaut de Seaborn peut produire des histogrammes qui ne reflètent pas correctement la répartition des données.
+  - Cela peut entraîner une mauvaise interprétation des fréquences ou masquer des caractéristiques importantes.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.displot(tips, x="size")`, l'histogramme montre la répartition de la variable `size` (taille des groupes), mais les bins par défaut peuvent regrouper des valeurs qui ne devraient pas l'être.
+
+- **Recommandation** :
+  - Dans ces cas, il est préférable de spécifier manuellement les intervalles pour garantir une correspondance exacte entre les bins et les valeurs de la variable.
+
+Les intervalles manuels offrent un meilleur contrôle et une précision accrue, en particulier pour les données discrètes.
+
+:::
+
+
+## Intervalles manuels (2/2)
+
+- Exemple où la méthode par défaut ne fonctionne pas bien : la variable prend un nombre restreint de valeurs.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  tips,
+  x="size",
+  bins=[1, 2, 3, 4, 5, 6, 7]
+)
+```
+
+- `bins` peut aussi prendre une liste de valeurs pour définir les intervalles.
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  tips,
+  x="size",
+  bins=[1, 2, 3, 4, 5, 6, 7],
+  height=3.5
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Intervalles manuels (2/2)**
+
+- **Utilisation avancée de `bins`** :
+  - Le paramètre `bins` peut accepter une **liste de valeurs** pour définir manuellement les intervalles spécifiques de l'histogramme.
+  - Cela est particulièrement utile lorsque la variable contient un nombre restreint de valeurs discrètes, comme dans l'exemple de la taille des groupes (`size`) dans `tips`.
+
+- **Exemple d'application** :
+  - En utilisant `sns.displot(tips, x="size", bins=[1, 2, 3, 4, 5, 6, 7])`, chaque bin correspond à une valeur unique ou à une plage bien définie, garantissant une représentation précise des fréquences pour chaque taille de groupe.
+
+- **Avantages de cette approche** :
+  - Permet une correspondance exacte entre les bins et les valeurs de la variable, évitant les regroupements arbitraires des données.
+  - Améliore la lisibilité et l'interprétation des histogrammes, surtout pour des données discrètes.
+
+Définir manuellement les bins avec une liste est une méthode puissante pour garantir une visualisation précise et adaptée aux besoins analytiques.
+
+:::
+
+
+## Utilisation des couleurs (1/3)
+
+- Après avoir étudié la distribution, permet d'explorer si ses caractéristiques diffèrent en fonction d'autres variables.
+- Quelle est la cause d'une distribution bimodale observée pour une variable comme la longueur des nageoires ?
+
+::: {.columns}
+::: {.column width="57%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species"
+)
+```
+
+- Une histogramme distinct pour chaque valeur unique de `hue`.
+
+:::
+::: {.column width="43%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  height=3,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Utilisation des couleurs (1/3)**
+
+- **Exploration avancée des distributions** :
+  - Après avoir visualisé une distribution globale, l'ajout de la sémantique de couleur via `hue` permet d'explorer si les caractéristiques de la distribution diffèrent selon les valeurs d'une autre variable.
+  - Par exemple, une distribution bimodale observée pourrait être expliquée par des sous-groupes distincts définis par une variable comme `species`.
+
+- **Fonctionnement de `hue`** :
+  - Le paramètre `hue` divise la distribution en histogrammes distincts pour chaque valeur unique de la variable spécifiée.
+  - Chaque sous-distribution est représentée par une couleur différente, facilitant l'identification des contributions de chaque groupe à la distribution globale.
+
+- **Exemple d'application** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", hue="species")`, l'histogramme est subdivisé par espèce de manchots (`species`), révélant comment chaque espèce contribue à la distribution des longueurs de nageoires.
+
+- **Avantages** :
+  - Permet de comprendre les différences entre sous-groupes.
+  - Explique les motifs complexes (comme une bimodalité) en fonction des variables catégorielles.
+
+Cette technique est idéale pour relier des variables catégorielles aux distributions numériques, offrant une meilleure compréhension des données.
+
+:::
+
+
+<!-- ## Utilisation des couleurs (2/4)
+
+- Par défaut, les histogrammes sont superposés, ce qui peut rendre leur distinction difficile.
+- **Solution 1** : `element="step"` permet d'utiliser un graphique en escalier au lieu des barres.
+
+::: {.columns}
+::: {.column width="57%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  element="step"
+)
+```
+
+:::
+::: {.column width="43%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  element="step",
+  height=3,
+)
+```
+
+:::
+::: -->
+
+
+## Utilisation des couleurs (2/3)
+
+- Par défaut, les histogrammes sont superposés, ce qui peut rendre leur distinction difficile.
+- **Solution 1** : `multiple="stack"` permet d'**empiler** les histogrammes.
+
+::: {.columns}
+::: {.column width="57%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  multiple="stack"
+)
+```
+
+- Le contour de l'histogramme global équivaut à celui sans `hue`.
+
+:::
+::: {.column width="43%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  multiple="stack",
+  height=3,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Utilisation des couleurs (2/3)**
+
+- **Problème avec l'affichage par défaut** :
+  - Par défaut, les histogrammes associés à chaque valeur de `hue` sont superposés. Cela peut rendre difficile de distinguer clairement les contributions de chaque groupe à la distribution globale.
+
+- **Solution : `multiple="stack"`** :
+  - En utilisant `multiple="stack"`, les histogrammes sont empilés verticalement. Chaque segment représente une valeur unique de la variable `hue`, facilitant la visualisation des proportions et des contributions.
+
+- **Avantages** :
+  - L'histogramme global (contour) reste inchangé par rapport à une visualisation sans `hue`, ce qui permet de conserver une vue d'ensemble tout en détaillant les contributions individuelles.
+  - Utile pour analyser les proportions relatives de sous-groupes dans une distribution.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", hue="species", multiple="stack")`, la distribution des longueurs de nageoires est empilée par espèce (`species`), révélant clairement la contribution de chaque espèce.
+
+L'option `stack` est idéale pour interpréter les distributions imbriquées sans compromettre la lisibilité.
+
+:::
+
+
+
+## Utilisation des couleurs (3/3)
+
+- L'histogramme empilé montre la relation entre les parties et le tout, mais peut masquer certaines caractéristiques.
+- **Solution 2** : `multiple="dodge"` permet de **juxtaposer** les histogrammes.
+
+::: {.columns}
+::: {.column width="57%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  multiple="dodge"
+)
+```
+
+- Convient si la variable catégorielle a peu de niveaux.
+
+:::
+::: {.column width="43%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  multiple="dodge",
+  height=3,
+)
+```
+
+:::
+:::
+
+
+::: notes
+
+**Utilisation des couleurs (3/3)**
+
+- **Limites des histogrammes empilés** :
+  - Bien que l'histogramme empilé (`multiple="stack"`) montre clairement la relation entre les parties et le tout, il peut masquer certaines caractéristiques, comme les modes ou les détails au sein des sous-groupes.
+
+- **Solution : `multiple="dodge"`** :
+  - En utilisant `multiple="dodge"`, les barres de chaque groupe (valeur de `hue`) sont décalées horizontalement et leur largeur est réduite.
+  - Cela permet de comparer directement les hauteurs des barres pour chaque sous-groupe, tout en évitant le chevauchement.
+
+- **Avantages** :
+  - Facilite l'identification des différences entre les sous-groupes.
+  - Permet une visualisation plus claire des distributions individuelles sans masquer les détails.
+  - Convient particulièrement si la variable catégorielle a un nombre limité de niveaux.
+
+- **Exemple d'utilisation** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", hue="species", multiple="dodge")`, les histogrammes des longueurs de nageoires sont décalés pour chaque espèce (`species`), permettant une comparaison directe des distributions.
+
+L'option `dodge` est idéale pour des comparaisons précises des sous-groupes lorsque le chevauchement ou l'empilement rend les données difficiles à interpréter.
+
+:::
+
+
+
+## Facettes
+
+- Comme pour les visualisations relationnelles, les facettes permettent de diviser les données en sous-ensembles.
+
+::: {.columns}
+::: {.column width="35%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species"
+  col="sex"
+)
+```
+
+:::
+::: {.column width="65%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  col="sex",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Facettes**
+
+- **Définition** :
+  - Les facettes divisent les données en sous-ensembles en fonction d'une ou plusieurs variables catégorielles. Chaque sous-ensemble est affiché dans un graphique distinct, facilitant l'exploration de relations complexes.
+
+- **Utilisation dans les histogrammes** :
+  - Le paramètre `col` permet de créer des graphiques distincts pour chaque niveau d'une variable catégorielle. Cela permet de comparer les distributions au sein de différents groupes.
+
+- **Exemple d'application** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", hue="species", col="sex")`, les données des longueurs de nageoires sont séparées en deux facettes en fonction du sexe (`sex`). Chaque facette affiche la distribution pour les différentes espèces (`species`), différenciées par la couleur (`hue`).
+
+- **Avantages** :
+  - Simplifie l'analyse de sous-groupes complexes.
+  - Permet une visualisation plus ciblée des différences entre catégories.
+  - Idéal pour comparer les distributions sur plusieurs dimensions simultanément.
+
+Les facettes offrent une approche puissante pour analyser les données stratifiées tout en conservant une clarté visuelle.
+
+:::
+
+
+## Normalisation (1/2)
+
+- Les histogrammes peuvent être normalisés pour montrer des densités plutôt que des fréquences.
+- Utile pour comparer des distributions de tailles différentes.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  stat="density"
+)
+```
+
+- Les hauteurs sont normalisées pour avoir une aire totale de 1.
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  stat="density",
+  height=3.5,
+)
+```
+
+:::
+:::
+
+::: notes
+
+**Normalisation (1/2)**
+
+- **Objectif de la normalisation** :
+  - Normaliser un histogramme revient à afficher des **densités** au lieu de fréquences absolues.
+  - Cela est particulièrement utile pour comparer des distributions issues de groupes de tailles différentes, où les fréquences brutes pourraient être trompeuses.
+
+- **Comment ça fonctionne** :
+  - Avec l'option `stat="density"`, les hauteurs des barres de l'histogramme sont ajustées de sorte que l'aire totale sous l'histogramme soit égale à 1.
+  - Chaque barre représente la proportion de données dans son intervalle par rapport à l'ensemble des observations.
+
+- **Exemple d'utilisation** :
+  - En utilisant `sns.displot(penguins, x="flipper_length_mm", hue="species", stat="density")`, les distributions des longueurs de nageoires sont normalisées pour chaque espèce (`species`), facilitant ainsi la comparaison visuelle de leurs formes et variations.
+
+- **Avantages** :
+  - Permet une comparaison équitable des distributions.
+  - Met en évidence les différences relatives dans les densités, indépendamment des tailles des groupes.
+
+La normalisation est essentielle pour interpréter correctement les distributions lorsqu'on compare des groupes de tailles inégales.
+
+:::
+
+
+
+## Normalisation (2/2)
+
+- Les histogrammes peuvent être normalisés pour montrer des densités plutôt que des fréquences.
+- Utile pour comparer des distributions de tailles différentes.
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{python}
+#| eval: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  stat="density",
+  common_norm=False
+)
+```
+
+- `common_norm=False` normalise chaque histogramme séparément.
+
+:::
+::: {.column width="50%"}
+
+```{python}
+#| echo: false
+sns.displot(
+  penguins,
+  x="flipper_length_mm",
+  hue="species",
+  stat="density",
+  common_norm=False,
+  height=3.5,
+)
+```
+
+:::
+:::
+
+
+
+::: notes
+
+**Normalisation (2/2)**
+
+- **Normalisation individuelle des sous-groupes** :
+  - Par défaut, la normalisation (`stat="density"`) considère l'ensemble des données pour calculer les densités, ce qui peut biaiser les comparaisons entre sous-groupes de tailles inégales.
+  - En utilisant `common_norm=False`, chaque sous-groupe (défini par `hue`) est normalisé indépendamment, de sorte que l'aire totale de l'histogramme de chaque groupe soit égale à 1.
+
+- **Utilité** :
+  - Permet de comparer la forme des distributions au sein de chaque sous-groupe, sans être influencé par les différences de taille entre les groupes.
+  - Utile lorsque l'accent est mis sur les proportions relatives dans chaque sous-groupe.
+
+- **Exemple d'application** :
+  - Avec `sns.displot(penguins, x="flipper_length_mm", hue="species", stat="density", common_norm=False)`, chaque espèce (`species`) a son propre histogramme normalisé, mettant en évidence les différences dans la forme des distributions sans tenir compte des effectifs globaux.
+
+- **Avantage** :
+  - Offre une visualisation plus équitable et centrée sur les sous-groupes.
+  - Idéal pour comparer des groupes très déséquilibrés.
+
+La normalisation par sous-groupe (`common_norm=False`) est essentielle pour une comparaison précise des distributions lorsque les tailles des groupes diffèrent.
+
+:::
+
+
+
+<!-- ## Résumé
+
+
+| Fonction                                  | Description en français                                                                                       |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| [`countplot`](https://seaborn.pydata.org/generated/seaborn.countplot.html)     | Nombre d'observations dans chaque catégorie en utilisant des barres.                               |
+| [`barplot`](https://seaborn.pydata.org/generated/seaborn.barplot.html)         | Estimations ponctuelles et des erreurs sous forme de barres rectangulaires.                       |
+| [`swarmplot`](https://seaborn.pydata.org/generated/seaborn.swarmplot.html)     | Nuage de points catégoriel avec ajustement pour éviter les superpositions.                         |
+| [`boxplot`](https://seaborn.pydata.org/generated/seaborn.boxplot.html)         | Diagramme en boîte pour montrer les distributions selon les catégories.                            | -->
+
+
+<!-- | [`pointplot`](https://seaborn.pydata.org/generated/seaborn.pointplot.html)     | Montre des estimations ponctuelles et des erreurs en utilisant des lignes avec des marqueurs.                 | -->
+<!-- | [`stripplot`](https://seaborn.pydata.org/generated/seaborn.stripplot.html)     | Dessine un nuage de points catégoriel en utilisant du jitter pour réduire les superpositions.                 | -->
+<!-- | [`violinplot`](https://seaborn.pydata.org/generated/seaborn.violinplot.html)   | Dessine une représentation KDE et ajoute des observations ou des statistiques des diagrammes en boîte.        | -->
+<!-- | [`boxenplot`](https://seaborn.pydata.org/generated/seaborn.boxenplot.html)     | Dessine une version améliorée des diagrammes en boîte pour des ensembles de données volumineux.               | -->
+
+<!-- ## Résumé
+
+| Fonction                                  | Description en français                                                                                       |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| [`histplot`](https://seaborn.pydata.org/generated/seaborn.histplot.html)       | Histogrammes univariés ou bivariés pour montrer les distributions des ensembles de données.          |
+| [`kdeplot`](https://seaborn.pydata.org/generated/seaborn.kdeplot.html)         | Distributions univariées ou bivariées à l'aide de l'estimation par noyau (KDE).                     | -->
+
+<!-- | [`ecdfplot`](https://seaborn.pydata.org/generated/seaborn.ecdfplot.html)       | Trace des fonctions de distribution cumulée empirique.                                                       | -->
+<!-- | [`rugplot`](https://seaborn.pydata.org/generated/seaborn.rugplot.html)         | Trace les distributions marginales en dessinant des graduations le long des axes x et y.                      |  -->
+
+
