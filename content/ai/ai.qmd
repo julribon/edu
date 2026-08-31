@@ -9,6 +9,7 @@ format:
     toc-title: Sommaire
     show-notes: true
     auto-stretch: false
+    embed-resources: true
 ---
 
 # Discussion sur l'IA
@@ -16,11 +17,7 @@ format:
 
 ## Question  
 
-<br>
-
 ### "Pour ou contre l'apprentissage de/avec l'IA ?"
-
-<br>
 
 Axes de discussion possibles :
 
@@ -62,9 +59,9 @@ L'analyse SWOT est une méthode d'évaluation stratégique qui permet d'identifi
 liés à un sujet ou projet donné. Elle permet de dresser un état des lieux et de structurer la réflexion.
 
 
-## Analyse SWOT
+## Matrice SWOT
 
-![](images/SWOT.webp){width=100%}
+![](images/SWOT.png){width=55%}
 
 
 
@@ -88,7 +85,7 @@ liés à un sujet ou projet donné. Elle permet de dresser un état des lieux et
 
 ## Phase 2 : Carte mentale (mindmap)
 
-![](images/mindmap-ai-learning.png){width="60%"}
+![](images/mindmap-ai-learning.png){width="65%"}
 
 
 ## Phase 3 : Retour dans les groupes de bases (10-15min)
@@ -117,7 +114,12 @@ liés à un sujet ou projet donné. Elle permet de dresser un état des lieux et
 - Utilisation passive de l'IA
 -  Manque d'effort cognitif
 
-![](images/feeling-of-knowing.png)
+
+## Illusion de maîtrise
+
+L'illusion de maîtrise chez les étudiants utilisant l'IA générative
+
+![](images/feeling-of-knowing.png){width="90%"}
 
 
 
@@ -130,28 +132,36 @@ Processus où l'IA pourrait poser problème :
 - La réflexion métacognitive sur l’apprentissage (comment puis-je m'améliorer?)
 - Le danger est de confondre “réponse obtenue” et “savoir acquis”!
 
-## Illusion de maîtrise & nécessité de la pensée critique
+## Illusion de maîtrise
 
-Processus où l'IA pourrait poser problème :
+L'IA entrave la pensée critique des étudiant-e•s
 
-![](images/ia-pensee-critique-perte.png){width=80%}
+![](images/ia-pensee-critique-perte.png){width=50%}
 
 
 ## IA comme outil d’accompagnement pédagogique (tuteur virtuel)
 
-IA génératives possèdent en effet le potentiel d’offrir une forme d’assistance, mais il y a des risques :
+IA génératives peut offrir une forme d’assistance, mais :
 
 - Anthropomorphisation et dépendance émotionnelle (prêter des intentions ou une intelligence à une IA)
 - Réduction des interactions humaines (moins solliciter l’enseignant ou ses camarades)
-- Baisse de la tolérance à la frustration (IA répond immédiatement)
+- Baisse de la tolérance à la frustration (réponses immédiates)
 - Disparition du conflit cognitif (IA évite la contradiction)
 
 Tuteur IA a utiliser comme complément (pas comme substitut).
 
+## IA comme tuteur virtuel
+
+Dépendance émotionnelle envers l'IA chez les élèves.
+
+![](images/tuteur-ia.png){width=70%}
+
 
 ## Analyse SWOT de l'IA
 
-![](images/SWOT-ia.png)
+IA comme outil d'accompagnement pédagogique
+
+![](images/SWOT-ia.png){width=80%}
 
 
 ## IA et production scolaire : assistance ou substitution
@@ -161,6 +171,7 @@ Tuteur IA a utiliser comme complément (pas comme substitut).
 - Perte de l’entraînement de compétences fondamentales (IA = raccourci cognitif)
 - La “fabrique du plausible” et le risque d’erreurs non détectées (vraisemblance)
 - Atteinte à l’intégrité de l’apprentissage
+
 
 
 ## IA et production scolaire
@@ -174,17 +185,24 @@ Types d'usage :
 - **Contributif**: IA collabore et génère une part significative du contenu (doit être préciser si autorisé)
 - **Substitutif**: l’IA est le producteur principal du travail.
 
-## IA et production scolaire
+## Usage de l'IA dans le travail scolaire
 
-![](images/usage-ia.png){width=70%}
+De l'outil à la substitution...
+
+![](images/usage-ia.png){width=35%}
 
 
 ## IA et production scolaire 
 
 L’important est de poser explicitement les limites dans chaque contexte (chaque cours, chaque institution) : 
 
-*Qu’est-ce qui est permis, qu’est-ce qui ne l’est pas.* 
+*Qu’est-ce qui est permis? Qu’est-ce qui ne l’est pas?* 
 
+Exemples : 
+
+*«Utiliser ChatGPT pour vous aider à trouver des idées (usage consultatif), mais réécrit avec vos mots et interdit de le laisser tel quel (pas d’usage substitutif). »*
+
+*Sous condition de joindre en annexe le brouillon sorti de l’IA et d’écrire une réflexion sur comment l’IA a été utilisée.*
 
 ## Références
 
