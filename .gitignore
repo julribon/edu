@@ -17,3 +17,8 @@ wheels/
 
 # macOS
 .DS_Store
+
+# LaTeX intermediate files (Quarto PDF render)
+*.aux
+*.log
+*.tex

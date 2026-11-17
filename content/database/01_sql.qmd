@@ -1938,8 +1938,8 @@ format_dataframe(y)
 :::
 ::: {.column width="50%"}
 
-<!--![](../images/df/join-setup.png){width=60%}-->
-![](../images/df/join-setup2.png){width=50%}
+<!--![](images/df/join-setup.png){width=60%}-->
+![](images/df/join-setup2.png){width=50%}
 
 :::
 ::: {.column width="50%"}
@@ -1958,7 +1958,7 @@ format_dataframe(df)
 ::: 
 ::: {.column width="50%"}
 
-![](../images/df/join-inner.png)
+![](images/df/join-inner.png)
 
 :::
 :::
@@ -2125,7 +2125,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](../images/df/join-inner.png){width=80%}
+![](images/df/join-inner.png){width=80%}
 :::
 :::
 
@@ -2185,7 +2185,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](../images/df/join-left.png){width=75%}
+![](images/df/join-left.png){width=75%}
 :::
 :::
 
@@ -2247,7 +2247,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](../images/df/join-right.png){width=75%}
+![](images/df/join-right.png){width=75%}
 :::
 :::
 
@@ -2310,7 +2310,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](../images/df/join-full.png){width=75%}
+![](images/df/join-full.png){width=75%}
 :::
 :::
 

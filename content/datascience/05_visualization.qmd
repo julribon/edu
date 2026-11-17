@@ -21,7 +21,7 @@ sys.path.append(os.path.abspath('modules'))
 
 ## Warm-up (1/3)
 
-![Source : Herald Sun](../images/visualization/bad_error2.jpg)
+![Source : Herald Sun](images/visualization/bad_error2.jpg)
 
 ::: notes
 
@@ -50,7 +50,7 @@ Ce graphique est un exemple classique de visualisation trompeuse. Il est essenti
 
 ## Warm-up (2/3)
 
-![Source : Demokratikus Koalíció](../images/visualization/bad_error1.jpg)
+![Source : Demokratikus Koalíció](images/visualization/bad_error1.jpg)
 
 ::: notes
 
@@ -84,7 +84,7 @@ La somme incorrecte des pourcentages est une erreur fondamentale qui rend ce gra
 
 ## Warm-up (3/3)
 
-![Source : CNN](../images/visualization/bad_error3.jpg)
+![Source : CNN](images/visualization/bad_error3.jpg)
 
 ::: notes
 
@@ -129,7 +129,7 @@ L'ordre décroissant des dates et l'échelle tronquée sont des choix de visuali
 :::
 ::: {.column width='50%'}
 
-![Source : talkwalker.com](../images/visualization/bad_data_content.png)
+![Source : talkwalker.com](images/visualization/bad_data_content.png)
 
 :::
 :::
@@ -173,7 +173,7 @@ Ce graphique illustre un problème classique d'utilisation excessive des visuali
 
 ::: {.column width='40%'}
 
-![](../images/visualization/bad_data_relevance.jpg)
+![](images/visualization/bad_data_relevance.jpg)
 
 :::
 :::
@@ -228,7 +228,7 @@ La créativité dans les visualisations ne peut pas compenser l'absence de perti
 :::
 ::: {.column width='50%'}
 
-![Source : Cawley S, et al. (2004), Cell 116:499-509, Figure 1](../images/visualization/bad_complexity.jpg)
+![Source : Cawley S, et al. (2004), Cell 116:499-509, Figure 1](images/visualization/bad_complexity.jpg)
 
 :::
 :::
@@ -273,9 +273,9 @@ La créativité dans les visualisations ne peut pas compenser l'absence de perti
 :::
 ::: {.column width='40%'}
 
-![](../images/visualization/bad_distorsion.png){width=80%}
+![](images/visualization/bad_distorsion.png){width=80%}
 
-![](../images/visualization/bad_distorsion2.jpg){width=80%}
+![](images/visualization/bad_distorsion2.jpg){width=80%}
 
 
 
@@ -372,7 +372,7 @@ Le facteur de mensonge est un outil essentiel pour évaluer l'intégrité d'un g
 
 ## Exemple
 
-![Source : NY Times](../images/visualization/lie_factor1.jpg)
+![Source : NY Times](images/visualization/lie_factor1.jpg)
 
 $$
 \mbox{facteur de mensonge} = \frac{\frac{5.3 - 0.6}{0.6}}{\frac{27.5 - 18}{18}} = 14.8!
@@ -2128,7 +2128,7 @@ sns.relplot(
 :::
 ::: {.column width='40%'}
 
-![](../images/visualization/color_palettes_22_0.svg)
+![](images/visualization/color_palettes_22_0.svg)
 
 :::
 :::
@@ -2187,8 +2187,8 @@ sns.relplot(
 
 - Palettes inversées  avec `_r` :
 
-  - `rocket` ![](../images/visualization/rocket.png){width=50%}
-  - `rocket_r` ![](../images/visualization/rocket_r.png){width=50%}
+  - `rocket` ![](images/visualization/rocket.png){width=50%}
+  - `rocket_r` ![](images/visualization/rocket_r.png){width=50%}
 
 
 :::
@@ -2196,17 +2196,17 @@ sns.relplot(
 
 - Disponible dans seaborn :
 
-  - `rocket` ![](../images/visualization/rocket.png){width=40%}
+  - `rocket` ![](images/visualization/rocket.png){width=40%}
 
-  - `mako` ![](../images/visualization/mako.png){width=40%}
+  - `mako` ![](images/visualization/mako.png){width=40%}
 
-  - `flare` ![](../images/visualization/flare.png){width=40%}
+  - `flare` ![](images/visualization/flare.png){width=40%}
 
-  - `crest` ![](../images/visualization/crest.png){width=40%}
+  - `crest` ![](images/visualization/crest.png){width=40%}
 
-  - `magma` ![](../images/visualization/magma.png){width=40%}
+  - `magma` ![](images/visualization/magma.png){width=40%}
 
-  - `viridis` ![](../images/visualization/viridis.png){width=40%}
+  - `viridis` ![](images/visualization/viridis.png){width=40%}
 
 :::
 :::
@@ -2274,13 +2274,13 @@ sns.relplot(
 
 - Palettes disponibles :
 
-  - `vlag` ![](../images/visualization/vlag.png){width=40%}
+  - `vlag` ![](images/visualization/vlag.png){width=40%}
 
-  - `icefire` ![](../images/visualization/icefire.png){width=40%}
+  - `icefire` ![](images/visualization/icefire.png){width=40%}
 
-  - `spectral` ![](../images/visualization/spectral.png){width=40%}
+  - `spectral` ![](images/visualization/spectral.png){width=40%}
 
-  - `coolwarm` ![](../images/visualization/coolwarm.png){width=40%}
+  - `coolwarm` ![](images/visualization/coolwarm.png){width=40%}
 
 :::
 :::

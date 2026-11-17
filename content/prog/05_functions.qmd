@@ -7,8 +7,8 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    # show-notes: true
-    # show-notes: separate-page
+    show-notes: separate-page
+    embed-resources: true
 ---
 
 ## Aujourd'hui
@@ -116,7 +116,7 @@ Les fonctions sont essentielles pour les raisons suivantes :
 
 ## Création de fonctions
 
-![](../images/functions/python-function-definition.png)
+![](images/python-function-definition.png)
 
 ::: notes
 Cette image explique comment définir une fonction, ainsi que sa structure :
@@ -259,9 +259,9 @@ Exemple d'une fonction avec des paramètres :
   2. La fonction est exécutée.
   3. Le contrôle revient au programme principal.
 
-<!--![](../images/functions/working-of-function-python.png)-->
+<!--![](images/working-of-function-python.png)-->
 
-<img src="../images/functions/working-of-function-python.png" style="width: 100%; height: auto;">
+<img src="images/working-of-function-python.png" style="width: 100%; height: auto;">
 
 :::notes
 Cette image montre comment une fonction est appelée dans un programme Python :
@@ -277,7 +277,7 @@ Cela illustre un flux d'exécution simple, où une fonction est définie, puis a
 
 ## Appel de fonction  (autre exemple)
 
-![](../images/functions/calling-a-function-in-python-example.webp)
+![](images/calling-a-function-in-python-example.webp)
 
 ::: notes
 

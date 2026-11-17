@@ -1,0 +1,238 @@
+---
+title: Les composants
+subtitle: Collège Clavin - Informatique
+author: Julien Ribon
+lang: fr
+format:
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Sommaire
+    show-notes: true
+    auto-stretch: false
+    embed-resources: true
+    theme: default
+    slide-number: c/t
+    show-slide-number: all
+    #transition: fade
+    incremental: false
+    footer: "Science informatique — 1. Matériel"
+---
+
+## Introduction {.center}
+
+- Qu'est-ce que la science informatique ?
+- Comment fonctionne un ordinateur ?
+- Comment résoudre un problème à l'aide d'un ordinateur ?
+
+# Qu'est-ce que la science informatique ?
+
+## Trois définitions
+
+> Science du traitement automatique et rationnel de l'information considérée
+> comme le support des connaissances et des communications.
+>
+> — *Dictionnaire Larousse*
+
+. . .
+
+> La science informatique n'est pas plus la science des ordinateurs
+> que l'astronomie n'est celle des télescopes.
+>
+> — *Michael R. Fellows et Ian Parberry*
+
+. . .
+
+Quatre piliers : **algorithmes**, **données / information**, **langages**, **machines**.
+*(Académie des sciences, 2013)*
+
+## Les 4 piliers de la science informatique
+
+::: {.incremental}
+- **Algorithme** — une méthode qui permet de résoudre un problème de manière systématique.
+- **Données** — manipulées par l'ordinateur, elles représentent des informations (images, sons, texte, nombres…). Elles doivent d'abord être **codées** de manière appropriée pour être traitées.
+- **Langage de programmation** — il permet d'implémenter un algorithme (généralement exprimé en langage naturel) de manière précise et sans ambiguïté.
+- **Machine** — elle peut exécuter n'importe quel algorithme traitant n'importe quel type d'information, du moment que les algorithmes et les informations sont codés de manière adéquate.
+:::
+
+## Matériel physique & numérique
+
+<!-- IMAGE À INSÉRER — diapositive 4 de l'original -->
+<!-- ![](images/04-materiel-numerique.png){fig-align="center"} -->
+
+::: {.notes}
+Schéma d'origine à réinsérer : opposition entre le support matériel et l'information numérique.
+:::
+
+## Traitement de l'information
+
+<!-- IMAGE À INSÉRER — diapositive 5 de l'original -->
+<!-- ![](images/05-traitement-information.png){fig-align="center"} -->
+
+::: {.notes}
+Schéma entrée → traitement → sortie.
+:::
+
+# Comment fonctionne un ordinateur ?
+
+## Vue d'ensemble
+
+<!-- IMAGE À INSÉRER — diapositive 6 de l'original -->
+<!-- ![](images/06-vue-ensemble.png){fig-align="center"} -->
+
+::: {.footer}
+Source : [playhooky.fr — l'ordinateur](https://www.playhooky.fr/focus/ordinateur/) (diapos 4 à 12)
+:::
+
+## Ordres de grandeur
+
+Les ordres de grandeur utilisés pour les différentes unités de mesure :
+
+| Préfixe | Symbole | Facteur |
+|:--|:-:|--:|
+| Kilo | k | $10^{3}$ |
+| Méga | M | $10^{6}$ |
+| Giga | G | $10^{9}$ |
+| Téra | T | $10^{12}$ |
+
+## Unité centrale
+
+<!-- IMAGE À INSÉRER — diapositive 8 de l'original -->
+<!-- ![](images/08-unite-centrale.png){fig-align="center"} -->
+
+## Les composants
+
+<!-- IMAGE À INSÉRER — diapositive 9 de l'original -->
+<!-- ![](images/09-composants.png){fig-align="center"} -->
+
+## Tout est électrique, tout est binaire
+
+- Toute information traitée ou stockée est échangée entre les différents organes sous forme d'**impulsions électriques très brèves**.
+- Les informations sont traitées de manière **binaire** (symboles `0` et `1`).
+
+::: {.fragment}
+| Signal | Valeur |
+|:--|:-:|
+| Pas d'impulsion électrique (0 V) | `0` |
+| Impulsion électrique (5 V) | `1` |
+:::
+
+::: {.fragment}
+Le **bit** (*binary unit*) est l'unité basique d'information : il vaut `0` ou `1`.
+:::
+
+## Carte mère
+
+<!-- IMAGE À INSÉRER — diapositive 11 de l'original -->
+
+- Elle est la **colonne vertébrale** de l'ordinateur.
+- Elle contient le **BIOS** : un logiciel interne qui permet à l'ordinateur de démarrer et de fonctionner correctement.
+
+## Le processeur
+
+- Le processeur est l'**unité centrale** (CPU, *Central Processing Unit*) : il exécute les instructions machine et traite les données des programmes informatiques.
+- Un processeur dont toutes les fonctions tiennent dans un seul boîtier est un **microprocesseur**. Le premier date de 1971 : l'**Intel 4004**.
+
+. . .
+
+L'unité de mesure de la vitesse du processeur est le **hertz (Hz)** :
+
+- 1 Hz = 1 instruction effectuée par seconde
+- 3,2 GHz = 3,2 milliards d'instructions par seconde
+
+## Processeurs historiques
+
+<!-- IMAGE À INSÉRER — diapositive 13 de l'original -->
+<!-- ![](images/13-processeurs-historiques.png){fig-align="center"} -->
+
+# Les mémoires
+
+## La mémoire de masse
+
+- La **mémoire de masse** (ou mémoire externe) permet de stocker des données à long terme, **y compris lorsque l'ordinateur est éteint**.
+- L'unité de mesure est l'**octet** (= 8 bits).
+- Un disque dur contient généralement entre **256 Go et 10 To**.
+
+## Disque dur : HDD
+
+::: {.columns}
+::: {.column width="60%"}
+- Stockage **permanent** des données et des logiciels
+- Support : disques magnétiques, mécanique
+- Bien plus **lent** que la RAM
+- Comporte des **pièces mécaniques**
+:::
+::: {.column width="40%"}
+<!-- IMAGE À INSÉRER — photo d'un HDD -->
+:::
+:::
+
+## Disque : SSD
+
+::: {.columns}
+::: {.column width="60%"}
+- Stockage **permanent** des données et des logiciels
+- Support : **mémoire flash**
+- Plus **rapide** qu'un HDD
+- **Aucune** pièce mécanique
+- Capacité plus faible qu'un HDD
+- Prix plus élevé qu'un HDD
+:::
+::: {.column width="40%"}
+<!-- IMAGE À INSÉRER — photo d'un SSD -->
+:::
+:::
+
+## La mémoire vive
+
+<!-- IMAGE À INSÉRER — diapositive 17 de l'original -->
+
+L'unité de mesure de la mémoire est l'**octet** (= 8 bits).
+Une barrette de RAM contient généralement entre **8 Go et 32 Go**.
+
+## Mémoire : RAM {.smaller}
+
+*Random Access Memory*
+
+- Stockage **temporaire** des données traitées par le processeur
+- **Rapide**
+- **Accès direct** aux données
+- **Volatile** : ne conserve pas l'information après l'arrêt de l'ordinateur
+
+# Autres composants
+
+## La carte graphique
+
+<!-- IMAGE À INSÉRER — diapositives 19 et 20 de l'original -->
+
+- Processeur **spécialisé** pour la vidéo et le traitement d'image
+- Plusieurs cœurs hautement spécialisés
+- Peut être intégrée dans le CPU de l'ordinateur
+- Peut disposer de sa **RAM dédiée** ultra rapide
+- Sortie vidéo vers un ou plusieurs écrans
+- Peut avoir son propre système de refroidissement
+
+## Ports : entrée / sortie
+
+<!-- IMAGE À INSÉRER — diapositives 21 et 22 de l'original -->
+
+Connecteurs pour les périphériques externes :
+
+- **Ports USB** — imprimante, clé mémoire, scanner, appareil photo…
+- **Ports vidéo** — HDMI, DisplayPort
+- **Ethernet** — connexion réseau
+- **Audio** — entrée et sortie, analogique ou numérique
+
+## Résumé — le matériel {.smaller}
+
+Les principaux composants d'un ordinateur :
+
+| Composant | Rôle | Caractéristiques |
+|:--|:--|:--|
+| **Processeur** | Centre de contrôle et d'exécution | Rapide, faible capacité de stockage |
+| **Mémoire RAM** | Sauvegarde **temporaire** des données | Vitesse intermédiaire, volatile |
+| **Disque dur** | Sauvegarde **permanente** des données | Lent, grande capacité |
+
+::: {.fragment}
+Plus une mémoire est proche du processeur, plus elle est rapide — et plus elle est petite.
+:::

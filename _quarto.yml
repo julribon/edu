@@ -4,3 +4,11 @@ project:
   render:
     - "*.qmd"
     #- "!exams/"
+
+execute:
+  echo: true
+
+format:
+  revealjs:
+    embed-resources: true
+    css: styles.css

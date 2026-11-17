@@ -1,0 +1,28 @@
+/* Code blocks on slides: light gray background, font 1pt smaller than Quarto's default (0.55em) */
+.reveal div.sourceCode,
+.reveal div.sourceCode pre,
+.reveal div.sourceCode pre code {
+  background-color: #f5f5f5;
+}
+
+.reveal div.sourceCode pre {
+  font-size: 0.5em;
+}
+
+/* output-location: column -> code 75% left, output 25% right */
+.reveal .column-output-location > .column:first-of-type {
+  flex: 0 0 75%;
+  width: 75%;
+}
+
+.reveal .column-output-location > .column:last-of-type {
+  flex: 0 0 25%;
+  width: 25%;
+}
+
+/* Printed output: wrap long lines at the column edge instead of overflowing */
+.reveal .cell-output pre,
+.reveal .cell-output pre code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -7,7 +7,8 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    # show-notes: true
+    show-notes: separate-page 
+    embed-resources: true
 ---
 
 # Collections
@@ -1243,7 +1244,7 @@ print(a.symmetric_difference(b), a ^ b)
 :::
 ::: {.column width="50%"  #vcenter}
 
-![](../images/collections/two_set_operations.webp)
+![](images/two_set_operations.webp)
 
 
 :::

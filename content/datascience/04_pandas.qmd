@@ -173,7 +173,7 @@ print(dates)
 
 ## Indices de qualité de l'air
 
-![[Source: iqair.ch](https://www.iqair.com/switzerland/geneva/geneve)](../images/df/air_quality.png){width=200%}
+![[Source: iqair.ch](https://www.iqair.com/switzerland/geneva/geneve)](images/dataframe/air_quality.png){width=200%}
 
 ## Pollution Atmosphérique à Lausanne
 

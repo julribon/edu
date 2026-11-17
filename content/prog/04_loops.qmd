@@ -7,7 +7,8 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    # show-notes: true
+    show-notes: separate-page
+    embed-resources: true
 include-in-header:
   - text: |
       <style>
@@ -33,7 +34,7 @@ include-in-header:
 :::
 ::: {.column width="70%"}
 
-![](../images/structured_programming.png)
+![](images/structured_programming.png)
 
 :::
 :::

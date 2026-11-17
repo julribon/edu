@@ -7,7 +7,8 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    #show-notes: true
+    show-notes: separate-page 
+    embed-resources: true
 ---
 
 # Introduction
@@ -40,7 +41,7 @@ OK, mais en pratique ?
 
 ## Point commun pour ces compagnies ?
 
-![](../images/intro/python_companies.jpeg)
+![](images/python_companies.jpeg)
 
 ::: notes
 
@@ -52,13 +53,13 @@ OK, mais en pratique ?
 
 ::: {layout="[[-1], [1], [-1]]"}
 
-![](../images/intro/python_logo.png){fig-align="center"}
+![](images/python_logo.png){fig-align="center"}
 
 :::
 
 ## Populaire ?
 
-![](../images/intro/tiobe_2024.png)
+![](images/tiobe_2024.png)
 
 ::: footer
 Plus d'informations sur le site du [TIOBE index](https://www.tiobe.com/tiobe-index/)
@@ -72,7 +73,7 @@ Plus d'informations sur le site du [TIOBE index](https://www.tiobe.com/tiobe-ind
 
 ## IA ?
 
-![](../images/intro/openai_pytorch.png)
+![](images/openai_pytorch.png)
 
 ::: footer
 Plus d'informations sur le blog d'[OpenAI](https://openai.com/blog/openai-pytorch)
@@ -144,7 +145,7 @@ Plus d'informations sur le blog d'[OpenAI](https://openai.com/blog/openai-pytorc
 
 ## Excel ?
 
-![](../images/intro/excel.png)
+![](images/excel.png)
 
 ## Avantages de Python
 
@@ -162,7 +163,7 @@ Plus d'informations sur le blog d'[OpenAI](https://openai.com/blog/openai-pytorc
 
 ::: {.column #vcenter width="48%"}
 
-![](../images/intro/geeks-vs-nongeeks.png)
+![](images/geeks-vs-nongeeks.png)
 
 :::
 ::::
@@ -206,23 +207,23 @@ Plus d'informations sur le blog d'[OpenAI](https://openai.com/blog/openai-pytorc
 * Accès à la page Moodle du cours:
 * Ensuite, cliquer sur le lien Ed.
 
-<!-- ![](../images/intro/cyberlearn_isdp.png) -->
+<!-- ![](images/cyberlearn_isdp.png) -->
 
 ## Ed Discussion
 
-![](../images/intro/ed_discussion_main.png)
+![](images/ed_discussion_main.png)
 
 ## Poser une question
 
 ::: {.columns}
 ::: {.column #vcenter width="50%"}
 
-![](../images/intro/ed_discussion_post.png)
+![](images/ed_discussion_post.png)
 
 :::
 ::: {.column #vcenter width="50%"}
 
-![](../images/intro/ed_discussion_post2.png)
+![](images/ed_discussion_post2.png)
 
 :::
 :::

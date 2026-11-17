@@ -2,6 +2,7 @@
 title: Intelligence Artificielle
 subtitle: Collège Clavin - Informatique
 author: Julien Ribon
+
 format: 
   revealjs:
     toc: true
@@ -28,7 +29,9 @@ Axes de discussion possibles :
  - Gestion de l'énergie et émission de CO2
  - Utilisation responsable et éthique
  - Souveraineté numérique
- - Droits 
+ - Dépendance à l'IA
+
+
 
 ::: notes
 
@@ -59,6 +62,8 @@ Il n'y a pas de réponse binaire « pour » ou « contre » ; l'objectif est de 
 - Création de nouveaux métiers (ex. : « prompt engineer », validation/humain-en-boucle).
 - Nécessité de formation continue et d'adaptation des compétences tout au long de la vie.
 - Question pour la classe : quels de nos cours/ métiers seront touchés dans 10 ans ?
+- Risque d'automatisation : certains métiers vont disparaître.
+- Adaptation nécessaire : investir dans l'éducation et la formation, développer des compétences transversales (pensée critique, créativité, etc.).
 
 **Gestion de l'énergie et émission de CO2**
 
@@ -80,6 +85,8 @@ Il n'y a pas de réponse binaire « pour » ou « contre » ; l'objectif est de 
 - Hébergement des données à l'étranger (hors UE/Suisse) : quel droit s'applique ?
 - Émergence d'alternatives européennes (ex. : Mistral, Llama) et de politiques de souveraineté (ex. : Cloud Act américain).
 - Question : que se passe-t-il si un fournisseur étranger change de politique ou ferme son service ?
+
+
 
 :::
 
@@ -149,7 +156,7 @@ Rappeler que la matrice est un outil d'aide à la réflexion, pas une fin en soi
 
 :::
 
-## Phase 1 : Groupes de base (10-15min)
+## Phase 1 : Groupes de base (10-15min) 
 
    - Formation des groupes de travail (3-4 personnes)
    - Ecrire sur 2 post-it : 1 attente & 1 crainte par rapport à l'IA
@@ -199,7 +206,8 @@ Cette image est un exemple/corrigé de carte mentale que les groupes d'experts p
 - **Opportunités** : usage responsable, gains de productivité, développement de compétences, avancées en santé (découverte de molécules).
 - **Menaces** : inégalités d'accès, souveraineté des données, impact écologique, propriété intellectuelle, emploi, éthique, sécurité des données.
 
-À montrer *après* que les groupes ont produit leur propre carte, pour comparer leurs idées à cette structure type — pas avant, pour ne pas brider leur réflexion. On peut aussi s'en servir comme grille de correction/relance si un groupe est resté trop pauvre sur une branche.
+À montrer *après* que les groupes ont produit leur propre carte, pour comparer leurs idées à cette structure type — pas avant, pour ne pas brider leur réflexion. On peut aussi s'en servir comme grille de correction/relance si un groupe est resté trop pauvre sur une branche. 
+
 
 :::
 

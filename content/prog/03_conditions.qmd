@@ -7,8 +7,8 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    #show-notes: true
-    #show-notes: separate-page
+    show-notes: separate-page
+    embed-resources: true
 ---
 
 ## Programmation structurée
@@ -24,7 +24,7 @@ format:
 :::
 ::: {.column width="70%"}
 
-![](../images/structured_programming.png)
+![](images/structured_programming.png)
 
 :::
 :::
@@ -181,7 +181,6 @@ if b > a:
   * Une mauvaise indentation peut provoquer des erreurs de syntaxe: `IndentationError`.
 
 ```{python}
-#| output-location: column 
 #| error: True
 
 if a > b:

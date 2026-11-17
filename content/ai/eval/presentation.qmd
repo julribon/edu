@@ -1,0 +1,52 @@
+---
+title: "Grille d'évaluation – Présentation SWOT sur l'IA"
+format: html
+---
+
+**Grille d'évaluation – Présentation SWOT sur l'IA (Jigsaw)**
+
+| | **Nom du groupe / Prénoms** : _______________ | **Date** : _________ |
+|---|---|---|
+
+---
+
+### Critères & pondération
+
+| # | Critère | Pond. | N1 – Insuffisant | N2 – Moyen | N3 – Bien | N4 – Très bien |
+|---|---------|-------|-----------------|------------|-----------|---------------|
+| 1 | **Contenu & Analyse SWOT** | **20 %** | Moins de 3 arguments par case ; arguments vagues, génériques ou copiés. Confusion interne/externe. | 3 arguments/case mais peu développés ; lien avec l'enseignement absent ou forcé. Quelques confusions S/W/O/T. | 3+ arguments/case, dont 1 lié à l'enseignement. Arguments concrets et pertinents. Distinction interne/externe correcte. | 3+ arguments/case bien développés, dont 1+ lié à l'enseignement. Exemples précis et variés. Nuance interne/externe maîtrisée. Lien avec les 7 axes du cours visible. |
+| 2 | **Pensée critique, nuance & argumentation** | **20 %** | Position binaire « pour » ou « contre ». Pas de nuance. Aucune remise en question des sources ou limites de l'IA. | Nuance timide, mais argumentation encore descriptive (liste d'avantages/inconvénients sans analyse). | Analyse équilibrée : pour ET contre argumentés. Au moins une limite de l'IA questionnée (ex. hallucinations, biais). Avis personnel justifié en conclusion. | Analyse critique approfondie : croisement S+O / W+T, remise en question systématique, lien avec l'effort cognitif / illusion de maîtrise. Avis personnel argumenté et nuancé en conclusion. |
+| 3 | **Présentation orale & timing** | **20 %** | Dépasse largement 5 min ou trop court. Lecture des slides. Un seul élève parle, les autres absents. | Timing approximatif (±1 min). Quelques éléments lus. Répartition inégale des interventions. | Respecte les 5 min (±30 s). Chaque expert présente sa partie (ou répartition claire). Discours fluide, regard vers la classe. | Timing maîtrisé. Chaque expert présente sa partie avec aisance. Discours naturel, pas de lecture. Engagement visible de tous les membres. |
+| 4 | **Structure & forme des slides** | **20 %** | Structure non respectée (pas d'intro, pas de conclusion, >4 slides contenu). Slides illisibles ou surchargées. | Structure globalement respectée mais 1 élément manquant (ex. pas d'avis en conclusion). Slides un peu chargées. | 1 intro (prénoms + titre) + 1-4 slides SWOT + 1 conclusion avec avis. Slides claires, lisibles, visuellement structurées (matrice SWOT visible). | Structure parfaite. Slides épurées, matrice SWOT claire et colorée (S/W/O/T). Équilibre visuel, pas de texte en bloc. Avis en conclusion distinct et lisible. |
+| 5 | **Gestion des questions (3 min)** | **20 %** | Ne répond pas ou réponses très superficielles. Silence face aux questions. | Réponses correctes mais courtes, limitées au contenu des slides. Un seul élève répond. | Réponses pertinentes et développées. Plusieurs membres interviennent. Capacité à nuancer ou reformuler une question difficile. | Réponses approfondies, au-delà des slides (exemples supplémentaires, liens entre catégories SWOT). Équipe coordonnée dans les réponses. Capacité à reconnaître une limite ou un point débattu en classe. |
+
+---
+
+### Total
+
+| Critère | Pondération | Note (1-4) | Points / 4 |
+|---------|:-----------:|:----------:|:----------:|
+| Contenu & Analyse SWOT | 20 % | /4 | /0,80 |
+| Pensée critique & nuance | 20 % | /4 | /0,80 |
+| Présentation orale & timing | 20 % | /4 | /0,80 |
+| Structure & forme slides | 20 % | /4 | /0,80 |
+| Gestion des questions | 20 % | /4 | /0,80 |
+| **TOTAL** | **100 %** | | **/4,00** |
+
+> **Conversion en note /6** (si souhaité) : Total × 1,5
+
+---
+
+### Observations libres
+_______________________________________________________________
+_______________________________________________________________
+
+---
+
+**Notes pour toi (prof) :**
+
+- **N1 à N4** : adapte l'échelle à ta pratique (tu peux convertir en /6, en descripteurs qualitatifs, ou en pourcentage).
+- **Critère 2 (pensée critique)** : c'est le cœur de ton cours. Si un groupe fait une belle matrice mais sans aucune nuance, il ne devrait pas dépasser N2 sur ce critère.
+- **Critère 3 (oral)** : le document de classe mentionne « idéalement » chaque expert présente sa partie. Si c'est fait à deux + deux qui répondent aux questions, c'est acceptable → ne pas pénaliser sur ce point tant que la répartition est claire.
+- **Timing** : 5 min + 3 min de questions (modalités que tu viens de donner), pas 2 min comme dans le doc initial.
+- **Travail individuel** : si tu veux aussi évaluer l'apport de chaque élève (ex. : qualité de sa carte mentale en phase 2, ou sa transmission en phase 3), tu peux ajouter une petite grille individuelle séparée. Dis-moi si tu veux que je la construise aussi.

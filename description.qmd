@@ -1,5 +1,6 @@
 ---
 title: "Description du cours"
+format: html
 ---
 
 ## But
