@@ -11,3 +11,9 @@ wheels/
 
 /.quarto/
 **/*.quarto_ipynb
+
+# Quarto render output
+/output/
+
+# macOS
+.DS_Store
