@@ -1,0 +1,115 @@
+/* ---------- Animated join illustration (.ja) ---------- */
+.reveal .ja {
+  --c1: #dbeafe; --c1s: #1d4ed8;   /* blue   */
+  --c2: #ffedd5; --c2s: #c2410c;   /* orange */
+  --c3: #dcfce7; --c3s: #15803d;   /* green  */
+  --kw: #fef9c3;                   /* key highlight */
+  font-size: 0.5em;
+}
+/* Join keyword (INNER / LEFT / RIGHT / FULL JOIN) highlighted in the SQL */
+.reveal .ja .ja-kw {
+  font-weight: 800;
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+/* Slightly smaller for slides with more rows (RIGHT / FULL JOIN) */
+.reveal .ja.ja-compact { font-size: 0.44em; }
+
+/* Custom fragments that stay visible and only change style */
+.reveal .slides section .fragment.ja-step {
+  opacity: 1;
+  visibility: inherit;
+}
+
+.reveal .ja pre.ja-sql {
+  width: 100%;
+  margin: 0 0 0.6em;
+  box-shadow: none;
+  font-size: 1em;
+}
+.reveal .ja pre.ja-sql code {
+  background: #f5f5f5;
+  padding: 0.4em 0.8em;
+  line-height: 1.4;
+  max-height: none;
+}
+
+.reveal .ja-tables {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+}
+.reveal .ja-title {
+  font-family: monospace;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.2em;
+}
+.reveal .ja-result-title { margin-top: 0.6em; }
+.reveal .ja-tag {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 0.8em;
+  color: #6b7280;
+}
+.reveal .ja-link {
+  text-align: center;
+  font-size: 1.6em;
+  color: #6b7280;
+  line-height: 1.2;
+}
+.reveal .ja-link code { font-size: 0.5em; }
+
+.reveal .ja table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 1em;
+}
+.reveal .ja th,
+.reveal .ja td {
+  padding: 0.2em 0.8em;
+  border: 1px solid #d4d4d4;
+  text-align: center;
+  transition: background-color 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+}
+.reveal .ja th { background: #f3f4f6; }
+.reveal .ja .key { font-weight: 800; }
+
+/* Step 1: highlight the join keys */
+.reveal .ja.visible .key { background: var(--kw); }
+
+/* Matching rows share a colour; keys in a darker shade */
+.reveal .ja tr.ja-c1.visible td, .reveal .ja tr.ja-c1.on td { background: var(--c1); }
+.reveal .ja tr.ja-c2.visible td, .reveal .ja tr.ja-c2.on td { background: var(--c2); }
+.reveal .ja tr.ja-c3.visible td, .reveal .ja tr.ja-c3.on td { background: var(--c3); }
+.reveal .ja tr.ja-c1.visible td.key, .reveal .ja tr.ja-c1.on td.key { color: var(--c1s); }
+.reveal .ja tr.ja-c2.visible td.key, .reveal .ja tr.ja-c2.on td.key { color: var(--c2s); }
+.reveal .ja tr.ja-c3.visible td.key, .reveal .ja tr.ja-c3.on td.key { color: var(--c3s); }
+
+/* Row without match: excluded (INNER) */
+.reveal .ja tr.ja-none.visible td {
+  background: #f3f4f6;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+/* Row without match: kept with NULLs (LEFT) */
+.reveal .ja tr.ja-null.visible td {
+  background: #f3f4f6;
+  outline: 2px dashed #9ca3af;
+  outline-offset: -2px;
+}
+.reveal .ja td.ja-nullval {
+  color: #b91c1c;
+  font-style: italic;
+}
+
+/* Step captions stacked in the same spot */
+.reveal .ja-caption {
+  display: grid;
+  margin-top: 0.6em;
+  text-align: center;
+  font-size: 1.1em;
+}
+.reveal .ja-caption > span { grid-area: 1 / 1; }

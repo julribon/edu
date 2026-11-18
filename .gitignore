@@ -10,7 +10,7 @@ wheels/
 .venv
 
 /.quarto/
-**/*.quarto_ipynb
+*.quarto_ipynb*
 
 # Quarto render output
 /output/

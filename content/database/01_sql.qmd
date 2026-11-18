@@ -3,14 +3,15 @@ title: Base de données & SQL
 subtitle: Informatique DF
 author: Julien Ribon
 
-#format: 
-#  revealjs:
-#    toc: true
-#    toc-depth: 1
-#    toc-title: Aujourd'hui
-#    #show-notes: separate-page
+format: 
+  revealjs:
+    toc: true
+    toc-depth: 1
+    toc-title: Aujourd'hui
+    show-notes: separate-page
+    embed-resources: true
+    css: joins.css
 
-format: pdf
 ---
 
 ## Objectifs
@@ -1938,8 +1939,8 @@ format_dataframe(y)
 :::
 ::: {.column width="50%"}
 
-<!--![](images/df/join-setup.png){width=60%}-->
-![](images/df/join-setup2.png){width=50%}
+<!--![](images/join-setup.png){width=60%}-->
+![](images/join-setup2.png){width=50%}
 
 :::
 ::: {.column width="50%"}
@@ -1958,7 +1959,7 @@ format_dataframe(df)
 ::: 
 ::: {.column width="50%"}
 
-![](images/df/join-inner.png)
+![](images/join-inner.png)
 
 :::
 :::
@@ -2125,7 +2126,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](images/df/join-inner.png){width=80%}
+![](images/join-inner.png){width=80%}
 :::
 :::
 
@@ -2185,7 +2186,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](images/df/join-left.png){width=75%}
+![](images/join-left.png){width=75%}
 :::
 :::
 
@@ -2247,7 +2248,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](images/df/join-right.png){width=75%}
+![](images/join-right.png){width=75%}
 :::
 :::
 
@@ -2310,7 +2311,7 @@ format_dataframe(df)
 :::
 ::: {.column width="65%"}
 <br>
-![](images/df/join-full.png){width=75%}
+![](images/join-full.png){width=75%}
 :::
 :::
 
@@ -2760,6 +2761,327 @@ WHERE command_id IS NULL;
 ### Cas d’usage :
 - Identifier les **clients inactifs**
 - Repérer les **produits jamais achetés**
+
+:::
+
+
+
+## Jointure pas à pas : INNER JOIN
+
+```{=html}
+<div class="ja fragment ja-step" data-fragment-index="1">
+
+<pre class="ja-sql"><code>SELECT c.id, c.firstname, m.client_id, m.reference
+FROM client AS c
+<span class="ja-kw">INNER JOIN</span> command AS m ON <b class="key">c.id</b> = <b class="key">m.client_id</b>;</code></pre>
+
+<div class="ja-tables">
+  <div>
+    <div class="ja-title">client</div>
+    <table>
+      <thead><tr><th class="key">id</th><th>firstname</th></tr></thead>
+      <tbody>
+        <tr class="fragment ja-step ja-c1" data-fragment-index="2"><td class="key">1</td><td>Antoinette</td></tr>
+        <tr class="fragment ja-step ja-c2" data-fragment-index="3"><td class="key">2</td><td>Auguste</td></tr>
+        <tr class="fragment ja-step ja-c3" data-fragment-index="4"><td class="key">3</td><td>Benjamin</td></tr>
+        <tr class="fragment ja-step ja-none" data-fragment-index="5"><td class="key">4</td><td>Claire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ja-link">⟷<br><code>c.id = m.client_id</code></div>
+
+  <div>
+    <div class="ja-title">command</div>
+    <table>
+      <thead><tr><th>id</th><th class="key">client_id</th><th>reference</th></tr></thead>
+      <tbody>
+        <tr class="fragment ja-step ja-c2" data-fragment-index="3"><td>1</td><td class="key">2</td><td>CMD0000001</td></tr>
+        <tr class="fragment ja-step ja-c1" data-fragment-index="2"><td>2</td><td class="key">1</td><td>CMD0000002</td></tr>
+        <tr class="fragment ja-step ja-c3" data-fragment-index="4"><td>4</td><td class="key">3</td><td>CMD0000004</td></tr>
+        <tr class="fragment ja-step ja-c2" data-fragment-index="3"><td>6</td><td class="key">2</td><td>CMD0000006</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ja-title ja-result-title">résultat</div>
+<table>
+  <thead><tr><th class="key">id</th><th>firstname</th><th class="key">client_id</th><th>reference</th></tr></thead>
+  <tbody>
+    <tr class="fragment ja-c1 on" data-fragment-index="2"><td class="key">1</td><td>Antoinette</td><td class="key">1</td><td>CMD0000002</td></tr>
+    <tr class="fragment ja-c2 on" data-fragment-index="3"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000001</td></tr>
+    <tr class="fragment ja-c2 on" data-fragment-index="3"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000006</td></tr>
+    <tr class="fragment ja-c3 on" data-fragment-index="4"><td class="key">3</td><td>Benjamin</td><td class="key">3</td><td>CMD0000004</td></tr>
+  </tbody>
+</table>
+
+<div class="ja-caption">
+  <span class="fragment fade-in-then-out" data-fragment-index="1">On compare la clé primaire <b>client.id</b> à la clé étrangère <b>command.client_id</b></span>
+  <span class="fragment fade-in-then-out" data-fragment-index="2">id = 1 → 1 commande correspondante → 1 ligne</span>
+  <span class="fragment fade-in-then-out" data-fragment-index="3">id = 2 → 2 commandes → le client apparaît 2 fois</span>
+  <span class="fragment fade-in-then-out" data-fragment-index="4">id = 3 → 1 commande → 1 ligne</span>
+  <span class="fragment" data-fragment-index="5">id = 4 → aucune commande → Claire est <b>exclue</b> du résultat</span>
+</div>
+
+</div>
+```
+
+::: notes
+
+**Jointure pas à pas : comment fonctionne un INNER JOIN**
+
+Avancer les animations une à une :
+
+1. **Les clés** : la jointure compare la clé primaire `client.id` avec la clé étrangère `command.client_id` (en gras). Ce sont les seules colonnes utilisées par la condition `ON`.
+2. **Client 1 (bleu)** : on cherche dans `command` toutes les lignes avec `client_id = 1` → une seule (CMD0000002). Une ligne de résultat est produite en combinant les deux.
+3. **Client 2 (orange)** : deux commandes ont `client_id = 2` → **deux lignes** dans le résultat. Les informations du client sont **dupliquées** : c'est normal pour une relation 1-N.
+4. **Client 3 (vert)** : une commande → une ligne.
+5. **Client 4 (Claire)** : aucune commande ne référence `id = 4` → avec un `INNER JOIN`, la ligne est **exclue**.
+
+À souligner :
+
+- L'**ordre des lignes** dans les tables n'a aucune importance : seule l'**égalité des clés** compte (les commandes 1 et 6 d'Auguste ne sont pas côte à côte).
+- Le résultat contient **une ligne par paire correspondante**, pas une ligne par client.
+
+:::
+
+
+
+## Jointure pas à pas : LEFT JOIN
+
+```{=html}
+<div class="ja">
+
+<pre class="ja-sql"><code>SELECT c.id, c.firstname, m.client_id, m.reference
+FROM client AS c
+<span class="ja-kw">LEFT JOIN</span> command AS m ON <b class="key">c.id</b> = <b class="key">m.client_id</b>;</code></pre>
+
+<div class="ja-tables">
+  <div>
+    <div class="ja-title">client <span class="ja-tag">table de gauche</span></div>
+    <table>
+      <thead><tr><th class="key">id</th><th>firstname</th></tr></thead>
+      <tbody>
+        <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td></tr>
+        <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td></tr>
+        <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td></tr>
+        <tr class="fragment ja-step ja-null" data-fragment-index="1"><td class="key">4</td><td>Claire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ja-link">⟷<br><code>c.id = m.client_id</code></div>
+
+  <div>
+    <div class="ja-title">command</div>
+    <table>
+      <thead><tr><th>id</th><th class="key">client_id</th><th>reference</th></tr></thead>
+      <tbody>
+        <tr class="ja-c2 on"><td>1</td><td class="key">2</td><td>CMD0000001</td></tr>
+        <tr class="ja-c1 on"><td>2</td><td class="key">1</td><td>CMD0000002</td></tr>
+        <tr class="ja-c3 on"><td>4</td><td class="key">3</td><td>CMD0000004</td></tr>
+        <tr class="ja-c2 on"><td>6</td><td class="key">2</td><td>CMD0000006</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ja-title ja-result-title">résultat</div>
+<table>
+  <thead><tr><th class="key">id</th><th>firstname</th><th class="key">client_id</th><th>reference</th></tr></thead>
+  <tbody>
+    <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td><td class="key">1</td><td>CMD0000002</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000001</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000006</td></tr>
+    <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td><td class="key">3</td><td>CMD0000004</td></tr>
+    <tr class="fragment ja-null on" data-fragment-index="1"><td class="key">4</td><td>Claire</td><td class="key ja-nullval">NULL</td><td class="ja-nullval">NULL</td></tr>
+  </tbody>
+</table>
+
+<div class="ja-caption">
+  <span class="fragment fade-out" data-fragment-index="1">Les correspondances sont les mêmes qu'avec INNER JOIN…</span>
+  <span class="fragment" data-fragment-index="1">… mais LEFT JOIN <b>conserve</b> Claire : les colonnes de <b>command</b> valent <b>NULL</b></span>
+</div>
+
+</div>
+```
+
+::: notes
+
+**Jointure pas à pas : LEFT JOIN**
+
+- Les correspondances (couleurs) sont **exactement les mêmes** que pour l'`INNER JOIN` : la condition `ON c.id = m.client_id` ne change pas.
+- La différence porte uniquement sur les lignes **sans correspondance** de la table de gauche (`client`).
+- Animation : Claire (id = 4) n'a aucune commande. Avec `LEFT JOIN`, elle est **conservée** dans le résultat, et les colonnes provenant de `command` sont remplies avec **NULL**.
+
+Astuce à montrer aux étudiants : pour trouver les clients **sans commande**, il suffit d'ajouter
+
+```sql
+WHERE m.client_id IS NULL
+```
+
+:::
+
+
+
+## Jointure pas à pas : RIGHT JOIN
+
+```{=html}
+<div class="ja ja-compact">
+
+<pre class="ja-sql"><code>SELECT c.id, c.firstname, m.client_id, m.reference
+FROM client AS c
+<span class="ja-kw">RIGHT JOIN</span> command AS m ON <b class="key">c.id</b> = <b class="key">m.client_id</b>;</code></pre>
+
+<div class="ja-tables">
+  <div>
+    <div class="ja-title">client</div>
+    <table>
+      <thead><tr><th class="key">id</th><th>firstname</th></tr></thead>
+      <tbody>
+        <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td></tr>
+        <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td></tr>
+        <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td></tr>
+        <tr class="fragment ja-step ja-none" data-fragment-index="2"><td class="key">4</td><td>Claire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ja-link">⟷<br><code>c.id = m.client_id</code></div>
+
+  <div>
+    <div class="ja-title">command <span class="ja-tag">table de droite</span></div>
+    <table>
+      <thead><tr><th>id</th><th class="key">client_id</th><th>reference</th></tr></thead>
+      <tbody>
+        <tr class="ja-c2 on"><td>1</td><td class="key">2</td><td>CMD0000001</td></tr>
+        <tr class="ja-c1 on"><td>2</td><td class="key">1</td><td>CMD0000002</td></tr>
+        <tr class="ja-c3 on"><td>4</td><td class="key">3</td><td>CMD0000004</td></tr>
+        <tr class="ja-c2 on"><td>6</td><td class="key">2</td><td>CMD0000006</td></tr>
+        <tr class="fragment ja-step ja-null" data-fragment-index="1"><td>11</td><td class="key">9</td><td>CMD0000011</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ja-title ja-result-title">résultat</div>
+<table>
+  <thead><tr><th class="key">id</th><th>firstname</th><th class="key">client_id</th><th>reference</th></tr></thead>
+  <tbody>
+    <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td><td class="key">1</td><td>CMD0000002</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000001</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000006</td></tr>
+    <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td><td class="key">3</td><td>CMD0000004</td></tr>
+    <tr class="fragment ja-null on" data-fragment-index="1"><td class="key ja-nullval">NULL</td><td class="ja-nullval">NULL</td><td class="key">9</td><td>CMD0000011</td></tr>
+  </tbody>
+</table>
+
+<div class="ja-caption">
+  <span class="fragment fade-out" data-fragment-index="1">Les correspondances restent les mêmes… mais la commande 11 référence un client 9 inexistant</span>
+  <span class="fragment fade-in-then-out" data-fragment-index="1">RIGHT JOIN <b>conserve</b> toutes les commandes : la 11 est gardée, les colonnes de <b>client</b> valent <b>NULL</b></span>
+  <span class="fragment" data-fragment-index="2">Claire n'a pas de commande → elle est <b>exclue</b> (seule la table de droite est conservée)</span>
+</div>
+
+</div>
+```
+
+::: notes
+
+**Jointure pas à pas : RIGHT JOIN**
+
+- Pour l'exemple, on ajoute une **commande orpheline** : la commande 11 référence un `client_id = 9` qui n'existe pas dans `client` (par exemple un client supprimé, ou des données importées sans contrôle). Avec une contrainte de clé étrangère, la base refuserait normalement cette ligne.
+- Les correspondances (couleurs) sont toujours les mêmes : la condition `ON` ne change pas.
+- Animation 1 : `RIGHT JOIN` conserve **toutes les lignes de la table de droite** (`command`). La commande 11 apparaît dans le résultat, avec **NULL** pour les colonnes de `client`.
+- Animation 2 : Claire, qui n'a aucune commande, est **exclue** : la table de gauche n'est pas conservée.
+
+À retenir : `A RIGHT JOIN B` est équivalent à `B LEFT JOIN A`. En pratique, on préfère souvent réécrire en `LEFT JOIN` pour la lisibilité.
+
+:::
+
+
+
+## Jointure pas à pas : FULL JOIN
+
+```{=html}
+<div class="ja ja-compact">
+
+<pre class="ja-sql"><code>SELECT c.id, c.firstname, m.client_id, m.reference
+FROM client AS c
+<span class="ja-kw">FULL JOIN</span> command AS m ON <b class="key">c.id</b> = <b class="key">m.client_id</b>;</code></pre>
+
+<div class="ja-tables">
+  <div>
+    <div class="ja-title">client</div>
+    <table>
+      <thead><tr><th class="key">id</th><th>firstname</th></tr></thead>
+      <tbody>
+        <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td></tr>
+        <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td></tr>
+        <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td></tr>
+        <tr class="fragment ja-step ja-null" data-fragment-index="1"><td class="key">4</td><td>Claire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ja-link">⟷<br><code>c.id = m.client_id</code></div>
+
+  <div>
+    <div class="ja-title">command</div>
+    <table>
+      <thead><tr><th>id</th><th class="key">client_id</th><th>reference</th></tr></thead>
+      <tbody>
+        <tr class="ja-c2 on"><td>1</td><td class="key">2</td><td>CMD0000001</td></tr>
+        <tr class="ja-c1 on"><td>2</td><td class="key">1</td><td>CMD0000002</td></tr>
+        <tr class="ja-c3 on"><td>4</td><td class="key">3</td><td>CMD0000004</td></tr>
+        <tr class="ja-c2 on"><td>6</td><td class="key">2</td><td>CMD0000006</td></tr>
+        <tr class="fragment ja-step ja-null" data-fragment-index="2"><td>11</td><td class="key">9</td><td>CMD0000011</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="ja-title ja-result-title">résultat</div>
+<table>
+  <thead><tr><th class="key">id</th><th>firstname</th><th class="key">client_id</th><th>reference</th></tr></thead>
+  <tbody>
+    <tr class="ja-c1 on"><td class="key">1</td><td>Antoinette</td><td class="key">1</td><td>CMD0000002</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000001</td></tr>
+    <tr class="ja-c2 on"><td class="key">2</td><td>Auguste</td><td class="key">2</td><td>CMD0000006</td></tr>
+    <tr class="ja-c3 on"><td class="key">3</td><td>Benjamin</td><td class="key">3</td><td>CMD0000004</td></tr>
+    <tr class="fragment ja-null on" data-fragment-index="1"><td class="key">4</td><td>Claire</td><td class="key ja-nullval">NULL</td><td class="ja-nullval">NULL</td></tr>
+    <tr class="fragment ja-null on" data-fragment-index="2"><td class="key ja-nullval">NULL</td><td class="ja-nullval">NULL</td><td class="key">9</td><td>CMD0000011</td></tr>
+  </tbody>
+</table>
+
+<div class="ja-caption">
+  <span class="fragment fade-out" data-fragment-index="1">Les correspondances sont toujours les mêmes…</span>
+  <span class="fragment fade-in-then-out" data-fragment-index="1">Claire (gauche, sans commande) est <b>conservée</b> → colonnes de <b>command</b> à <b>NULL</b></span>
+  <span class="fragment" data-fragment-index="2">La commande 11 (droite, sans client) est <b>conservée</b> → colonnes de <b>client</b> à <b>NULL</b></span>
+</div>
+
+</div>
+```
+
+::: notes
+
+**Jointure pas à pas : FULL JOIN**
+
+- Mêmes tables que pour le `RIGHT JOIN` (avec la commande orpheline 11).
+- Les correspondances (couleurs) sont toujours identiques.
+- Animation 1 : comme un `LEFT JOIN`, Claire (sans commande) est **conservée**, avec **NULL** pour les colonnes de `command`.
+- Animation 2 : comme un `RIGHT JOIN`, la commande 11 (sans client) est **conservée**, avec **NULL** pour les colonnes de `client`.
+
+Récapitulatif des 4 jointures sur cet exemple :
+
+| Jointure | Lignes appariées | Claire (gauche seule) | Commande 11 (droite seule) |
+|----------|:---:|:---:|:---:|
+| INNER    | ✓ | ✗ | ✗ |
+| LEFT     | ✓ | ✓ | ✗ |
+| RIGHT    | ✓ | ✗ | ✓ |
+| FULL     | ✓ | ✓ | ✓ |
+
+Remarque : SQLite ne supporte `RIGHT JOIN` et `FULL JOIN` que depuis la version 3.39 (2022) ; avec une version plus ancienne, on peut émuler un `FULL JOIN` avec un `UNION` de deux `LEFT JOIN`.
 
 :::
 
