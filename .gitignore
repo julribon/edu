@@ -22,3 +22,5 @@ wheels/
 *.aux
 *.log
 *.tex
+
+**/*.quarto_ipynb

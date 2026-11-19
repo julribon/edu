@@ -113,3 +113,37 @@
   font-size: 1.1em;
 }
 .reveal .ja-caption > span { grid-area: 1 / 1; }
+
+/* ---------- Multi-table join (.ja-multi) ---------- */
+.reveal .ja.ja-multi { font-size: 0.42em; }
+.reveal .ja-multi .ja-tables {
+  align-items: flex-start;
+  gap: 1.2em;
+}
+.reveal .ja-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1em;
+  margin-top: 0.8em;
+}
+.reveal .ja .ja-bottom pre.ja-sql {
+  width: auto;
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* Keys of the join currently being applied (step 1, 2 or 3) */
+.reveal .ja .ja-j1.current-fragment .k1,
+.reveal .ja .ja-j2.current-fragment .k2,
+.reveal .ja .ja-j3.current-fragment .k3 {
+  outline: 2px solid #eab308;
+  outline-offset: -2px;
+}
+/* ...and the matching line of the SQL query */
+.reveal .ja .ja-j1.current-fragment span.k1,
+.reveal .ja .ja-j2.current-fragment span.k2,
+.reveal .ja .ja-j3.current-fragment span.k3 {
+  outline: none;
+  background: var(--kw);
+}
