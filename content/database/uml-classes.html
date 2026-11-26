@@ -1,0 +1,135 @@
+<style>
+/* Police système pour les diagrammes Mermaid : disponible immédiatement,
+   donc Mermaid mesure les textes avec la même police que celle affichée
+   (sinon le texte dépasse des rectangles des classes). */
+:root { --mermaid-font-family: Helvetica, Arial, sans-serif; }
+
+/* Titres des classes plus grands (appliqué avant la mesure de Mermaid,
+   les rectangles s'adaptent). */
+svg g.node .label-group text { font-size: 24px; }
+svg g.node .members-group text { font-size: 18px; }
+svg .edgeLabels .edgeLabel text { font-size: 19px; }
+svg .edgeTerminals text { font-size: 16px; }   /* multiplicités (1, 0..*) */
+/* multiplicité côté classe cible : Mermaid la place hors du groupe décalé,
+   on l'aligne à droite pour qu'elle s'étende loin du rectangle */
+svg .edgeTerminals > text { text-anchor: end; }
+
+/* Texte des relations (associations) : pas de fond coloré. */
+svg .edgeLabels .labelBkg,
+svg .edgeLabels .edgeLabel,
+svg .edgeLabels .edgeLabel p { background-color: transparent !important; }
+svg .edgeLabels .edgeLabel rect { fill: transparent !important; }
+</style>
+<script>
+// Diagrammes de classes Mermaid : supprime uniquement le compartiment des méthodes
+// (Mermaid 11 le dessine toujours, même vide). La zone des attributs est conservée.
+(function () {
+  const NUM = /-?\d*\.?\d+(?:e[-+]?\d+)?/gi;
+
+  // les chemins n'utilisent que des paires (x, y) : un nombre sur deux est un y
+  function ys(d) { const out = []; let i = 0; d.replace(NUM, n => { if (i++ % 2) out.push(+n); return n; }); return out; }
+
+  function fix(node) {
+    if (node.dataset.umlFixed) return;
+    const methods = node.querySelector(':scope > .methods-group');
+    const box = node.querySelector(':scope > .label-container');
+    const dividers = node.querySelectorAll(':scope > .divider');
+    if (!methods || !box || dividers.length < 2) return;
+    node.dataset.umlFixed = '1';
+    if (methods.childElementCount > 0) return;
+
+    // le dernier séparateur marque le début du compartiment des méthodes
+    const last = dividers[dividers.length - 1];
+    const cut = ys(last.querySelector('path').getAttribute('d'))[0];
+    last.remove();
+
+    // remonter le bord inférieur du rectangle jusqu'à ce séparateur
+    const paths = box.querySelectorAll('path');
+    let bottom = -Infinity;
+    paths.forEach(p => ys(p.getAttribute('d')).forEach(y => { bottom = Math.max(bottom, y); }));
+    paths.forEach(p => {
+      let i = 0;
+      p.setAttribute('d', p.getAttribute('d').replace(NUM, n =>
+        (i++ % 2 && Math.abs(+n - bottom) < 0.01) ? String(cut) : n));
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // Préfixes PK / FK dans une marge : les noms d'attributs sont alignés.
+  // 1) Avant le rendu (Quarto lance Mermaid au "load") : dans chaque classe,
+  //    toutes les lignes reçoivent le même préfixe (le plus long de la classe,
+  //    par ex. "PK, FK"), suivi d'un code invisible (n × U+200B) qui donne
+  //    le vrai préfixe. Mermaid mesure donc des lignes au préfixe identique.
+  // 2) Après le rendu : on remet le vrai préfixe (ou rien) et on fixe le nom
+  //    de l'attribut à la position mesurée -> alignement exact, rectangle juste.
+  const ZW = '​';
+  const KEY = /^(\s*)((?:PK|FK)(?:\s*,\s*(?:PK|FK))*)\s+(\S.*)$/;
+  const prefixes = [];   // code -> vrai préfixe
+
+  function code(prefix) {
+    let i = prefixes.indexOf(prefix);
+    if (i < 0) { prefixes.push(prefix); i = prefixes.length - 1; }
+    return ZW.repeat(i + 1);
+  }
+
+  function prepare(pre) {
+    const lines = pre.textContent.split('\n');
+    if (!lines.some(l => /^\s*classDiagram\b/.test(l))) return;
+    for (let i = 0; i < lines.length; i++) {
+      if (!/^\s*class\s+\S+\s*\{\s*$/.test(lines[i])) continue;
+      let end = i + 1;
+      while (end < lines.length && !/^\s*\}\s*$/.test(lines[end])) end++;
+      const members = [];
+      for (let j = i + 1; j < end; j++) if (lines[j].trim()) members.push(j);
+      const keys = members.map(j => {
+        const m = lines[j].match(KEY);
+        return m ? m[2].split(/\s*,\s*/).join(', ') : '';
+      });
+      const widest = keys.reduce((a, b) => (b.length > a.length ? b : a), '');
+      if (widest) members.forEach((j, n) => {
+        const m = lines[j].match(KEY);
+        const indent = lines[j].match(/^\s*/)[0];
+        const rest = m ? m[3] : lines[j].trim();
+        lines[j] = indent + widest + code(keys[n]) + ' ' + rest;
+      });
+      i = end;
+    }
+    pre.textContent = lines.join('\n');
+  }
+
+  function alignMember(text) {
+    if (text.dataset.umlPrefix) return;
+    const spans = Array.from(text.querySelectorAll('tspan.text-inner-tspan'));
+    const k = spans.findIndex(s => s.textContent.includes(ZW));
+    if (k < 0 || k + 1 >= spans.length) return;
+    text.dataset.umlPrefix = '1';
+    const real = prefixes[(spans[k].textContent.match(/​/g).length) - 1];
+    const name = spans[k + 1];
+    // position du 1er caractère du nom (après l'espace de séparation)
+    const x = name.getStartPositionOfChar(1).x;
+    name.textContent = name.textContent.replace(/^\s+/, '');
+    name.setAttribute('x', x);
+    spans[0].textContent = real;
+    spans.slice(1, k + 1).forEach(s => s.remove());
+    // clé primaire : souligner le nom seulement, pas le préfixe
+    const label = text.closest('.label');
+    if (label && /underline/.test(label.getAttribute('style') || '')) {
+      label.style.textDecoration = 'none';
+      spans.slice(k + 1).forEach(s => { s.style.textDecoration = 'underline'; });
+    }
+  }
+
+  document.querySelectorAll('pre.mermaid-js').forEach(prepare);
+
+  function run() {
+    document.querySelectorAll('svg g.node').forEach(fix);
+    document.querySelectorAll('svg g.node .members-group text').forEach(alignMember);
+  }
+
+  // attendre que Mermaid ait fini de dessiner (plus aucune mutation pendant 300ms)
+  let timer;
+  const schedule = () => { clearTimeout(timer); timer = setTimeout(run, 300); };
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  window.addEventListener('load', schedule);
+})();
+</script>

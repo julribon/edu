@@ -11,6 +11,7 @@ format:
     show-notes: separate-page
     embed-resources: true
     css: joins.css
+    include-after-body: uml-classes.html
 
 ---
 
@@ -472,6 +473,26 @@ Contient les détails des produits achetés dans chaque commande.
 
 # Structured Query Language (SQL)
 
+## Le langage SQL
+
+*Structured Query Language*
+
+- **Interroger, manipuler, définir** des données
+- Utilisé par presque toutes les DB relationnelles
+- Créé chez **IBM** dans les années 70
+- Toujours très utilisé
+
+::: aside
+Source : <https://www.oracle.com/ch-fr/database/what-is-database>
+:::
+
+::: notes
+- Le langage SQL est un langage de programmation utilisé par quasiment toutes les bases de données relationnelles pour interroger, manipuler et définir des données, et pour fournir un contrôle des accès.
+- Les tables de notre e-commerce (*client*, *product*, *command*, *command_product*) sont elles-mêmes créées en SQL, avec `CREATE TABLE` (définition des données).
+- Le langage SQL a été développé chez IBM dans les années 70.
+- Il est encore fortement utilisé aujourd'hui, mais de nouveaux langages commencent à apparaître.
+:::
+
 ## Structure d'une requête SQL
 
 Voici les clauses de base d'une requête SQL :
@@ -538,6 +559,32 @@ ORDER BY champs
 LIMIT nombre;
 ```
 
+:::
+
+
+## Requête SQL (= SQL query)
+
+```sql
+SELECT colonne1, colonne2
+FROM table
+WHERE condition(s)      -- optionnel
+ORDER BY colonne1       -- optionnel
+```
+
+Exemple : les produits à plus de 100 CHF, triés par nom
+
+```sql
+SELECT name, price
+FROM product
+WHERE price > 100
+ORDER BY name;
+```
+
+::: notes
+- Une requête SQL simple est de la forme `SELECT … FROM … WHERE … ORDER BY …`. Les clauses `WHERE` et `ORDER BY` sont optionnelles.
+- En général, on écrit les mots réservés en majuscules pour que la requête soit lisible. Ce n'est pas obligatoire.
+- Résultat de l'exemple : Kindle Paperwhite (129.95), Lenovo Laptop i7 (574.95).
+- Chaque clause est détaillée dans les slides suivants.
 :::
 
 
@@ -1117,6 +1164,31 @@ Ces fonctions peuvent aussi être combinées avec `GROUP BY` pour des calculs pa
 :::
 
 
+## SELECT : Récapitulatif {.smaller}
+
+| Sélectionner…           | Exemple                                          |
+|-------------------------|--------------------------------------------------|
+| des colonnes            | `SELECT firstname, lastname FROM client`         |
+| toutes les colonnes     | `SELECT * FROM product`                          |
+| des valeurs distinctes  | `SELECT DISTINCT lastname FROM client`           |
+| le minimum / maximum    | `SELECT MIN(price), MAX(price) FROM product`     |
+| le nombre de lignes     | `SELECT COUNT(*) FROM command`                   |
+| le compte distinct      | `SELECT COUNT(DISTINCT client_id) FROM command`  |
+
+::: notes
+Pour le `SELECT`, on peut :
+
+- Sélectionner des colonnes : `SELECT firstname, lastname FROM client`
+- Sélectionner toutes les colonnes : `SELECT * FROM product`
+- Sélectionner des valeurs distinctes : `SELECT DISTINCT lastname FROM client` → Bourgeois, Costa, Dias, Pons, Smith
+- Sélectionner le minimum / maximum : `SELECT MIN(price), MAX(price) FROM product` → 49.99 et 574.95
+- Sélectionner le compte (= le nombre de lignes) : `SELECT COUNT(*) FROM command` → 10
+- Sélectionner le compte distinct : `SELECT COUNT(DISTINCT client_id) FROM command` → 4 (clients ayant passé au moins une commande)
+
+Et plus encore. Voir la documentation ou des tutoriels pour en savoir plus : <https://www.w3schools.com/sql/sql_ref_sqlserver.asp>
+:::
+
+
 ## WHERE : Filtrer les données
 
 * La clause WHERE permet de filtrer les lignes selon des conditions
@@ -1342,6 +1414,37 @@ WHERE name LIKE '%Logitech%';
 
 :::
 
+
+
+
+## WHERE : Récapitulatif {.smaller}
+
+| Filtrer…                      | Exemple                                                           |
+|-------------------------------|-------------------------------------------------------------------|
+| sur un texte                  | `WHERE lastname = 'Costa'`                   |
+| sur un nombre                 | `WHERE price < 100`                         |
+| 2 conditions vraies (`AND`) | `WHERE client_id = 1 AND command_date >= '2025'` |
+| 1 condition vraie (`OR`)    | `WHERE lastname = 'Costa' OR lastname = 'Smith'` |
+| inverse (`NOT`) | `WHERE NOT lastname = 'Costa'`           |
+
+
+- Le texte doit être entre **apostrophes** (p.ex. `'Costa'`)
+- Égalité avec un seul `=` (et non `==` comme dans d'autres langages)
+
+::: notes
+Les conditions s'écrivent presque comme en Python : `=`, `<`, `<=`, `>`, `>=`, `<>` (différent), combinées avec `AND`, `OR`, `NOT`.
+
+- Filtrer sur un texte : `WHERE lastname = 'Costa'` → Antoinette et Auguste Costa
+- Filtrer sur un nombre : `WHERE price < 100` → Echo Dot 5, Logitech MX Master 3S, Anker PowerCore 20K, Samsung SSD 980 1TB
+- `AND` (les deux conditions vraies) : `WHERE client_id = 1 AND command_date >= '2025-01-01'` → les commandes d'Antoinette Costa passées en 2025 (CMD0000002 et CMD0000007)
+- `OR` (au moins une condition vraie) : `WHERE lastname = 'Costa' OR lastname = 'Smith'` → Antoinette, Auguste et Alice
+- `NOT` (inverse la condition) : `WHERE NOT lastname = 'Costa'` → tous les clients sauf les Costa : Benjamin Dias, Claire Bourgeois, Émile Pons, Alice Smith. Équivalent à `lastname <> 'Costa'`.
+
+Attention :
+
+- En SQL, l'égalité s'écrit avec un seul `=` (et non `==`).
+- Le texte s'écrit entre apostrophes simples `'Costa'`. En PostgreSQL, les guillemets doubles `"…"` désignent un nom de colonne ou de table (comme l'alias `"Prénom"`), pas du texte.
+:::
 
 
 
@@ -1898,6 +2001,53 @@ Les jointures sont **le cœur de l’exploitation des bases relationnelles**. Sa
 - **1:N (un à plusieurs)** : un client peut avoir plusieurs commandes.
 - **N:M (plusieurs à plusieurs)** : un produit peut apparaître dans plusieurs commandes, et une commande contient plusieurs produits. Cela nécessite souvent une **table intermédiaire** (ex. : `command_product`).
 
+:::
+
+## JOIN : Premier exemple
+
+Les commandes avec le nom du client :
+
+```sql
+SELECT command.reference, client.firstname, client.lastname
+FROM command
+JOIN client ON command.client_id = client.id
+```
+
+- `JOIN` : lier plusieurs tables
+- `ON` : condition de jointure (clé étrangère = clé primaire)
+- `table.colonne` : lève l'ambiguïté
+
+::: notes
+- Lorsqu'on veut sélectionner des colonnes de plusieurs tables, il faut indiquer à l'ordinateur comment lier les différentes tables.
+- Ceci se fait avec l'instruction `JOIN`, qui joint deux tables selon une ou plusieurs conditions de jointure (après `ON`). En général, on joint une clé étrangère (`command.client_id`) avec la clé primaire qu'elle référence (`client.id`).
+- Ici, *id* existe dans *client*, *command* et *product*, et *reference* dans *command* et *product* : il faut préciser la table (`client.id`, `command.reference`). C'est aussi bénéfique pour la lisibilité. On peut raccourcir avec des alias (`FROM command AS cm`).
+- Résultat : CMD0000001, Auguste Costa ; CMD0000002, Antoinette Costa ; CMD0000003, Émile Pons ; …
+:::
+
+## JOIN : Jointures possibles
+
+```{mermaid}
+%%| echo: false
+%%{init: {"fontSize": 24, "htmlLabels": false, "flowchart": {"htmlLabels": false, "rankSpacing": 100, "nodeSpacing": 40}}}%%
+classDiagram
+    direction LR
+    class client
+    class command
+    class command_product
+    class product
+    client "1" -- "0..*" command : client_id
+    command "1" -- "1..*" command_product : command_id
+    product "1" -- "0..*" command_product : product_id
+```
+
+::: notes
+Chaque association du diagramme correspond à une jointure possible (l'étiquette indique la clé étrangère) :
+
+- *command* ↔ *client* : `command.client_id = client.id`
+- *command_product* ↔ *command* : `command_product.command_id = command.id`
+- *command_product* ↔ *product* : `command_product.product_id = product.id`
+
+Pour aller d'une table à une autre non reliée directement (par ex. *client* → *product*), on enchaîne plusieurs `JOIN` (voir « Jointures multiples »).
 :::
 
 ## Comprendre les jointures {.smaller}

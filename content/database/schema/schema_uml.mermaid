@@ -1,0 +1,69 @@
+%%{init: {"htmlLabels": false, "flowchart": {"htmlLabels": false, "rankSpacing": 100, "nodeSpacing": 40}}}%%
+classDiagram
+    direction LR
+    class maitres {
+        PK no_maitre : INTEGER$
+        nom : VARCHAR
+        prenom : VARCHAR
+        sexe : CHAR
+        date_naissance : DATE
+    }
+    class groupes {
+        PK no_groupe : INTEGER$
+        FK no_maitre : INTEGER
+        numero : VARCHAR
+        degre_pedagogique : INTEGER
+    }
+    class eleves {
+        PK no_eleve : INTEGER$
+        FK no_groupe : INTEGER
+        nom : VARCHAR
+        prenom : VARCHAR
+        sexe : CHAR
+        date_naissance : DATE
+        nationalite : VARCHAR
+    }
+    class salles {
+        PK no_salle : INTEGER$
+        salle : VARCHAR
+        max_eleves : INTEGER
+        lignes : INTEGER
+        colonnes : INTEGER
+        type_salle : VARCHAR
+    }
+    class cours {
+        PK no_cours : INTEGER$
+        FK no_maitre : INTEGER
+        libelle_cours : VARCHAR
+        max_eleves : INTEGER
+    }
+    class seances {
+        PK, FK no_salle : INTEGER$
+        PK jour : VARCHAR$
+        PK periode : INTEGER$
+        PK semestre : INTEGER$
+        FK no_cours : INTEGER
+        FK no_maitre : INTEGER
+    }
+    class inscriptions {
+        PK, FK no_eleve : INTEGER$
+        PK, FK no_cours : INTEGER$
+        date_inscription : DATE
+        moyenne_bulletin : DECIMAL
+    }
+    class notes {
+        PK no_note : INTEGER$
+        FK no_eleve : INTEGER
+        FK no_cours : INTEGER
+        note : DECIMAL
+        date_note : DATE
+    }
+
+    maitres "1" -- "0..*" groupes : est maître de groupe
+    groupes "1" -- "0..*" eleves : regroupe
+    maitres "1" -- "0..*" cours : enseigne
+    cours "1" -- "1..*" seances : a lieu en
+    salles "1" -- "0..*" seances : accueille
+    eleves "1" -- "0..*" inscriptions : s'inscrit
+    cours "1" -- "0..*" inscriptions : compte
+    inscriptions "1" -- "0..*" notes : reçoit

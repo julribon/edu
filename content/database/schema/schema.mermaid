@@ -1,0 +1,68 @@
+
+erDiagram
+    maitres {
+        INTEGER no_maitre PK
+        VARCHAR nom
+        VARCHAR prenom
+        CHAR sexe "F ou M"
+        DATE date_naissance
+    }
+    groupes {
+        INTEGER no_groupe PK
+        INTEGER no_maitre FK "maitre de groupe"
+        VARCHAR numero UK "ex. 102"
+        INTEGER degre_pedagogique "1 a 4, = 1er chiffre du numero"
+    }
+    eleves {
+        INTEGER no_eleve PK
+        INTEGER no_groupe FK
+        VARCHAR nom
+        VARCHAR prenom
+        CHAR sexe "F ou M"
+        DATE date_naissance
+        VARCHAR nationalite
+    }
+    salles {
+        INTEGER no_salle PK
+        VARCHAR salle UK
+        INTEGER max_eleves
+        INTEGER lignes
+        INTEGER colonnes
+        VARCHAR type_salle
+    }
+    cours {
+        INTEGER no_cours PK
+        INTEGER no_maitre FK "UNIQUE avec no_cours"
+        VARCHAR libelle_cours UK
+        INTEGER max_eleves
+    }
+    seances {
+        INTEGER no_salle PK, FK
+        VARCHAR jour PK "Lundi..Vendredi"
+        INTEGER periode PK "1 a 12"
+        INTEGER semestre PK "1 ou 2"
+        INTEGER no_cours FK "UNIQUE avec jour, periode, semestre"
+        INTEGER no_maitre FK "copie de cours.no_maitre, UNIQUE avec jour, periode, semestre"
+    }
+    inscriptions {
+        INTEGER no_eleve PK, FK
+        INTEGER no_cours PK, FK
+        DATE date_inscription "defaut CURRENT_DATE"
+        DECIMAL moyenne_bulletin "1 a 6, note officielle, NULL possible"
+    }
+    notes {
+        INTEGER no_note PK "IDENTITY"
+        INTEGER no_eleve FK
+        INTEGER no_cours FK
+        DECIMAL note "1 a 6"
+        DATE date_note "defaut CURRENT_DATE"
+    }
+
+    maitres      ||--o{ groupes      : "est maitre de groupe"
+    groupes      ||--o{ eleves       : "regroupe"
+    maitres      ||--o{ cours        : "enseigne"
+    cours        ||--|{ seances      : "a lieu en"
+    salles       ||--o{ seances      : "accueille"
+    eleves       ||--o{ inscriptions : "s'inscrit"
+    cours        ||--o{ inscriptions : "compte"
+    inscriptions ||--o{ notes        : "recoit"
