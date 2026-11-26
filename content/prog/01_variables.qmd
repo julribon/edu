@@ -7,10 +7,18 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    show-notes: separate-page 
+    show-notes: separate-page
     embed-resources: true
+    include-in-header:
+      text: |
+        <style>:root { --mermaid-font-family: Helvetica, Arial, sans-serif; }</style>
 ---
 
+```{python}
+#| include: false
+# Erreurs : afficher seulement la dernière ligne (ex. ValueError: ...), sans la trace complète
+%xmode Minimal
+```
 
 # Variables
 
@@ -222,6 +230,45 @@ Ces techniques sont pratiques pour écrire un code plus compact, tout en restant
 :::
 
 
+## Entrée, traitement, sortie
+
+```{mermaid}
+%%| echo: false
+%%{init: {"htmlLabels": false, "themeVariables": {"fontSize": "32px"}, "flowchart": {"htmlLabels": false, "wrappingWidth": 400, "subGraphTitleMargin": {"top": 0, "bottom": 20}}}}%%
+flowchart LR
+    subgraph c1 ["input()"]
+        I[/"`**Input**`"/]
+    end
+    subgraph c2 ["programme"]
+        T["`**Traitement**`"]
+    end
+    subgraph c3 ["print()"]
+        O[/"`**Output**`"/]
+    end
+    I --> T --> O
+    style c1 fill:none,stroke:none
+    style c2 fill:none,stroke:none
+    style c3 fill:none,stroke:none
+```
+
+* **Entrée** : l'utilisateur donne des données au programme → `input()`
+  * ⚠️ Le programme **s'arrête** et **attend** que l'utilisateur entre une information (puis appuie sur Entrée)
+* **Traitement** : le programme calcule, transforme les données
+* **Sortie** : le programme affiche un résultat → `print()`
+
+::: notes
+
+Un programme suit presque toujours le même schéma :
+
+- **INPUT (entrée)** : il reçoit des données, par exemple saisies au clavier par l'utilisateur avec `input()`. À cet instant, l'exécution est **suspendue** : le programme ne continue qu'une fois que l'utilisateur a tapé sa réponse et appuyé sur Entrée.
+- **TRAITEMENT** : le programme (le rectangle) travaille sur ces données : calculs, conversions, décisions…
+- **OUTPUT (sortie)** : il communique le résultat, par exemple en l'affichant à l'écran avec `print()`.
+
+Nous connaissons déjà `print()` pour la sortie ; voyons maintenant `input()` pour l'entrée.
+
+:::
+
+
 ## La fonction `input()`
 
 * Permet de capturer des données saisies par l'utilisateur via le clavier.
@@ -258,10 +305,10 @@ Cette fonction est couramment utilisée pour interagir avec l'utilisateur et obt
 * **Définition :** le type de valeur qu'elle contient.
 * Détermine son comportement et les opérations que l'on peut effectuer dessus.
 * Les plus courants:
-  * `int` - nombre entier, p.ex. 5
-  * `float` - nombre à virgule flottante, p.ex. 3.14
-  * `str` - chaîne de caractères, p.ex. "Hello, World!"
-  * `bool` - booléen, p.ex. True ou False
+  * `int` - nombre entier, p.ex. `5`
+  * `float` - nombre à virgule flottante, p.ex. `3.14`
+  * `str` - chaîne de caractères, p.ex. `"Hello, World!"`
+  * `bool` - booléen, p.ex. `True` ou `False`
   * les collections (`list`, `tuple`, `dict`, `set`, etc.)
 
 ::: notes
@@ -603,12 +650,13 @@ Ces opérations sont essentielles dans la plupart des calculs numériques.
 
 ## Conversion de types
 
-* Convertir d'un type à l'autre en utilisant les fonctions **`bool()`**, **`int()`** et **`float()`**:
+* Convertir d'un type à l'autre en utilisant les fonctions **`bool()`**, **`int()`**, **`float()`** et **`str()`**:
 ```{python}
 #| output-location: column
 print(int(2.8), int(False))
 print(float(1), float(True))
 print(bool(2.8), bool(0))
+print(str(2.8), str(True))
 ```
 
 * Convertir un **`float`** en **`int`** supprime les décimales!
@@ -630,6 +678,7 @@ La conversion de types permet de changer la représentation d'une variable d'un 
 - **`int()`** : convertit une valeur en entier.
 - **`float()`** : convertit une valeur en nombre à virgule flottante.
 - **`bool()`** : convertit une valeur en booléen.
+- **`str()`** : convertit une valeur en chaîne de caractères (`str(2.8) + str(True)` donne le texte `"2.8True"`).
 
 **Exemples de conversion :**
 - Un entier peut être converti en flottant avec `float(x)`, et un flottant en entier avec `int(y)` (ce qui supprime la partie décimale).
@@ -691,6 +740,42 @@ print(bool(""))
 ```
 
 Toutes les chaînes de caractères sont considérées comme **`True`** sauf la chaîne vide **`""`**.
+
+
+## Conversion de types
+
+**`str()`** - construit une chaîne de caractères à partir d'un entier, d'un flottant ou d'un booléen.
+
+💡 Contrairement à `int()` ou `float()`, **`str()` fonctionne toujours** : toute valeur peut s'écrire en texte.
+
+```{python}
+#| output-location: column
+print(str(3))
+print(str(2.8))
+print(str(True))
+print(type(str(3)))
+```
+
+Utile pour **assembler** du texte et des nombres :
+
+```{python}
+#| output-location: column
+#| error: true
+age = 17
+print("Âge : " + str(age))
+print("Âge : " + age)
+```
+
+::: notes
+
+La fonction **`str()`** convertit n'importe quelle valeur en chaîne de caractères : `str(3)` donne `"3"`, `str(2.8)` donne `"2.8"`, `str(True)` donne `"True"`.
+
+- Le résultat s'affiche comme le nombre, mais c'est maintenant du **texte** : `type(str(3))` donne `<class 'str'>`.
+- C'est l'inverse de `int()` et `float()`, qui transforment un texte en nombre.
+- Contrairement à ces fonctions, `str()` **ne provoque jamais d'erreur** : toute valeur peut s'écrire en texte. À l'inverse, `int("bonjour")` ou `float("2,5")` provoquent une **`ValueError`**, car le texte ne représente pas un nombre valide.
+- Usage courant : l'opérateur `+` ne peut pas assembler du texte et un nombre. `"Âge : " + age` provoque une erreur **`TypeError`** ; il faut d'abord convertir le nombre avec `str(age)`.
+
+:::
 
 
 
@@ -898,10 +983,10 @@ print(len(a))
 ```
 
 
-* Conversions avec la fonction **`str()`**:
+* Recherche avec l'opérateur **`in`**:
 
 ```{python}
-print(a + str(3))
+print("Hell" in a)
 ```
 
 :::
@@ -916,18 +1001,18 @@ Les chaînes de caractères en Python permettent plusieurs opérations utiles :
 
 - **Multiplication (`*`)** : L'opérateur `*` permet de répéter une chaîne plusieurs fois. Par exemple, `"Hello" * 3` renverra `"HelloHelloHello"`. Cela peut être utilisé pour générer des motifs répétés.
 
-- **Conversion en chaîne (`str()`)** : La fonction `str()` permet de convertir d'autres types de données en chaînes de caractères. Cela est utile lorsqu'on souhaite concaténer des données non textuelles, comme des nombres, avec une chaîne.
+- **Recherche (`in`)** : L'opérateur `in` teste si un texte est contenu dans une chaîne et renvoie un booléen. Par exemple, `"ell" in "Hello"` renvoie `True`, `"x" in "Hello"` renvoie `False`. Attention, la recherche distingue les majuscules des minuscules : `"hello" in "Hello"` renvoie `False`.
 
 Ces opérations permettent une manipulation flexible des chaînes dans les programmes Python.
 
 :::
 
-## Opérations de chaînes de caractères
+## Opérations de chaînes de caractères {.smaller}
 
 <p>
 ```{python}
 #| output-location: column
-a = "     Hello, World   "
+a = "   bonjour, tout le Monde  "
 print(a)
 ```
 </p>
@@ -936,29 +1021,32 @@ print(a)
 
 ```{python}
 #| output-location: column
-print(a.strip())
+a = a.strip()
+print(a)
 ```
 
 * **`replace()`** - remplace une chaîne par une autre.
 
 ```{python}
 #| output-location: column
-print(a.replace("He", "Ja"))
+print(a.replace("bonjour", "Hello"))
 ```
 
 
-* **`lower()`** - convertit la chaîne en minuscules.
+* **`lower()`** / **`upper()`** - convertit la chaîne en minuscules / majuscules.
 
 ```{python}
 #| output-location: column
 print(a.lower())
+print(a.upper())
 ```
 
-* **`upper()`** - convertit la chaîne en majuscules.
+* **`capitalize()`** / **`title()`** - majuscule à la première lettre de la chaîne / de chaque mot.
 
 ```{python}
 #| output-location: column
-print(a.upper())
+print(a.capitalize())
+print(a.title())
 ```
 
 <!--
@@ -1014,6 +1102,10 @@ Les chaînes de caractères en Python offrent plusieurs méthodes pour les manip
 - **`lower()`** : Convertit tous les caractères de la chaîne en minuscules, ce qui est utile pour les comparaisons de chaînes qui ne tiennent pas compte de la casse.
 
 - **`upper()`** : Convertit tous les caractères de la chaîne en majuscules, utile lorsque l'on souhaite normaliser le texte ou mettre en avant certaines parties.
+
+- **`capitalize()`** : Met une majuscule à la première lettre de la chaîne et le reste en minuscules (`"bonjour tout le monde"` → `"Bonjour tout le monde"`).
+
+- **`title()`** : Met une majuscule à la première lettre de chaque mot (`"Bonjour Tout Le Monde"`), pratique pour mettre en forme des noms saisis par l'utilisateur. Attention : `capitalize()` ne fait rien si la chaîne commence par un espace, d'où l'intérêt de faire `strip()` avant.
 
 Ces méthodes rendent les chaînes de caractères très flexibles et permettent de les manipuler facilement pour diverses tâches dans les programmes Python.
 
