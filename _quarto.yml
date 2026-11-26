@@ -1,6 +1,8 @@
 project:
   title: "Informatique"
   output-dir: output
+  # Diagrammes Mermaid -> SVG statiques (pour les sites qui n'exécutent pas Mermaid)
+  post-render: scripts/mermaid_static.py
   render:
     - "*.qmd"
     #- "!exams/"

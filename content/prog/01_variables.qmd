@@ -7,7 +7,7 @@ format:
     toc: true
     toc-depth: 1
     toc-title: Aujourd'hui
-    show-notes: separate-page
+    #show-notes: separate-page
     embed-resources: true
     include-in-header:
       text: |
